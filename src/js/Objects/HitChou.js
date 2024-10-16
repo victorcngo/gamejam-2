@@ -1,8 +1,11 @@
-export default class HitChou extends Chou {
-    constructor(...args) {
-        super(...args);
-        this.type = 'hit'
 
+import Chou from './Chou.js'
+
+export default class HitChou extends Chou {
+    constructor(container, direction, index, initXPos) {
+        super(container, direction, index, initXPos)
+        this.type = 'hit'
+        this.drawChou()
     }
 
     isSuccessful() {
@@ -22,10 +25,11 @@ export default class HitChou extends Chou {
 
     }
 
-        // Move the circle (for animation)
-        move() {
-            this.circlePos += this.speed;
-        }
+    remove() {
+        this.container.removeChild(this.circleGraphics);
+   
+    }
+
     
        
 }

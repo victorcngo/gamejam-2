@@ -1,5 +1,6 @@
 import Chou from './Chou.js'
 import {precision, holdBarHeight} from '../settings.js'
+import * as PIXI from 'pixi.js'
 
 export default class HoldChou extends Chou {
     constructor(length, container, direction, index, type, initXPos) {
@@ -8,13 +9,12 @@ export default class HoldChou extends Chou {
         this.timer = length;
         this.type = 'hold'
         this.rectLength = length;
- 
-
+        this.barGraphics = new PIXI.Graphics();
+        this.container.addChild(this.barGraphics);
     }
 
     move() {
         this.circlePos += 1;
-        // this.moveBar();
     }
 
     // Move the bar
@@ -42,20 +42,22 @@ export default class HoldChou extends Chou {
         this.timer -= 1;
     }
 
-    isSuccessful() {
-        this.isHitCorrect() && this.isHoldCorrect()
-    }
-
     isHoldCorrect() {
         // return this.timer > - precision && this.timer < precision
-        return this.timer < - precision ? false : true
+        return this.timer < precision && this.timer > - precision
     }
 
     showFeedback() {
-        this.color =  this.isSuccessful() ? 0x00FF00 : 0xFF0000;
+        this.color =  this.isHoldCorrect() ? 0x00FF00 : 0xFF0000;
     }
 
     timeIsUp() {
         return this.timer < - precision ? true : false
+    }
+
+    remove() {
+        this.container.removeChild(this.circleGraphics);
+        this.container.removeChild(this.barGraphics);
+   
     }
 }

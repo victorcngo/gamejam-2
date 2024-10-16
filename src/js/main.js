@@ -45,7 +45,9 @@ const app = new PIXI.Application({
   // Create choux
   function createChoux() {
       let prevX = radius;
+      let type; 
       for (let i = 0; i < 5; i++) {
+        type = Math.random() < 0.5;
           const length = Math.random() * (200 - 100) + 100;
           const initXPos = Math.random() * (prevX + 100 ) + prevX;
           choux[i] = new HoldChou(length,chouxContainer, 'left', i, 'hold', initXPos);
@@ -81,6 +83,7 @@ const app = new PIXI.Application({
 
   const handleButtonAUp = () => {
     userIsHolding = false;
+    choux[0].showFeedback()
     const success = choux[0].timer < precision && choux[0].timer > - precision
     console.log("success", success, choux[0].timer)
 
