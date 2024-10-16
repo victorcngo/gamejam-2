@@ -16,7 +16,6 @@ const app = new PIXI.Application({
   document.body.appendChild(app.view); // Append canvas to the document
 
   await setUpButtons()
-  console.log(player1)
 
   
   // Variables
@@ -56,20 +55,40 @@ const app = new PIXI.Application({
   
   
   // Mouse press event listener (equivalent to mousePressed)
-  app.view.addEventListener('mousedown', () => {
-      let target = choux[0];
+  //app.view.addEventListener('mousedown', () => {
+  //    let target = choux[0];
+  //    target.showFeedback()
+  //
+  //    if (target.isHitCorrect() && target.type === 'hold') {
+  //        userIsHolding = true;
+  //    }
+  //});
+ //
+  //
+  //// Mouse release event listener (equivalent to mouseReleased)
+  //app.view.addEventListener('mouseup', () => {
+  //  userIsHolding = false;
+  //});
+
+  const handleButtonADown = () => {
+    let target = choux[0];
       target.showFeedback()
   
       if (target.isHitCorrect() && target.type === 'hold') {
           userIsHolding = true;
       }
-  });
+  }
+
+  const handleButtonAUp = () => {
+    userIsHolding = false;
+  }
+
   
-  // Mouse release event listener (equivalent to mouseReleased)
-  app.view.addEventListener('mouseup', () => {
-      userIsHolding = false;
-  });
-  
+  player1.buttons[0].addEventListener('keydown',handleButtonADown)
+  player1.buttons[0].addEventListener('keyup',handleButtonAUp)
+
+
+
   // Main update loop -> equivalzent of draw
   function update() {
       for (let i = 0; i < choux.length; i++) {
