@@ -17,8 +17,6 @@ document.body.appendChild(app.view); // Append canvas to the document
 // Variables
 let choux = [];
 let directions = ["left", "right", "up", "down"];
-// let precision = 15;
-// let hitZone = 375;
 let userIsHolding = false;
 
 
@@ -45,7 +43,7 @@ function createChoux() {
     let prevX = radius;
     for (let i = 0; i < 5; i++) {
         const length = Math.random() * (200 - 100) + 100;
-        const initXPos = Math.random() * (prevX + 100 - prevX) + prevX;
+        const initXPos = Math.random() * (prevX + 100 ) + prevX;
         choux[i] = new HoldChou(length,chouxContainer, 'left', i, 'hold', initXPos);
         prevX = -(radius + choux[i].rectLength - prevX);
     }
@@ -77,15 +75,21 @@ function update() {
 
         if (!choux[i]) return;
 
+        if(choux[i].type === 'hold') choux[i].moveBar()
+
         // Move only if not holding or not the first Chou
         if (!userIsHolding || i !== 0) {
             choux[i].move();
+
         }
         
 
         if (userIsHolding) {
             choux[0].updateTimer();
             console.log(choux[0].timer);
+            if( !choux[0].isHoldCorrect()) {
+                choux[0].remove() 
+            }
         }
     }
 }

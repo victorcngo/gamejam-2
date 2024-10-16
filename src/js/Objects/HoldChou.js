@@ -8,18 +8,18 @@ export default class HoldChou extends Chou {
         this.timer = length;
         this.type = 'hold'
         this.rectLength = length;
+ 
 
     }
 
     move() {
-        this.circlePos += this.speed;
-        this.moveBar();
+        this.circlePos += 1;
+        // this.moveBar();
     }
 
     // Move the bar
     moveBar() {
-
-        this.barPos += this.speed;
+        this.barPos += 1;
         this.drawChou();
     }
 
@@ -47,10 +47,15 @@ export default class HoldChou extends Chou {
     }
 
     isHoldCorrect() {
-        this.timer > - precision && this.timer < precision
+        // return this.timer > - precision && this.timer < precision
+        return this.timer < - precision ? false : true
     }
 
     showFeedback() {
         this.color =  this.isSuccessful() ? 0x00FF00 : 0xFF0000;
+    }
+
+    timeIsUp() {
+        return this.timer < - precision ? false : true
     }
 }
