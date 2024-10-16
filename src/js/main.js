@@ -68,6 +68,10 @@ const app = new PIXI.Application({
   // Mouse release event listener (equivalent to mouseReleased)
   app.view.addEventListener('mouseup', () => {
       userIsHolding = false;
+      // check succes 
+
+      const success = choux[0].timer < precision && choux[0].timer > - precision
+      console.log("success", success, choux[0].timer)
   });
   
   // Main update loop -> equivalzent of draw
@@ -90,16 +94,16 @@ const app = new PIXI.Application({
   
           if (userIsHolding) {
               choux[0].updateTimer();
-              console.log(choux[0].timer);
-              if( !choux[0].isHoldCorrect()) {
-                  choux[0].remove() 
-              }
+            //   if( !choux[0].isHoldCorrect()) {
+            //       choux[0].remove() 
+            //   }
           }
       }
   }
   
   // equivalent of setup
   createChoux();
+  app.ticker.maxFPS = 60
   app.ticker.add(update);
   
   // Resize handler for window resize

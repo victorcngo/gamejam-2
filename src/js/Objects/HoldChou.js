@@ -6,6 +6,7 @@ export default class HoldChou extends Chou {
         super(...args);
         this.length = length;
         this.timer = length;
+        console.log("timer at init", length)
         this.type = 'hold'
         this.rectLength = length;
  
@@ -19,6 +20,7 @@ export default class HoldChou extends Chou {
 
     // Move the bar
     moveBar() {
+        console.log("move bar")
         this.barPos += 1;
         this.drawChou();
     }
@@ -39,7 +41,8 @@ export default class HoldChou extends Chou {
 
      // Update the timer (for holding action)
     updateTimer() {
-        this.timer--;
+        console.log("timer", this.timer)
+        this.timer -= 1;
     }
 
     isSuccessful() {
