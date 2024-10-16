@@ -6,6 +6,8 @@ const app = new PIXI.Application({
   width: window.innerWidth,   // Set canvas width
   height: window.innerHeight,  // Set canvas height
   backgroundColor: 0xffffff, // Background color (white)
+  resolution: window.devicePixelRatio || 1, // Set resolution to match device pixel ratio
+  antialias: true, // Enable antialiasing for smoother graphics
 });
 document.body.appendChild(app.view); // Append canvas to the document
 
