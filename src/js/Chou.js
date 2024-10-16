@@ -1,5 +1,8 @@
+import {radius, holdBarHeight} from './settings.js'
+import * as PIXI from 'pixi.js'
+
 export default class Chou {
-    constructor(direction, length, index, type, initXPos) {
+    constructor(container, direction, length, index, type, initXPos) {
         this.direction = direction;
         this.length = length;
         this.speed = 1;
@@ -11,14 +14,15 @@ export default class Chou {
         this.circlePos = initXPos;
         this.barPos = initXPos;
         this.color = this.getRandomColor();
+        this.container = container;
 
         // Create the circle and bar graphics
         this.circleGraphics = new PIXI.Graphics();
         this.barGraphics = new PIXI.Graphics();
 
         this.drawChou();
-        chouxContainer.addChild(this.circleGraphics);
-        chouxContainer.addChild(this.barGraphics);
+        this.container.addChild(this.circleGraphics);
+        this.container.addChild(this.barGraphics);
     }
 
     // Get random color
@@ -35,7 +39,7 @@ export default class Chou {
 
         // Draw the bar
         this.barGraphics.clear();
-        this.barGraphics.beginFill(0x000000);  // Black color for bar
+        this.barGraphics.beginFill(this.color);  // Black color for bar
         this.barGraphics.drawRect(this.barPos - this.rectLength, 200 - holdBarHeight / 2, this.rectLength, holdBarHeight);
         this.barGraphics.endFill();
     }
@@ -55,5 +59,10 @@ export default class Chou {
     // Update the timer (for holding action)
     updateTimer() {
         this.timer--;
+    }
+
+    remove() {
+        this.container.removeChild(this.circleGraphics);
+        this.container.removeChild(this.barGraphics);
     }
 }

@@ -1,4 +1,6 @@
 import * as PIXI from 'pixi.js'
+import Chou from './chou.js'
+import {radius} from './settings.js'
 
 
 // Create a new PixiJS application
@@ -17,8 +19,7 @@ let directions = ["left", "right", "up", "down"];
 let precision = 15;
 let hitZone = 375;
 let userIsHolding = false;
-const holdBarHeight = 10;
-const radius = 50;
+
 
 // Static line
 const line = new PIXI.Graphics();
@@ -38,84 +39,18 @@ app.stage.addChild(hitZoneCircle);
 const chouxContainer = new PIXI.Container();
 app.stage.addChild(chouxContainer);
 
-
-
 // Create choux
 function createChoux() {
     let prevX = radius;
     for (let i = 0; i < 5; i++) {
         const length = Math.random() * (200 - 100) + 100;
         const initXPos = Math.random() * (prevX + 100 - prevX) + prevX;
-        choux[i] = new Chou('left', length, i, 'hold', initXPos);
+        choux[i] = new Chou(chouxContainer, 'left', length, i, 'hold', initXPos);
         prevX = -(radius + choux[i].rectLength - prevX);
     }
 }
 
 // Chou class definition
-class Chou {
-    constructor(direction, length, index, type, initXPos) {
-        this.direction = direction;
-        this.length = length;
-        this.speed = 1;
-        this.type = type;
-        this.index = index;
-        this.radius = radius;
-        this.timer = length;
-        this.rectLength = length;
-        this.circlePos = initXPos;
-        this.barPos = initXPos;
-        this.color = this.getRandomColor();
-
-        // Create the circle and bar graphics
-        this.circleGraphics = new PIXI.Graphics();
-        this.barGraphics = new PIXI.Graphics();
-
-        this.drawChou();
-        chouxContainer.addChild(this.circleGraphics);
-        chouxContainer.addChild(this.barGraphics);
-    }
-
-    // Get random color
-    getRandomColor() {
-        return Math.random() * 0xFFFFFF;
-    }
-
-    // Draw the Chou (circle and bar)
-    drawChou() {
-        this.circleGraphics.clear();
-        this.circleGraphics.beginFill(this.color);
-        this.circleGraphics.drawCircle(this.circlePos, 200, this.radius / 2);
-        this.circleGraphics.endFill();
-
-        // Draw the bar
-        this.barGraphics.clear();
-        this.barGraphics.beginFill(this.color);  // Black color for bar
-        this.barGraphics.drawRect(this.barPos - this.rectLength, 200 - holdBarHeight / 2, this.rectLength, holdBarHeight);
-        this.barGraphics.endFill();
-    }
-
-    // Move the circle (for animation)
-    move() {
-        this.circlePos += this.speed;
-        this.drawChou();
-    }
-
-    // Move the bar
-    moveBar() {
-        this.barPos += this.speed;
-        this.drawChou();
-    }
-
-    // Update the timer (for holding action)
-    updateTimer() {
-        this.timer--;
-    }
-
-    remove() {
-        chouxContainer.removeChild(this.circleGraphics);
-        chouxContainer.removeChild(this.barGraphics);
-    }
-}
 
 // Check if the hit is correct
 function isHitCorrect(target) {
