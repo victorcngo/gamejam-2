@@ -81,6 +81,8 @@ const app = new PIXI.Application({
 
   const handleButtonAUp = () => {
     userIsHolding = false;
+    const success = choux[0].timer < precision && choux[0].timer > - precision
+      console.log("success", success, choux[0].timer)
   }
 
   
@@ -109,16 +111,16 @@ const app = new PIXI.Application({
   
           if (userIsHolding) {
               choux[0].updateTimer();
-              console.log(choux[0].timer);
-              if( !choux[0].isHoldCorrect()) {
-                  choux[0].remove() 
-              }
+            //   if( !choux[0].isHoldCorrect()) {
+            //       choux[0].remove() 
+            //   }
           }
       }
   }
   
   // equivalent of setup
   createChoux();
+  app.ticker.maxFPS = 60
   app.ticker.add(update);
   
   // Resize handler for window resize
