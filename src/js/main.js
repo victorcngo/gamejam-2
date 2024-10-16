@@ -82,7 +82,8 @@ const app = new PIXI.Application({
   const handleButtonAUp = () => {
     userIsHolding = false;
     const success = choux[0].timer < precision && choux[0].timer > - precision
-      console.log("success", success, choux[0].timer)
+    console.log("success", success, choux[0].timer)
+
   }
 
   
@@ -109,13 +110,15 @@ const app = new PIXI.Application({
           }
           
   
-          if (userIsHolding) {
-              choux[0].updateTimer();
-            //   if( !choux[0].isHoldCorrect()) {
-            //       choux[0].remove() 
-            //   }
-          }
-      }
+        }
+        if (userIsHolding) {
+            choux[0].updateTimer();
+            if(choux[0].timeIsUp()) {
+                choux[0].remove() 
+                choux.splice(0, 1)
+                userIsHolding = false
+            }
+        }
   }
   
   // equivalent of setup

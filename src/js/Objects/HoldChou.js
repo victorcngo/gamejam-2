@@ -2,11 +2,10 @@ import Chou from './Chou.js'
 import {precision, holdBarHeight} from '../settings.js'
 
 export default class HoldChou extends Chou {
-    constructor(length, ...args) {
-        super(...args);
+    constructor(length, container, direction, index, type, initXPos) {
+        super(container, direction, index, type, initXPos)
         this.length = length;
         this.timer = length;
-        console.log("timer at init", length)
         this.type = 'hold'
         this.rectLength = length;
  
@@ -20,7 +19,6 @@ export default class HoldChou extends Chou {
 
     // Move the bar
     moveBar() {
-        console.log("move bar")
         this.barPos += 1;
         this.drawChou();
     }
@@ -41,7 +39,6 @@ export default class HoldChou extends Chou {
 
      // Update the timer (for holding action)
     updateTimer() {
-        console.log("timer", this.timer)
         this.timer -= 1;
     }
 
@@ -59,6 +56,6 @@ export default class HoldChou extends Chou {
     }
 
     timeIsUp() {
-        return this.timer < - precision ? false : true
+        return this.timer < - precision ? true : false
     }
 }
