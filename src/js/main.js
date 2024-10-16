@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js'
-import Chou from './chou.js'
-import {radius} from './settings.js'
+
+import HoldChou from './Objects/HoldChou.js'
+import {radius, precision, hitZone} from './settings.js'
 
 
 // Create a new PixiJS application
@@ -16,8 +17,8 @@ document.body.appendChild(app.view); // Append canvas to the document
 // Variables
 let choux = [];
 let directions = ["left", "right", "up", "down"];
-let precision = 15;
-let hitZone = 375;
+// let precision = 15;
+// let hitZone = 375;
 let userIsHolding = false;
 
 
@@ -45,30 +46,18 @@ function createChoux() {
     for (let i = 0; i < 5; i++) {
         const length = Math.random() * (200 - 100) + 100;
         const initXPos = Math.random() * (prevX + 100 - prevX) + prevX;
-        choux[i] = new Chou(chouxContainer, 'left', length, i, 'hold', initXPos);
+        choux[i] = new HoldChou(length,chouxContainer, 'left', i, 'hold', initXPos);
         prevX = -(radius + choux[i].rectLength - prevX);
     }
 }
 
-// Chou class definition
-
-// Check if the hit is correct
-function isHitCorrect(target) {
-    return target.circlePos > hitZone - precision && target.circlePos < hitZone + precision;
-}
-
-// Show feedback by changing color on hit
-function showFeedback(target) {
-    target.color = isHitCorrect(target) ? 0x00FF00 : 0xFF0000;  // Green for correct hit, Red for incorrect
-    target.drawChou();
-}
 
 // Mouse press event listener (equivalent to mousePressed)
 app.view.addEventListener('mousedown', () => {
     let target = choux[0];
-    showFeedback(target);
+    target.showFeedback()
 
-    if (isHitCorrect(target) && target.type === 'hold') {
+    if (target.isHitCorrect() && target.type === 'hold') {
         userIsHolding = true;
     }
 });
@@ -82,8 +71,7 @@ app.view.addEventListener('mouseup', () => {
 function update() {
     for (let i = 0; i < choux.length; i++) {
         if (choux[i].circlePos > hitZone + 5) {
-            // Remove the choux from the rendering
-            choux[i].remove();
+            choux[i].remove(); // Remove the choux from the rendering
             choux.splice(i, 1);  // Remove choux that passed hitZone
         }
 
@@ -93,7 +81,7 @@ function update() {
         if (!userIsHolding || i !== 0) {
             choux[i].move();
         }
-        choux[i].moveBar();
+        
 
         if (userIsHolding) {
             choux[0].updateTimer();
