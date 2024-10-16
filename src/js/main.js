@@ -80,7 +80,6 @@ function update() {
         // Move only if not holding or not the first Chou
         if (!userIsHolding || i !== 0) {
             choux[i].move();
-
         }
         
 
