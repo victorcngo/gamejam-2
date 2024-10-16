@@ -5,9 +5,9 @@ import * as PIXI from 'pixi.js'
 const app = new PIXI.Application({
   width: window.innerWidth,   // Set canvas width
   height: window.innerHeight,  // Set canvas height
-  backgroundColor: 0xffffff, // Background color (white)
   resolution: window.devicePixelRatio || 1, // Set resolution to match device pixel ratio
   antialias: true, // Enable antialiasing for smoother graphics
+  transparent: true
 });
 document.body.appendChild(app.view); // Append canvas to the document
 
@@ -19,6 +19,7 @@ let hitZone = 375;
 let userIsHolding = false;
 const holdBarHeight = 10;
 const radius = 50;
+
 // Static line
 const line = new PIXI.Graphics();
 line.lineStyle(2, 0x000000)  // Line style (black)
@@ -142,7 +143,7 @@ app.view.addEventListener('mouseup', () => {
     userIsHolding = false;
 });
 
-// Main update loop
+// Main update loop -> equivalzent of draw
 function update() {
     for (let i = 0; i < choux.length; i++) {
         if (choux[i].circlePos > hitZone + 5) {
@@ -166,7 +167,7 @@ function update() {
     }
 }
 
-// Initialize setup and game loop
+// equivalent of setup
 createChoux();
 app.ticker.add(update);
 
