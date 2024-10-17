@@ -54,7 +54,7 @@ export default class Hit extends Chou {
     }
 
     showFeedback() {
-        this.color = this.isHitCorrect() ? 0x00FF00 : 0xFF0000;
+        // this.color = this.isHitCorrect() ? 0x00FF00 : 0xFF0000;
         console.log("success", this.isHitCorrect())
     }
 

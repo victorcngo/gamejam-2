@@ -26,16 +26,6 @@ const createApp = async() => {
             game.userIsHolding = true;
         }
     }
-
-    // Static line
-    const timelineTexture = PIXI.Texture.from('./assets/icons/timeline.svg');
-    const timeline = new PIXI.Sprite(timelineTexture);
-    timeline.anchor.set(0.5, 0.5);
-    
-    timeline.x = window.innerWidth / 2;
-    timeline.y = timelineY;
-    
-    app.stage.addChild(timeline);
     
 
 
