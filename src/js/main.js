@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js'
 import {setUpButtons, player1, player2} from './BorneManager/borneManager.js'
 import Game from './Objects/Game.js'
 
