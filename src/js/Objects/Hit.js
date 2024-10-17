@@ -1,7 +1,6 @@
 import Chou from './Chou.js'
 import * as PIXI from 'pixi.js'
 import { timelineY } from '../settings.js'
-import { showProut } from '../main.js'
 
 export default class Hit extends Chou {
     constructor(container, direction, index, initXPos, playerId, arrowType) {
@@ -27,7 +26,6 @@ export default class Hit extends Chou {
 
     loadFleche() {
         this.fleche.anchor.set(0.5)
-
         switch (this.arrowType) {
             case 'left':
                 this.fleche.rotation = Math.PI

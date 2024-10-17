@@ -23,8 +23,6 @@ export default class MelodyPlayer {
 
         this.fetchMelody()
         this.setPlayerEvents()
-        
-
     }
 
     fetchMelody(){
@@ -40,8 +38,6 @@ export default class MelodyPlayer {
 
         
     }
-
-    
 
     setPlayerEvents(){
 
