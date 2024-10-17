@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import {radius,  hitZone,numOfTargets, hitRange} from '../settings.js'
+import {radius,  hitZone,numOfTargets, hitRange, timelineY} from '../settings.js'
 import Hit from './Hit.js'
 import Hold from './Hold.js'
 
@@ -67,24 +67,6 @@ export default class Game {
         this.targets[1] = targetsPlayer1
         this.targets[2] = targetsPlayer2
 
-
-        // let prevX = playerID === 1 ? radius : radius + window.innerWidth;
-        // let type = 0
-        // for (let i = 0; i < numOfTargets; i++) {
-        //     //type = Math.random() < 0.5 ? 1 : 0;
-        //     const length = Math.random() * (100) + 100;
-        //     const initXPos = Math.random() * (prevX + 100 ) + prevX;
-        //     if(type === 1) {
-        //         // create Targets playerID
-        //         targets[i] = new Hold(length,this.targetsContainer, 'left', i, initXPos, playerID);
-        //         prevX = (radius + this.targets[i].rectLength - prevX)
-        //         // create Targets for player 2
-        //     } else {
-        //         targets[i] = new Hit(this.targetsContainer, 'left', i, initXPos, playerID);
-        //         //prevX = (radius - prevX) * this.direction
-        //     }
-        // }
-
     }
 
     update(playerID) {
@@ -108,10 +90,7 @@ export default class Game {
             this.targets[playerID].splice(0, 1);
         }
       
-        // if (currTarget.isInHitRange()) {
-        // this works
-        //     currTarget.color = 0x0000FF
-        // }
+        
         if (this.userIsHolding && currTarget.type === 'hold') {
             currTarget.updateTimer()
             currTarget.updateBar()
