@@ -1,5 +1,5 @@
 import { player1 } from '../BorneManager/borneManager.js';
-import {radius, holdBarHeight, hitZone, precisionn , hitRange} from '../settings.js'
+import {radius,hitRange, timelineY} from '../settings.js'
 
 import * as PIXI from 'pixi.js'
 
@@ -11,9 +11,9 @@ export default class Chou {
         this.radius = radius;
         this.circlePos = initXPos;
         this.barPos = initXPos;
-        this.color = Math.random() * 0xFFFFFF*this.getColor();
-        this.container = container;
         this.playerID = playerId;
+        this.color = this.playerID === 1 ? '0xE63C49' : '0xFFA541';
+        this.container = container;
 
         //init joystick
         this.joystickPosition = {
@@ -27,6 +27,8 @@ export default class Chou {
         // Create the circle and bar graphics
         this.circleGraphics = new PIXI.Graphics();
         this.container.addChild(this.circleGraphics);
+
+        this.loadBackground(`/assets/icons/chou-${this.playerID}.svg`);
     }
 
     initJoystick(){
@@ -48,6 +50,15 @@ export default class Chou {
         })
     }
 
+    loadBackground(svgPath) {
+        const texture = PIXI.Texture.from(svgPath);
+        this.background = new PIXI.Sprite(texture);
+        this.background.anchor.set(0.5);
+        this.background.x = this.circlePos;
+        this.background.y = timelineY;
+        this.container.addChild(this.background);
+    }
+
     // Get random color
     getColor() {
        return this.playerID === 1 ? 0x0000FF :  0x00FFFF;
@@ -56,6 +67,7 @@ export default class Chou {
 
     remove() {
         this.container.removeChild(this.circleGraphics);
+        this.container.removeChild(this.background);
     }
 
     isHitCorrect() {
@@ -71,5 +83,4 @@ export default class Chou {
         if(this.playerID === 2) return this.circlePos < hitRange[0]
         // if direction 
     }
-
 }
