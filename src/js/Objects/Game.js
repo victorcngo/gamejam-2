@@ -1,14 +1,14 @@
 import * as PIXI from 'pixi.js'
-import {radius,  hitZone,numOfTargets, hitRange, timelineY} from '../settings.js'
+import { radius, hitZone, numOfTargets, hitRange, timelineY, arrowTypes } from '../settings.js'
 import Hit from './Hit.js'
 import Hold from './Hold.js'
 import MelodyPlayer from './MelodyPlayer.js';
 
 export default class Game {
-    constructor (app){ 
+    constructor(app) {
         this.hasStarted = false;
         this.isDone = false;
-        this.playersHaveLost = false; 
+        this.playersHaveLost = false;
         this.targetsContainer = new PIXI.Container();
         this.targets = {}
         this.app = app
@@ -40,39 +40,41 @@ export default class Game {
             .endFill();
         this.app.stage.addChild(hitZoneCircle);
 
-            // Static line
+        // Static line
         const timelineTexture = PIXI.Texture.from('./assets/icons/timeline.svg');
         const timeline = new PIXI.Sprite(timelineTexture);
         timeline.anchor.set(0.5, 0.5);
-        
+
         timeline.x = window.innerWidth / 2;
         timeline.y = timelineY;
         this.app.stage.addChild(timeline);
     }
 
-    createTargets () {
+    createTargets() {
         let length = 0
         let type = 1
         let targetsPlayer1 = []
         let targetsPlayer2 = []
         let xPos1 = 0
-        let xPos2 =  window.innerWidth
+        let xPos2 = window.innerWidth
+
+        // player one
         for (let i = 0; i < numOfTargets; i++) {
-            const randOffset = Math.random() * (radius) + radius
-            type = Math.random() < 0.5 ? 1 : 0;
-            length = Math.random() * (500) + 100;
-            if(type === 0) {
+            //type = Math.random() < 0.5 ? 1 : 0;
+            length = Math.random() * (100) + 100;
+
+            if (type === 0) {
                 // for hit target
-                xPos1 -= radius*2 + randOffset
-                xPos2 += radius*2 + randOffset
-                targetsPlayer1[i] = new Hit(this.targetsContainer, 'left', i, xPos1, 1);
-                targetsPlayer2[i] = new Hit(this.targetsContainer, 'left', i, xPos2, 2);
-            } else if(type === 1) {
+                xPos1 -= radius * 2
+                xPos2 += radius * 2
+                targetsPlayer1[i] = new Hit(this.targetsContainer, 'left', i, xPos1, 1, arrowTypes[Math.floor(Math.random() * 4)]);
+                targetsPlayer2[i] = new Hit(this.targetsContainer, 'left', i, xPos2, 2, arrowTypes[Math.floor(Math.random() * 4)]);
+            } else if (type === 1) {
                 // for hold target
-                xPos1 -= radius*2 + length + 10
-                xPos2 += radius*2 + length + 10
-                targetsPlayer1[i] = new Hold(100, this.targetsContainer, 'left', i, xPos1, 1);
-                targetsPlayer2[i] = new Hold(100, this.targetsContainer, 'left', i, xPos2, 2);
+                xPos1 -= radius * 2 + length
+                xPos2 += radius * 2 + length
+                targetsPlayer1[i] = new Hold(100, this.targetsContainer, 'left', i, xPos1, 1, arrowTypes[Math.floor(Math.random() * 4)]);
+                targetsPlayer2[i] = new Hold(100, this.targetsContainer, 'left', i, xPos2, 2, arrowTypes[Math.floor(Math.random() * 4)]);
             }
         }
         this.targets[1] = targetsPlayer1
@@ -81,34 +83,34 @@ export default class Game {
     }
 
     update(playerID) {
-        if(this.targets[playerID].length === 0) return
-        if( !this.targets[playerID]) return
+        if (this.targets[playerID].length === 0) return
+        if (!this.targets[playerID]) return
         for (let i = 0; i < this.targets[playerID].length; i++) {
             const target = this.targets[playerID][i]
-            if (! target) return;
-            if( target.type === 'hold') {
+            if (!target) return;
+            if (target.type === 'hold') {
                 target.moveBar()
                 if (!this.userIsHolding || i !== 0) {
                     target.move();
                 }
-            } else if(  target.type === 'hit') {
+            } else if (target.type === 'hit') {
                 target.move()
             }
         }
-        const currTarget =this.targets[playerID][0]
-        if(currTarget.isMissed()) {
+        const currTarget = this.targets[playerID][0]
+        if (currTarget.isMissed()) {
             currTarget.remove();
             this.targets[playerID].splice(0, 1);
         }
-      
-        
+
+
         if (this.userIsHolding && currTarget.type === 'hold') {
             currTarget.updateTimer()
             currTarget.updateBar()
             // reduce bar width
             currTarget.bar
-            if(currTarget.timeIsUp()) {
-                currTarget.remove() 
+            if (currTarget.timeIsUp()) {
+                currTarget.remove()
                 this.targets[playerID].splice(0, 1)
                 this.userIsHolding = false
             }
@@ -116,15 +118,15 @@ export default class Game {
     }
 
     updateAll() {
-       this.update(1)
-       this.update(2)
+        this.update(1)
+        this.update(2)
     }
 
-    checkResults () {
+    checkResults() {
 
     }
 
     end() {
-        
+
     }
 }
