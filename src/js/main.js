@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
-
-import HoldChou from './Objects/HoldChou.js'
+import Hit from './Objects/Hit.js'
+import Hold from './Objects/Hold.js'
 import {radius, precision, hitZone} from './settings.js'
 import {setUpButtons, player1} from './BorneManager/borneManager.js'
 
@@ -45,32 +45,22 @@ const app = new PIXI.Application({
   // Create choux
   function createChoux() {
       let prevX = radius;
-      let type; 
+      let type;
       for (let i = 0; i < 5; i++) {
-        type = Math.random() < 0.5;
-          const length = Math.random() * (200 - 100) + 100;
-          const initXPos = Math.random() * (prevX + 100 ) + prevX;
-          choux[i] = new HoldChou(length,chouxContainer, 'left', i, 'hold', initXPos);
-          prevX = -(radius + choux[i].rectLength - prevX);
+        type = Math.random() < 0.5 ? 1 : 0;
+        const length = Math.random() * (100) + 100;
+        const initXPos = Math.random() * (prevX + 100 ) + prevX;
+        if(type === 1) {
+              choux[i] = new Hold(length,chouxContainer, 'left', i, initXPos);
+              prevX = -(radius + choux[i].rectLength - prevX);
+          } else {
+            choux[i] = new Hit(chouxContainer, 'left', i, initXPos);
+            prevX = -(radius - prevX);
+
+          }
+          
       }
   }
-  
-  
-  // Mouse press event listener (equivalent to mousePressed)
-  //app.view.addEventListener('mousedown', () => {
-  //    let target = choux[0];
-  //    target.showFeedback()
-  //
-  //    if (target.isHitCorrect() && target.type === 'hold') {
-  //        userIsHolding = true;
-  //    }
-  //});
- //
-  //
-  //// Mouse release event listener (equivalent to mouseReleased)
-  //app.view.addEventListener('mouseup', () => {
-  //  userIsHolding = false;
-  //});
 
   const handleButtonADown = () => {
     let target = choux[0];
@@ -97,32 +87,37 @@ const app = new PIXI.Application({
 
   // Main update loop -> equivalzent of draw
   function update() {
-      for (let i = 0; i < choux.length; i++) {
-          if (choux[i].circlePos > hitZone + 5) {
-              choux[i].remove(); // Remove the choux from the rendering
-              choux.splice(i, 1);  // Remove choux that passed hitZone
-          }
-  
-          if (!choux[i]) return;
-  
-          if(choux[i].type === 'hold') choux[i].moveBar()
-  
-          // Move only if not holding or not the first Chou
-          if (!userIsHolding || i !== 0) {
-              choux[i].move();
-          }
-          
-  
+    for (let i = 0; i < choux.length; i++) {
+        if (choux[i].circlePos > hitZone + 5) {
+            choux[i].remove(); // Remove the choux from the rendering
+            choux.splice(i, 1);  // Remove choux that passed hitZone
         }
-        if (userIsHolding) {
-            choux[0].updateTimer();
-            if(choux[0].timeIsUp()) {
-                choux[0].remove() 
-                choux.splice(0, 1)
-                userIsHolding = false
+
+        if (!choux[i]) return;
+
+        if(choux[i].type === 'hold') {
+            choux[i].moveBar()
+            if (!userIsHolding || i !== 0) {
+                choux[i].move();
             }
+        } else if( choux[i].type === 'hit') {
+            choux[i].move()
         }
-  }
+
+        // Move only if not holding or not the first Chou
+        
+        
+
+    }
+    if (userIsHolding && choux[0].type === 'hold') {
+        choux[0].updateTimer();
+        if(choux[0].timeIsUp()) {
+            choux[0].remove() 
+            choux.splice(0, 1)
+            userIsHolding = false
+        }
+    }
+}
   
   // equivalent of setup
   createChoux();

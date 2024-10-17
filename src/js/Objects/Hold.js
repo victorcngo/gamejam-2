@@ -3,8 +3,8 @@ import {precision, holdBarHeight} from '../settings.js'
 import * as PIXI from 'pixi.js'
 
 export default class HoldChou extends Chou {
-    constructor(length, container, direction, index, type, initXPos) {
-        super(container, direction, index, type, initXPos)
+    constructor(length, container, direction, index,initXPos) {
+        super(container, direction, index, initXPos)
         this.length = length;
         this.timer = length;
         this.type = 'hold'
@@ -58,6 +58,5 @@ export default class HoldChou extends Chou {
     remove() {
         this.container.removeChild(this.circleGraphics);
         this.container.removeChild(this.barGraphics);
-   
     }
 }

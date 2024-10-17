@@ -27,7 +27,11 @@ export default class HitChou extends Chou {
 
     remove() {
         this.container.removeChild(this.circleGraphics);
-   
+    }
+
+    move() {
+        this.circlePos += 1;
+        this.drawChou();
     }
 
     

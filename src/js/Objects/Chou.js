@@ -2,23 +2,18 @@ import {radius, holdBarHeight, hitZone, precision} from '../settings.js'
 import * as PIXI from 'pixi.js'
 
 export default class Chou {
-    constructor(container, direction, index, type, initXPos) {
+    constructor(container, direction, index,initXPos) {
         this.direction = direction;
         this.speed = 1;
-        this.type = type;
         this.index = index;
         this.radius = radius;
-        
         this.circlePos = initXPos;
-        console.log("init pos", initXPos)
-        console.log("in chou constructor ", this.circlePos)
         this.barPos = initXPos;
         this.color = this.getRandomColor();
         this.container = container;
 
         // Create the circle and bar graphics
         this.circleGraphics = new PIXI.Graphics();
-
         this.container.addChild(this.circleGraphics);
 
     }
@@ -36,10 +31,6 @@ export default class Chou {
     isHitCorrect() {
         return this.circlePos > hitZone - precision && this.circlePos < hitZone + precision;
 
-    }
-
-    move() {
-        this.circlePos += 1;
     }
 
 }
