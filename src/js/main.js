@@ -1,7 +1,13 @@
 import {setUpButtons, player1, player2} from './BorneManager/borneManager.js'
 import Game from './Objects/Game.js'
 import * as PIXI from 'pixi.js'
-import { arrowTypes, timelineY } from './settings.js'
+import { timelineY } from './settings.js'
+import{ debounce} from './utils/debounce.js'
+
+let charIsUp = {
+    1: false, 
+    2: false
+}
 
 const createApp = async() => {
     // Create a new PixiJS application
@@ -17,6 +23,15 @@ const createApp = async() => {
     const game = new Game(app, )
     game.init()
 
+    const animateChar = (playerID) => {
+        document.querySelector(`div.char${playerID}`).classList.toggle(('active'))
+        document.querySelector(`div.char${playerID}Fart`).classList.toggle(('active'))
+    }
+
+    const debouncedAnimateChar1 = debounce(() => animateChar(1), 500);
+    const debouncedAnimateChar2 = debounce(() => animateChar(2), 500);
+    
+
     const handleButtonADown = (playerID) => {
         let target = game.targets[playerID][0];
         if(!target) return
@@ -25,15 +40,23 @@ const createApp = async() => {
         if (target.isHitCorrect() && target.type === 'hold') {
             game.userIsHolding = true;
         }
+
+        if(playerID === 1) {
+            debouncedAnimateChar1()
+        }
+        if(playerID === 2) {
+            debouncedAnimateChar2()
+        }
+       
+    
     }
     
-
-
     const handleButtonAUp = (playerID) => {
         const target = game.targets[playerID][0]
+        if(!target) return
         game.userIsHolding = false;
         target.showFeedback()
-        if(target.isHoldCorrect()) showProut()
+        if(target.type === 'hold' && target.isHoldCorrect()) showProut()
     }
 
     player1.buttons[0].addEventListener('keydown',() => handleButtonADown(1))
@@ -50,8 +73,6 @@ const createApp = async() => {
 
     window.addEventListener('resize', () => {
         app.renderer.resize(window.innerWidth, window.innerHeight);
-        game.bgLine.clear();
-        game.bgLine.lineStyle(2, 0x000000).moveTo(0, 200).lineTo(window.innerWidth, 200); // Redraw line
     });
 
     const showProut = () => {

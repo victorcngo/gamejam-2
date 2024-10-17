@@ -51,7 +51,7 @@ export default class Game {
 
         // player one
         for (let i = 0; i < numOfTargets; i++) {
-            //type = Math.random() < 0.5 ? 1 : 0;
+            type = Math.random() < 0.5 ? 1 : 0;
             length = Math.random() * (100) + 100;
            
             if(type === 0) {

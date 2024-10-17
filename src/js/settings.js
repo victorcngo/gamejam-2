@@ -5,4 +5,5 @@ export const precision = 15;
 export const hitRange = [hitZone - precision, hitZone + precision]
 export const numOfTargets = 5;
 export const arrowTypes = ['left', 'right', 'up', 'down']
-export const timelineY = window.innerHeight - 200
+export const timelineY = window.innerHeight - 100
+export const iconScale = 2
