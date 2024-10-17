@@ -11,15 +11,16 @@ export default class Hold extends Chou {
         this.rectLength = length;
         this.barGraphics = new PIXI.Graphics();
         this.container.addChild(this.barGraphics);
+        this.direction = this.playerID === 1 ? 1 : -1
     }
 
     move() {
-        this.circlePos += 1;
+        this.circlePos += this.direction;
     }
 
     // Move the bar
     moveBar() {
-        this.barPos += 1;
+        this.barPos += this.direction;
         this.drawChou();
     }
 

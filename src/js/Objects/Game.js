@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import {radius,  hitZone} from '../settings.js'
+import {radius,  hitZone,numOfTargets, hitRange} from '../settings.js'
 import Hit from './Hit.js'
 import Hold from './Hold.js'
 
@@ -9,24 +9,25 @@ export default class Game {
         this.isDone = false;
         this.playersHaveLost = false; 
         this.targetsContainer = new PIXI.Container();
-        this.targets = []
+        this.targets = {}
         this.app = app
         this.userIsHolding = false;
+        this.bgLine = new PIXI.Graphics();
     }
 
     init() {
         this.setStaticObjects()
-        this.createTargets()
+        this.createTargets(1)
+        this.createTargets(2)
         this.app.stage.addChild(this.targetsContainer);
     }
 
     setStaticObjects() {
         // Static line
-        const line = new PIXI.Graphics();
-        line.lineStyle(2, 0x000000)  // Line style (black)
+        this.bgLine.lineStyle(2, 0x000000)  // Line style (black)
             .moveTo(0, 200)          // Start point
             .lineTo(this.app.screen.width, 200); // End point (full screen width)
-        this.app.stage.addChild(line);
+        this.app.stage.addChild(this.bgLine);
         // Static ellipse at the hit zone
         const hitZoneCircle = new PIXI.Graphics();
         hitZoneCircle.lineStyle(2, 0x000000)   // Outline color (black)
@@ -34,57 +35,93 @@ export default class Game {
             .drawCircle(hitZone, 200, radius / 2) // Circle at (375, 200) with half-radius
             .endFill();
         this.app.stage.addChild(hitZoneCircle);
-
     }
 
-    createTargets () {
-        let prevX = radius;
-        let type;
-        for (let i = 0; i < 5; i++) {
-        type = Math.random() < 0.5 ? 1 : 0;
-        const length = Math.random() * (100) + 100;
-        const initXPos = Math.random() * (prevX + 100 ) + prevX;
-        if(type === 1) {
-                this.targets[i] = new Hold(length,this.targetsContainer, 'left', i, initXPos);
-                prevX = -(radius + this.targets[i].rectLength - prevX);
-            } else {
-            this.targets[i] = new Hit(this.targetsContainer, 'left', i, initXPos);
-            prevX = -(radius - prevX);
+    createTargets (playerID) {
+        let targets = []
+        let prevX = 0
+        let direction = playerID === 1 ? -1 : 1
+        let type = 0
 
+        for (let i = 0; i < numOfTargets; i++) {
+            type = Math.random() < 0.5 ? 1 : 0;
+            let initXPos = i*radius*2 * direction;
+     
+            if(playerID === 2) {
+                initXPos +=  window.innerWidth;
             }
+            
+            // for hit target only
+
+            targets[i] = new Hit(this.targetsContainer, 'left', i, initXPos, playerID);
+            prevX += initXPos 
         }
+        this.targets[playerID] = targets
+
+        // let prevX = playerID === 1 ? radius : radius + window.innerWidth;
+        // let type = 0
+        // for (let i = 0; i < numOfTargets; i++) {
+        //     //type = Math.random() < 0.5 ? 1 : 0;
+        //     const length = Math.random() * (100) + 100;
+        //     const initXPos = Math.random() * (prevX + 100 ) + prevX;
+        //     if(type === 1) {
+        //         // create Targets playerID
+        //         targets[i] = new Hold(length,this.targetsContainer, 'left', i, initXPos, playerID);
+        //         prevX = (radius + this.targets[i].rectLength - prevX)
+        //         // create Targets for player 2
+        //     } else {
+        //         targets[i] = new Hit(this.targetsContainer, 'left', i, initXPos, playerID);
+        //         //prevX = (radius - prevX) * this.direction
+        //     }
+        // }
+
     }
 
-    update() {
-        for (let i = 0; i < this.targets.length; i++) {
-            if (this.targets[i].circlePos > hitZone + 5) {
-                this.targets[i].remove(); // Remove the this.targets from the rendering
-                this.targets.splice(i, 1);  // Remove this.targets that passed hitZone
-            }
-    
-            if (!this.targets[i]) return;
-    
-            if(this.targets[i].type === 'hold') {
-                this.targets[i].moveBar()
+    update(playerID) {
+        if(this.targets[playerID].length === 0) return
+        if( !this.targets[playerID]) return
+        for (let i = 0; i < this.targets[playerID].length; i++) {
+            const target = this.targets[playerID][i]
+            if (! target) return;
+            if( target.type === 'hold') {
+                target.moveBar()
                 if (!this.userIsHolding || i !== 0) {
-                    this.targets[i].move();
+                    target.move();
                 }
-            } else if( this.targets[i].type === 'hit') {
-                this.targets[i].move()
+            } else if(  target.type === 'hit') {
+                target.move()
             }
         }
-        if (this.userIsHolding && this.targets[0].type === 'hold') {
-            this.targets[0].updateTimer();
-            if(this.targets[0].timeIsUp()) {
-                this.targets[0].remove() 
-                this.targets.splice(0, 1)
+        const currTarget =this.targets[playerID][0]
+        if(currTarget.isMissed()) {
+            currTarget.remove();
+            this.targets[playerID].splice(0, 1);
+        }
+      
+        // if (currTarget.isInHitRange()) {
+        // this works
+        //     currTarget.color = 0x0000FF
+        // }
+        if (this.userIsHolding && currTarget.type === 'hold') {
+            currTarget.updateTimer()
+            if(currTarget.timeIsUp()) {
+                currTarget.remove() 
+                this.targets[playerID].splice(0, 1)
                 this.userIsHolding = false
             }
         }
+    }
 
+    updateAll() {
+       this.update(1)
+       this.update(2)
     }
 
     checkResults () {
 
+    }
+
+    end() {
+        
     }
 }
