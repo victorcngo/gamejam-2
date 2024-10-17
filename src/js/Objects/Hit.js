@@ -8,7 +8,6 @@ export default class Hit extends Chou {
         this.direction = this.playerID === 1 ? -1 : 1
     }
     showFeedback() {
-        console.log("hit correct",  this.isHitCorrect())
         this.color =  this.isHitCorrect() ? 0x00FF00 : 0xFF0000;
         this.drawChou()
     }

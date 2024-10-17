@@ -13,12 +13,12 @@ export default class Game {
         this.app = app
         this.userIsHolding = false;
         this.bgLine = new PIXI.Graphics();
+        this.speed = 1;
     }
 
     init() {
         this.setStaticObjects()
-        this.createTargets(1)
-        this.createTargets(2)
+        this.createTargets()
         this.app.stage.addChild(this.targetsContainer);
     }
 
@@ -37,26 +37,36 @@ export default class Game {
         this.app.stage.addChild(hitZoneCircle);
     }
 
-    createTargets (playerID) {
-        let targets = []
-        let prevX = 0
-        let direction = playerID === 1 ? -1 : 1
-        let type = 0
+    createTargets () {
+        let length = 0
+        let type = 1
+        let targetsPlayer1 = []
+        let targetsPlayer2 = []
+        let xPos1 = 0
+        let xPos2 =  window.innerWidth
 
+        // player one
         for (let i = 0; i < numOfTargets; i++) {
-            type = Math.random() < 0.5 ? 1 : 0;
-            let initXPos = i*radius*2 * direction;
-     
-            if(playerID === 2) {
-                initXPos +=  window.innerWidth;
+            //type = Math.random() < 0.5 ? 1 : 0;
+            length = Math.random() * (100) + 100;
+           
+            if(type === 0) {
+                // for hit target
+                xPos1 -= radius*2
+                xPos2 += radius*2
+                targetsPlayer1[i] = new Hit(this.targetsContainer, 'left', i, xPos1, 1);
+                targetsPlayer2[i] = new Hit(this.targetsContainer, 'left', i, xPos2, 2);
+            } else if(type === 1) {
+                // for hold target
+                xPos1 -= radius*2 + length
+                xPos2 += radius*2 + length
+                targetsPlayer1[i] = new Hold(100, this.targetsContainer, 'left', i, xPos1, 1);
+                targetsPlayer2[i] = new Hold(100, this.targetsContainer, 'left', i, xPos2, 2);
             }
-            
-            // for hit target only
-
-            targets[i] = new Hit(this.targetsContainer, 'left', i, initXPos, playerID);
-            prevX += initXPos 
         }
-        this.targets[playerID] = targets
+        this.targets[1] = targetsPlayer1
+        this.targets[2] = targetsPlayer2
+
 
         // let prevX = playerID === 1 ? radius : radius + window.innerWidth;
         // let type = 0
@@ -104,6 +114,9 @@ export default class Game {
         // }
         if (this.userIsHolding && currTarget.type === 'hold') {
             currTarget.updateTimer()
+            currTarget.updateBar()
+            // reduce bar width
+            currTarget.bar
             if(currTarget.timeIsUp()) {
                 currTarget.remove() 
                 this.targets[playerID].splice(0, 1)

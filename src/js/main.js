@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js'
-import { precision} from './settings.js'
 import {setUpButtons, player1, player2} from './BorneManager/borneManager.js'
 import Game from './Objects/Game.js'
 
@@ -16,8 +15,6 @@ const createApp = async() => {
     await setUpButtons()
     const game = new Game(app)
     game.init()
-
-    // player 1 -> button A
 
     const handleButtonADown = (playerID) => {
         let target = game.targets[playerID][0];
