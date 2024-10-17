@@ -54,10 +54,7 @@ export default class Chou {
         const texture = PIXI.Texture.from(svgPath);
         this.background = new PIXI.Sprite(texture);
         this.background.anchor.set(0.5, 0.5);
-        console.log(this.background.width)
-        console.log(this.background.height)
-        //this.background.width = 1
-        // this.background.height *= 1.2
+        this.background.scale.set(2, 2)
         this.background.x = this.circlePos;
         this.background.y = timelineY;
         this.container.addChild(this.background);

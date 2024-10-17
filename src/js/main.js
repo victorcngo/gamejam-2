@@ -4,11 +4,6 @@ import * as PIXI from 'pixi.js'
 import { timelineY } from './settings.js'
 import{ debounce} from './utils/debounce.js'
 
-let charIsUp = {
-    1: false, 
-    2: false
-}
-
 const createApp = async() => {
     // Create a new PixiJS application
     const app = new PIXI.Application({

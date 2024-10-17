@@ -47,7 +47,6 @@ export default class Game {
         
         timeline.x = window.innerWidth / 2;
         timeline.y = timelineY;
-        
         this.app.stage.addChild(timeline);
     }
 
@@ -58,22 +57,20 @@ export default class Game {
         let targetsPlayer2 = []
         let xPos1 = 0
         let xPos2 =  window.innerWidth
-
-        // player one
         for (let i = 0; i < numOfTargets; i++) {
+            const randOffset = Math.random() * (radius) + radius
             type = Math.random() < 0.5 ? 1 : 0;
-            length = Math.random() * (100) + 100;
-           
+            length = Math.random() * (500) + 100;
             if(type === 0) {
                 // for hit target
-                xPos1 -= radius*2
-                xPos2 += radius*2
+                xPos1 -= radius*2 + randOffset
+                xPos2 += radius*2 + randOffset
                 targetsPlayer1[i] = new Hit(this.targetsContainer, 'left', i, xPos1, 1);
                 targetsPlayer2[i] = new Hit(this.targetsContainer, 'left', i, xPos2, 2);
             } else if(type === 1) {
                 // for hold target
-                xPos1 -= radius*2 + length
-                xPos2 += radius*2 + length
+                xPos1 -= radius*2 + length + 10
+                xPos2 += radius*2 + length + 10
                 targetsPlayer1[i] = new Hold(100, this.targetsContainer, 'left', i, xPos1, 1);
                 targetsPlayer2[i] = new Hold(100, this.targetsContainer, 'left', i, xPos2, 2);
             }

@@ -11,13 +11,11 @@ export default class Hold extends Chou {
         this.barGraphics = new PIXI.Graphics();
         this.container.addChild(this.barGraphics);
         this.direction = this.playerID === 1 ? 1 : -1
-
         this.loadFleche('/assets/icons/fleche.svg', arrowType);
     }
 
     loadFleche(svgPath, arrowType) {
         const texture = PIXI.Texture.from(svgPath);
-
         this.fleche = new PIXI.Sprite(texture);
         this.fleche.anchor.set(0.5)
 
@@ -47,18 +45,15 @@ export default class Hold extends Chou {
     move() {
         this.circlePos += this.direction
     }
-
+    
     // Move the bar
     moveBar() {
-        this.barPos += this.direction
         this.drawChou();
+        this.barPos += this.direction
     }
 
 
     drawChou() {
-        this.background.x = this.circlePos
-        this.fleche.x = this.circlePos
-
         // Draw the bar
         this.barGraphics.clear();
         this.barGraphics.beginFill(this.color);  // Black color for bar
@@ -69,6 +64,10 @@ export default class Hold extends Chou {
             this.barGraphics.drawRect(this.barPos, timelineY - holdBarHeight / 2, this.rectLength, holdBarHeight);
         }
         this.barGraphics.endFill();
+
+        this.background.x = this.circlePos
+        this.fleche.x = this.circlePos
+
     }
 
     // Update the timer (for holding action)
@@ -85,8 +84,8 @@ export default class Hold extends Chou {
         return this.timer < precision && this.timer > - precision
     }
 
-    showFeedback(container) {
-        this.color = this.isHoldCorrect() ? 0x00FF00 : 0xFF0000;
+    showFeedback() {
+        //this.color = this.isHoldCorrect() ? 0x00FF00 : 0xFF0000;
     }
 
     timeIsUp() {
