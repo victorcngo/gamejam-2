@@ -1,17 +1,19 @@
 import { player1 } from '../BorneManager/borneManager.js';
-import {radius, holdBarHeight, hitZone, precision} from '../settings.js'
+import {radius, holdBarHeight, hitZone, precisionn , hitRange} from '../settings.js'
+
 import * as PIXI from 'pixi.js'
 
 export default class Chou {
-    constructor(container, direction, index,initXPos) {
+    constructor(container, direction, index,initXPos, playerId) {
         this.direction = direction;
         this.speed = 1;
         this.index = index;
         this.radius = radius;
         this.circlePos = initXPos;
         this.barPos = initXPos;
-        this.color = this.getRandomColor();
+        this.color = Math.random() * 0xFFFFFF*this.getColor();
         this.container = container;
+        this.playerID = playerId;
 
         //init joystick
         this.joystickPosition = {
@@ -25,7 +27,6 @@ export default class Chou {
         // Create the circle and bar graphics
         this.circleGraphics = new PIXI.Graphics();
         this.container.addChild(this.circleGraphics);
-
     }
 
     initJoystick(){
@@ -48,8 +49,8 @@ export default class Chou {
     }
 
     // Get random color
-    getRandomColor() {
-        return Math.random() * 0xFFFFFF;
+    getColor() {
+       return this.playerID === 1 ? 0x0000FF :  0x00FFFF;
     }
 
 
@@ -58,8 +59,17 @@ export default class Chou {
     }
 
     isHitCorrect() {
-        return this.circlePos > hitZone - precision && this.circlePos < hitZone + precision;
+        return this.isInHitRange()
+    }
 
+    isInHitRange() {
+        return this.circlePos > hitRange[0] && this.circlePos < hitRange[1] ? true : false
+     }
+
+    isMissed() {
+        if(this.playerID === 1) return this.circlePos > hitRange[1]
+        if(this.playerID === 2) return this.circlePos < hitRange[0]
+        // if direction 
     }
 
 }

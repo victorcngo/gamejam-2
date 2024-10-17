@@ -1,16 +1,12 @@
 import Chou from './Chou.js'
 
 export default class Hit extends Chou {
-    constructor(container, direction, index, initXPos) {
-        super(container, direction, index, initXPos)
+    constructor(container, direction, index, initXPos, playerId) {
+        super(container, direction, index, initXPos, playerId)
         this.type = 'hit'
         this.drawChou()
+        this.direction = this.playerID === 1 ? -1 : 1
     }
-
-    isSuccessful() {
-        this.isHitCorrect()
-    }
-
     showFeedback() {
         this.color =  this.isHitCorrect() ? 0x00FF00 : 0xFF0000;
         this.drawChou()
@@ -29,7 +25,7 @@ export default class Hit extends Chou {
     }
 
     move() {
-        this.circlePos += 1;
+        this.circlePos += (-this.direction);
         this.drawChou();
     }
 
