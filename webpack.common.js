@@ -17,7 +17,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: 'assets/',to:'assets/'}
+      { from: 'assets/',to:'assets/'},
+      { from: './style.css', to: 'style.css' }, // Add this line to copy the stylesheet
     ], {
       ignore: [],
       debug:'debug',
