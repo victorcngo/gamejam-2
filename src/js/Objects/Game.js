@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js'
 import {radius,  hitZone,numOfTargets, hitRange, timelineY} from '../settings.js'
 import Hit from './Hit.js'
 import Hold from './Hold.js'
+import MelodyPlayer from './MelodyPlayer.js';
 
 export default class Game {
     constructor (app){ 
@@ -16,9 +17,18 @@ export default class Game {
     }
 
     init() {
+
+        //Need click to allow audioContext, remove when startingpage completed
+        window.addEventListener('click',this.setMelodyPlayer)
+        
+
         this.setStaticObjects()
         this.createTargets()
         this.app.stage.addChild(this.targetsContainer);
+    }
+
+    setMelodyPlayer(){
+        const aaa = new MelodyPlayer()
     }
 
     setStaticObjects() {
