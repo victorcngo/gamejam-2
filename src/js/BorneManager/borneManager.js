@@ -18,6 +18,15 @@ export const setUpButtons = async () => {
     Axis.registerKeys(["o","O"], "i", 2);
     Axis.registerKeys(["p","P"], "s", 2);
 
+    const gamepadEmulator = Axis.createGamepadEmulator(0);
+    function update() {
+        gamepadEmulator.update();
+        requestAnimationFrame(update);
+    }
+    
+    update();
+
+    Axis.joystick1.setGamepadEmulatorJoystick(gamepadEmulator, 0);
 
     player1 = await Axis.createPlayer({
         id: 1,
@@ -30,7 +39,6 @@ export const setUpButtons = async () => {
         joysticks: Axis.joystick2,
         buttons: Axis.buttonManager.getButtonsById(2)
     })
-
 }
 
 

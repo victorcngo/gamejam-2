@@ -3,6 +3,7 @@ import Hit from './Objects/Hit.js'
 import Hold from './Objects/Hold.js'
 import {radius, precision, hitZone} from './settings.js'
 import {setUpButtons, player1} from './BorneManager/borneManager.js'
+import Mix from './Objects/Mix.js'
 
 const createApp = async() => {
     // Create a new PixiJS application
@@ -47,18 +48,19 @@ const app = new PIXI.Application({
       let prevX = radius;
       let type;
       for (let i = 0; i < 5; i++) {
-        type = Math.random() < 0.5 ? 1 : 0;
+        type = Math.floor(Math.random() * 2.999);
         const length = Math.random() * (100) + 100;
         const initXPos = Math.random() * (prevX + 100 ) + prevX;
-        if(type === 1) {
+        if(type === 0) {
               choux[i] = new Hold(length,chouxContainer, 'left', i, initXPos);
               prevX = -(radius + choux[i].rectLength - prevX);
-          } else {
+          } else if(type === 1) {
             choux[i] = new Hit(chouxContainer, 'left', i, initXPos);
             prevX = -(radius - prevX);
-
+          }  else {
+            choux[i] = new Mix(length,chouxContainer,'left',i,initXPos)
+            prevX = -(radius + choux[i].rectLength - prevX);
           }
-          
       }
   }
 
