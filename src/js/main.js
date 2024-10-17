@@ -1,5 +1,6 @@
 import {setUpButtons, player1, player2} from './BorneManager/borneManager.js'
 import Game from './Objects/Game.js'
+import * as PIXI from 'pixi.js'
 
 const createApp = async() => {
     // Create a new PixiJS application
