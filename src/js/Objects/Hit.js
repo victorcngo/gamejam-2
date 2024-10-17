@@ -1,7 +1,6 @@
-
 import Chou from './Chou.js'
 
-export default class HitChou extends Chou {
+export default class Hit extends Chou {
     constructor(container, direction, index, initXPos) {
         super(container, direction, index, initXPos)
         this.type = 'hit'

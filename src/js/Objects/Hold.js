@@ -2,7 +2,7 @@ import Chou from './Chou.js'
 import {precision, holdBarHeight} from '../settings.js'
 import * as PIXI from 'pixi.js'
 
-export default class HoldChou extends Chou {
+export default class Hold extends Chou {
     constructor(length, container, direction, index,initXPos) {
         super(container, direction, index, initXPos)
         this.length = length;
