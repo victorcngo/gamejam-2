@@ -3,23 +3,24 @@ import {precision, holdBarHeight} from '../settings.js'
 import * as PIXI from 'pixi.js'
 
 export default class Hold extends Chou {
-    constructor(length, container, direction, index,initXPos) {
-        super(container, direction, index, initXPos)
+    constructor(length, container, direction, index,initXPos, playerId) {
+        super(container, direction, index, initXPos, playerId)
         this.length = length;
         this.timer = length;
         this.type = 'hold'
         this.rectLength = length;
         this.barGraphics = new PIXI.Graphics();
         this.container.addChild(this.barGraphics);
+        this.direction = this.playerID === 1 ? 1 : -1
     }
 
     move() {
-        this.circlePos += 1;
+        this.circlePos += this.direction
     }
 
     // Move the bar
     moveBar() {
-        this.barPos += 1;
+        this.barPos += this.direction
         this.drawChou();
     }
 
@@ -33,7 +34,12 @@ export default class Hold extends Chou {
         // Draw the bar
         this.barGraphics.clear();
         this.barGraphics.beginFill(this.color);  // Black color for bar
-        this.barGraphics.drawRect(this.barPos - this.rectLength, 200 - holdBarHeight / 2, this.rectLength, holdBarHeight);
+        // draw according to direction
+        if(this.direction === 1) {
+            this.barGraphics.drawRect(this.barPos  - this.rectLength, 200 - holdBarHeight / 2, this.rectLength, holdBarHeight);
+        } else {
+            this.barGraphics.drawRect(this.barPos, 200 - holdBarHeight / 2, this.rectLength, holdBarHeight);
+        }
         this.barGraphics.endFill();
     }
 
@@ -42,8 +48,12 @@ export default class Hold extends Chou {
         this.timer -= 1;
     }
 
+    updateBar() {
+        this.barPos += 0.75;
+        this.rectLength -= 1;
+    }
+
     isHoldCorrect() {
-        // return this.timer > - precision && this.timer < precision
         return this.timer < precision && this.timer > - precision
     }
 
