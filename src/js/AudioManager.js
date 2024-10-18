@@ -27,7 +27,6 @@ export class AudioManager {
     }
 
     play(name) {
-        console.log(name, this.sounds[name]);
         if (this.sounds[name]) {
             this.sounds[name].currentTime = 0;
             this.sounds[name].play();
