@@ -26,7 +26,11 @@ export const setUpButtons = async () => {
     
     update();
 
+    //Creation du gamepad emulator, pour le dev avec une manette
+
     Axis.joystick1.setGamepadEmulatorJoystick(gamepadEmulator, 0);
+
+    //Creation des joueurs
 
     player1 = await Axis.createPlayer({
         id: 1,
