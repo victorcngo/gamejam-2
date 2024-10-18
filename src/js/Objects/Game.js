@@ -22,7 +22,7 @@ export default class Game {
     }
 
     init() {
-        this.setMelodyPlayer();
+        //this.setMelodyPlayer();
         // Need click to allow audioContext, remove when startingpage completed
         player1.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
 

@@ -3,7 +3,7 @@ import {radius,hitRange, timelineY} from '../settings.js'
 
 import * as PIXI from 'pixi.js'
 
-export default class Chou {
+export default class Target {
     constructor(container, direction, index,initXPos, playerId) {
         this.direction = direction;
         this.speed = 1;
