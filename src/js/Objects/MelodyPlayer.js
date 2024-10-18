@@ -6,7 +6,7 @@ import { Soundfont } from "smplr";
 export default class MelodyPlayer {
 
 
-    constructor() {
+    constructor(tempo) {
 
         /**
          * Tempo = La vitesse d'éxécution de la musique, pour gérer la difficulté; la musique de base est à 110,
@@ -17,7 +17,7 @@ export default class MelodyPlayer {
          */
         
 
-        this.tempo = 80
+        this.tempo = tempo
         this.currentTick = 0
 
         /**
@@ -58,7 +58,7 @@ export default class MelodyPlayer {
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
                 this.player.loadArrayBuffer(arrayBuffer);
-                this.startNewWave(110)
+                this.startNewWave(this.tempo)
             })
             .catch(error => {
                 console.error('Error loading the MIDI file:', error);
@@ -73,6 +73,12 @@ export default class MelodyPlayer {
 
         this.player.on('playing', () => {
             this.currentTick = this.player.tick
+        })
+        
+
+        //A REMOVE, C'EST PAS PROPRE, C'EST UN LOOP DE LA MELLODY POUR LA DEMO
+        this.player.on('endOfFile',()=>{
+            new MelodyPlayer(this.tempo + 30)
         })
 
         /**
@@ -90,6 +96,7 @@ export default class MelodyPlayer {
                         velocity: 80,
                         duration: 0.1
                     });
+                    
                 }
             }
         })
@@ -105,6 +112,7 @@ export default class MelodyPlayer {
     startNewWave(tempo) {
         this.tempo = tempo
         this.createRandomChoux()
+        this.player.playLoop()
         this.player.play()
     }
 

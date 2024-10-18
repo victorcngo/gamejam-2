@@ -18,6 +18,7 @@ export default class Game {
         this.speed = 1;
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
+        this.melodyPlayer = null
     }
 
     init() {
@@ -31,9 +32,12 @@ export default class Game {
     }
 
     setMelodyPlayer() {
-        new MelodyPlayer()
-        document.querySelector('.start').style.display = "none";
-        player1.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
+        if (!this.melodyPlayer) {
+            this.melodyPlayer = new MelodyPlayer(90)
+            document.querySelector('.start').style.display = "none";
+            player1.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
+        }
+
     }
 
     setStaticObjects() {
