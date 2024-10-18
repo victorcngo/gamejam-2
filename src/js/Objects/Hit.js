@@ -1,4 +1,4 @@
-import Chou from './Chou.js'
+import Chou from './Target.js'
 import * as PIXI from 'pixi.js'
 import { timelineY } from '../settings.js'
 

@@ -1,4 +1,4 @@
-import Chou from './Chou.js'
+import Chou from './Target.js'
 import { precision, holdBarHeight, timelineY } from '../settings.js'
 import * as PIXI from 'pixi.js'
 export default class Hold extends Chou {
