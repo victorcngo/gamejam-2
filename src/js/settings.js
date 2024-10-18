@@ -1,9 +1,9 @@
 export const radius = 100;
 export const holdBarHeight = 25;
-export const hitZone = window.innerWidth/2  ;
+export const hitZonePosition = window.innerWidth / 2;
 export const precision = 15;
 export const speed = 2;
-export const hitRange = [hitZone - precision, hitZone + precision]
+export const hitRange = [hitZonePosition - precision, hitZonePosition + precision]
 export const numOfTargets = 10;
 export const arrowTypes = ['left', 'right', 'up', 'down']
 export const timelineY = window.innerHeight - 100
