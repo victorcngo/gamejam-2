@@ -1,9 +1,10 @@
 import * as PIXI from 'pixi.js'
-import { radius, hitZone, numOfTargets, hitRange, timelineY, arrowTypes } from '../settings.js'
+import { radius, hitZonePosition, numOfTargets, hitRange, timelineY, arrowTypes } from '../settings.js'
 import Hit from './Hit.js'
 import Hold from './Hold.js'
 import MelodyPlayer from './MelodyPlayer.js';
 import { AudioManager } from '../AudioManager.js'
+import { player1 } from '../BorneManager/borneManager.js'
 
 export default class Game {
     constructor(app) {
@@ -20,9 +21,9 @@ export default class Game {
     }
 
     init() {
+        this.setMelodyPlayer();
         // Need click to allow audioContext, remove when startingpage completed
-        window.addEventListener('click', this.setMelodyPlayer)
-
+        player1.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
 
         this.setStaticObjects()
         this.createTargets()
@@ -31,24 +32,24 @@ export default class Game {
 
     setMelodyPlayer() {
         new MelodyPlayer()
-        window.removeEventListener('click', this.setMelodyPlayer);
+        document.querySelector('.start').style.display = "none";
+        player1.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
     }
 
     setStaticObjects() {
-        // Static ellipse at the hit zone
-        const hitZoneCircle = new PIXI.Graphics();
-        hitZoneCircle.lineStyle(2, 0x000000)   // Outline color (black)
-            .beginFill(0xffffff)               // Fill color (white)
-            .drawCircle(hitZone, timelineY, radius / 2) // Circle at (375, 200) with half-radius
-            .endFill();
-        this.app.stage.addChild(hitZoneCircle);
+        // Hit zone
+        const hitZoneTexture = PIXI.Texture.from('./assets/timeline-center.svg');
+        const hitZone = new PIXI.Sprite(hitZoneTexture);
+        hitZone.anchor.set(0.5, 0.5);
+        hitZone.x = hitZonePosition;
+        hitZone.y = timelineY;
+        this.app.stage.addChild(hitZone);
 
-        // Static line
-        const timelineTexture = PIXI.Texture.from('./assets/icons/timeline.svg');
+        // Timeline
+        const timelineTexture = PIXI.Texture.from('./assets/timeline-background.svg');
         const timeline = new PIXI.Sprite(timelineTexture);
         timeline.anchor.set(0.5, 0.5);
-
-        timeline.x = window.innerWidth / 2;
+        timeline.x = hitZonePosition;
         timeline.y = timelineY;
         this.app.stage.addChild(timeline);
     }
