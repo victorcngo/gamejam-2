@@ -1,8 +1,7 @@
 import { setUpButtons, player1, player2 } from './BorneManager/borneManager.js'
 import Game from './Objects/Game.js'
 import * as PIXI from 'pixi.js'
-import{ debounce} from './utils/debounce.js'
-import { AudioManager } from './AudioManager.js'
+import { debounce } from './utils/debounce.js'
 import { longFarts, smallFarts, timelineY } from './settings.js'
 
 const createApp = async () => {
@@ -26,23 +25,19 @@ const createApp = async () => {
 
     const debouncedAnimateChar1 = debounce(() => animateChar(1), 500);
     const debouncedAnimateChar2 = debounce(() => animateChar(2), 500);
-    
-    const audioManager = new AudioManager()
 
     const handleButtonADown = (playerID) => {
-
         let target = game.targets[playerID][0];
         if (!target) return
 
         if (target.type === 'hit') {
             const randomFart = smallFarts[Math.floor(Math.random() * smallFarts.length)]
-            audioManager.loadSound(randomFart.name, randomFart.src)
-            audioManager.debouncedPlay(randomFart.name);
+            game.audioManager.debouncedPlay(randomFart.name);
         }
+
         else if (target.type === 'hold') {
             const randomFart = longFarts[Math.floor(Math.random() * longFarts.length)]
-            audioManager.loadSound(randomFart.name, randomFart.src)
-            audioManager.debouncedPlay(randomFart.name);
+            game.audioManager.debouncedPlay(randomFart.name);
         }
 
         target.showFeedback()
@@ -51,20 +46,23 @@ const createApp = async () => {
             game.userIsHolding = true;
         }
 
-        if(playerID === 1) {
+        if (playerID === 1) {
             debouncedAnimateChar1()
         }
-        if(playerID === 2) {
+        if (playerID === 2) {
             debouncedAnimateChar2()
         }
     }
 
     const handleButtonAUp = (playerID) => {
         const target = game.targets[playerID][0]
-        if(!target) return
+        if (!target) return
         game.userIsHolding = false;
         target.showFeedback()
-        if(target.type === 'hold' && target.isHoldCorrect()) showProut()
+        if (target.type === 'hold' && target.isHoldCorrect()) showProut()
+
+        game.audioManager.clearDebouncedPlay()
+        game.audioManager.stop()
     }
 
     player1.buttons[0].addEventListener('keydown', () => handleButtonADown(1))

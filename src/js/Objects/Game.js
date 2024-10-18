@@ -3,6 +3,7 @@ import { radius, hitZone, numOfTargets, hitRange, timelineY, arrowTypes } from '
 import Hit from './Hit.js'
 import Hold from './Hold.js'
 import MelodyPlayer from './MelodyPlayer.js';
+import { AudioManager } from '../AudioManager.js'
 
 export default class Game {
     constructor(app) {
@@ -14,21 +15,23 @@ export default class Game {
         this.app = app
         this.userIsHolding = false;
         this.speed = 1;
+        this.audioManager = new AudioManager()
+        this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
     }
 
     init() {
+        // Need click to allow audioContext, remove when startingpage completed
+        window.addEventListener('click', this.setMelodyPlayer)
 
-        //Need click to allow audioContext, remove when startingpage completed
-        window.addEventListener('click',this.setMelodyPlayer)
-        
 
         this.setStaticObjects()
         this.createTargets()
         this.app.stage.addChild(this.targetsContainer);
     }
 
-    setMelodyPlayer(){
-        const aaa = new MelodyPlayer()
+    setMelodyPlayer() {
+        new MelodyPlayer()
+        window.removeEventListener('click', this.setMelodyPlayer);
     }
 
     setStaticObjects() {
