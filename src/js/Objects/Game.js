@@ -37,12 +37,12 @@ export default class Game {
             document.querySelector('.start').style.display = "none";
             player1.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
-
+        this.hasStarted = true
     }
 
     setStaticObjects() {
         // Hit zone
-        const hitZoneTexture = PIXI.Texture.from('./assets/timeline-center.svg');
+        const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
         const hitZone = new PIXI.Sprite(hitZoneTexture);
         hitZone.anchor.set(0.5, 0.5);
         hitZone.x = hitZonePosition;
@@ -126,6 +126,7 @@ export default class Game {
     }
 
     updateAll() {
+        if(!this.hasStarted) return
         this.update(1)
         this.update(2)
     }
