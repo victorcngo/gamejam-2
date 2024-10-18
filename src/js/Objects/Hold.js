@@ -1,5 +1,5 @@
 import Chou from './Target.js'
-import { precision, holdBarHeight, timelineY, speed } from '../settings.js'
+import { precision, holdBarHeight, timelineY} from '../settings.js'
 import * as PIXI from 'pixi.js'
 export default class Hold extends Chou {
     constructor(length, container, direction, index, initXPos, playerId, arrowType) {
@@ -43,13 +43,13 @@ export default class Hold extends Chou {
     }
 
     move() {
-        this.circlePos += this.direction * speed
+        this.circlePos += this.direction * this.game.speed
     }
 
     // Move the bar
     moveBar() {
         this.drawChou();
-        this.barPos += this.direction * speed
+        this.barPos += this.direction * this.game.speed
     }
 
 
@@ -72,12 +72,12 @@ export default class Hold extends Chou {
 
     // Update the timer (for holding action)
     updateTimer() {
-        this.timer -= speed;
+        this.timer -= this.game.speed;
     }
 
     updateBar() {
         this.barPos = this.circlePos;
-        this.rectLength -= speed;
+        this.rectLength -= this.game.speed;
     }
 
     isHoldCorrect() {

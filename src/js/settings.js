@@ -2,7 +2,7 @@ export const radius = 100;
 export const holdBarHeight = 25;
 export const hitZonePosition = window.innerWidth / 2;
 export const precision = 15;
-export const speed = 2;
+export const startSpeed = 3;
 export const hitRange = [hitZonePosition - precision, hitZonePosition + precision]
 
 export const numOfTargets = 20;

@@ -1,12 +1,14 @@
 import { player1 } from '../BorneManager/borneManager.js';
-import {radius,hitRange, timelineY} from '../settings.js'
+import {radius,hitRange, timelineY, startSpeed} from '../settings.js'
+import Game from './Game.js'
 
 import * as PIXI from 'pixi.js'
 
 export default class Target {
     constructor(container, direction, index,initXPos, playerId) {
         this.direction = direction;
-        this.speed = 1;
+        this.game = new Game()
+        // this.speed = this.game.speed
         this.index = index;
         this.radius = radius;
         this.circlePos = initXPos;

@@ -1,6 +1,6 @@
 import Chou from './Target.js'
 import * as PIXI from 'pixi.js'
-import { timelineY, speed } from '../settings.js'
+import { timelineY } from '../settings.js'
 
 export default class Hit extends Chou {
     constructor(container, direction, index, initXPos, playerId, arrowType) {
@@ -67,7 +67,7 @@ export default class Hit extends Chou {
     }
 
     move() {
-        this.circlePos += (-this.direction)*speed;
+        this.circlePos += (-this.direction)*this.game.speed;
         this.drawChou();
     }
 }

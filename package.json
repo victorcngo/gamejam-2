@@ -15,6 +15,7 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/runtime": "^7.8.4",
     "axis-api": "github:gobelins-axis/axis-api",
     "core-js": "^3.6.4",
@@ -23,10 +24,10 @@
     "smplr": "^0.15.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.25.8",
     "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "babel-loader": "^8.0.6",
+    "@babel/preset-env": "^7.25.8",
+    "babel-loader": "^8.4.1",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^7.0.2",

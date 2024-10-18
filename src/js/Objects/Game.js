@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { radius, hitZonePosition, numOfTargets, hitRange, timelineY, arrowTypes } from '../settings.js'
+import { radius, hitZonePosition, numOfTargets, hitRange, timelineY, arrowTypes, startSpeed } from '../settings.js'
 import Hit from './Hit.js'
 import Hold from './Hold.js'
 import MelodyPlayer from './MelodyPlayer.js';
@@ -7,7 +7,11 @@ import { AudioManager } from '../AudioManager.js'
 import { player1 } from '../BorneManager/borneManager.js'
 
 export default class Game {
+    static instance
     constructor(app) {
+        if (Game.instance) {
+            return Game.instance; // Return existing instance if already created
+        }
         this.hasStarted = false;
         this.isDone = false;
         this.playersHaveLost = false;
@@ -15,11 +19,19 @@ export default class Game {
         this.targets = {}
         this.app = app
         this.userIsHolding = false;
-        this.speed = 1;
+        this.speed = startSpeed;
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
+        Game.instance = this;
     }
+
+    // static getInstance(app) {
+    //     if (!Game.instance) {
+    //         Game.instance = new Game(app); // Create new instance if none exists
+    //     }
+    //     return Game.instance;
+    // }
 
     init() {
         //this.setMelodyPlayer();
@@ -137,5 +149,9 @@ export default class Game {
 
     end() {
 
+    }
+
+    increaseSpeed(num) {
+        this.speed += num
     }
 }

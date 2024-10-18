@@ -13,9 +13,25 @@ module.exports = {
     filename: 'game.min.[hash:8].js',
   },
   target: 'web',
+  module: {
+    rules: [
+      {
+        test: /\.js$/, // Processing JS files with Babel
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-class-properties'], // Using the Babel class properties plugin
+          },
+        },
+      },
+    ],
+  },
   
   plugins: [
     new CleanWebpackPlugin(),
+
     new CopyWebpackPlugin([
       { from: 'assets/',to:'assets/'},
       { from: './style.css', to: 'style.css' }, // Add this line to copy the stylesheet

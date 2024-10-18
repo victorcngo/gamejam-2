@@ -1,13 +1,12 @@
 import MidiPlayer from 'midi-player-js';
 import { Soundfont } from "smplr";
-import Game from './Game'
 
 //Onjectif de cette class : Analyser le fichier midi pour timer l'apparition des choux
 
-export default class MelodyPlayer {
+export default class RythmeManager {
 
 
-    constructor(tempo) {
+    constructor(tempo, gameSpeed) {
 
         /**
          * Tempo = La vitesse d'éxécution de la musique, pour gérer la difficulté; la musique de base est à 110,
@@ -20,7 +19,7 @@ export default class MelodyPlayer {
 
         this.tempo = tempo
         this.currentTick = 0
-        this.game = new Game() // singleton
+        this.gameSpeed = gameSpeed
 
         /**
          * Le Player du fichier MIDI. Il ne fait pas de son, il trigger juste un event lorsque qu'un note est jouée
@@ -80,9 +79,9 @@ export default class MelodyPlayer {
 
         //A REMOVE, C'EST PAS PROPRE, C'EST UN LOOP DE LA MELLODY POUR LA DEMO
         this.player.on('endOfFile',()=>{
-            this.game.increaseSpeed(7)
-            new MelodyPlayer(this.tempo + 30)
-           
+            // 
+            new RythmeManager(this.tempo + 30)
+            this.gameSpeed += 1
         })
 
         /**
