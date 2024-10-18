@@ -2,7 +2,7 @@ import Chou from './Target.js'
 import { precision, holdBarHeight, timelineY, speed } from '../settings.js'
 import * as PIXI from 'pixi.js'
 export default class Hold extends Chou {
-    constructor(length, container, direction, index,initXPos, playerId, arrowType) {
+    constructor(length, container, direction, index, initXPos, playerId, arrowType) {
         super(container, direction, index, initXPos, playerId)
         this.length = length;
         this.timer = length;
@@ -43,13 +43,13 @@ export default class Hold extends Chou {
     }
 
     move() {
-        this.circlePos += this.direction*speed
+        this.circlePos += this.direction * speed
     }
-    
+
     // Move the bar
     moveBar() {
         this.drawChou();
-        this.barPos += this.direction*speed
+        this.barPos += this.direction * speed
     }
 
 
@@ -58,8 +58,8 @@ export default class Hold extends Chou {
         this.barGraphics.clear();
         this.barGraphics.beginFill(this.color);  // Black color for bar
         // draw according to direction
-        if(this.direction === 1) {
-            this.barGraphics.drawRect(this.barPos  - this.rectLength, timelineY - holdBarHeight / 2, this.rectLength, holdBarHeight);
+        if (this.direction === 1) {
+            this.barGraphics.drawRect(this.barPos - this.rectLength, timelineY - holdBarHeight / 2, this.rectLength, holdBarHeight);
         } else {
             this.barGraphics.drawRect(this.barPos, timelineY - holdBarHeight / 2, this.rectLength, holdBarHeight);
         }
@@ -76,7 +76,7 @@ export default class Hold extends Chou {
     }
 
     updateBar() {
-        this.barPos += 0.75;
+        this.barPos = this.circlePos;
         this.rectLength -= speed;
     }
 
