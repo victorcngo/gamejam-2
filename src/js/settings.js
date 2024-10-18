@@ -4,9 +4,7 @@ export const hitZonePosition = window.innerWidth / 2;
 export const precision = 15;
 export const startSpeed = 3;
 export const hitRange = [hitZonePosition - precision, hitZonePosition + precision]
-
-export const numOfTargets = 20;
-
+export const numOfTargets = 200;
 export const arrowTypes = ['left', 'right', 'up', 'down']
 export const timelineY = window.innerHeight - 100
 export const iconScale = 2
