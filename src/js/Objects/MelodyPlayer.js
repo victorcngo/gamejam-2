@@ -80,7 +80,7 @@ export default class MelodyPlayer {
 
         //A REMOVE, C'EST PAS PROPRE, C'EST UN LOOP DE LA MELLODY POUR LA DEMO
         this.player.on('endOfFile',()=>{
-            this.game.increaseSpeed(7)
+            this.game.increaseSpeed(5)
             new MelodyPlayer(this.tempo + 30)
            
         })
