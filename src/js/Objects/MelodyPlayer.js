@@ -16,7 +16,7 @@ export default class MelodyPlayer {
          * CurrentTick = le tick actuel de la musique, la valeur qui va se faire comparer à la valeur d'apparition du chou
          * Sachant que la musique loopera, elle repassera souvent à 0
          */
-        
+
 
         this.tempo = tempo
         this.currentTick = 0
@@ -76,13 +76,13 @@ export default class MelodyPlayer {
         this.player.on('playing', () => {
             this.currentTick = this.player.tick
         })
-        
+
 
         //A REMOVE, C'EST PAS PROPRE, C'EST UN LOOP DE LA MELLODY POUR LA DEMO
-        this.player.on('endOfFile',()=>{
+        this.player.on('endOfFile', () => {
             this.game.increaseSpeed(5)
             new MelodyPlayer(this.tempo + 30)
-           
+
         })
 
         /**
@@ -100,7 +100,7 @@ export default class MelodyPlayer {
                         velocity: 80,
                         duration: 0.1
                     });
-                    
+
                 }
             }
         })
@@ -133,7 +133,7 @@ export default class MelodyPlayer {
          * On récupère la track 3 du fichier MID, qui est la track sur laquelle on à créer des notes qui donne le tempo
          * de la melody, et qui réprésente des timings sur lesquels on peut accrocher des choux
          */
-        
+
 
         const rythmTrack = this.player.tracks[2]
         const rythmNotes = []
@@ -219,10 +219,6 @@ export default class MelodyPlayer {
 
 
         //Array d'object avec un type de chou, sa duration, et le timing auxquels il est censé être interagit
-        console.log(choux)
-
+        // console.log(choux)
     }
-
-
-
 }

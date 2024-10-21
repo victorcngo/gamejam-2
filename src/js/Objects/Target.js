@@ -1,5 +1,5 @@
 import { player1 } from '../BorneManager/borneManager.js';
-import {radius,hitRange, timelineY, startSpeed} from '../settings.js'
+import { radius, hitRange, timelineY, startSpeed } from '../settings.js'
 import Game from './Game.js'
 
 import * as PIXI from 'pixi.js'
@@ -7,7 +7,7 @@ import * as PIXI from 'pixi.js'
 
 // All targets type extend this base class. Put all logic common to all targets here
 export default class Target {
-    constructor(container, direction, index,initXPos, playerId) {
+    constructor(container, direction, index, initXPos, playerId) {
         this.direction = direction;
         this.game = new Game()
         this.index = index;
@@ -20,34 +20,29 @@ export default class Target {
 
         //init joystick 
         this.joystickPosition = {
-            x:0,
-            y:0
+            x: 0,
+            y: 0
         }
         this.joystickOrientation = 'center'
         this.initJoystick()
-        
-
-        // Create the circle and bar graphics
-        this.circleGraphics = new PIXI.Graphics();
-        this.container.addChild(this.circleGraphics);
 
         this.loadBackground(`/assets/icons/chou-${this.playerID}.svg`);
     }
-
-    // TODO : move it outside and run it one time per player. Make values of controller accessible in each target
-    initJoystick(){
-        player1.joysticks[0].addEventListener('joystick:move',(e)=>{
+  
+// TODO : move it outside and run it one time per player. Make values of controller accessible in each target
+    initJoystick() {
+        player1.joysticks[0].addEventListener('joystick:move', (e) => {
             this.joystickPosition = e.position
-            if(Math.abs(e.position.x)>Math.abs(e.position.y)){
-                if(Math.abs(e.position.x) < 0.6){
+            if (Math.abs(e.position.x) > Math.abs(e.position.y)) {
+                if (Math.abs(e.position.x) < 0.6) {
                     this.joystickOrientation = 'center'
-                }else{
+                } else {
                     this.joystickOrientation = e.position.x < 0 ? 'left' : 'right'
                 }
-            }else{
-                if(Math.abs(e.position.y) < 0.6){
+            } else {
+                if (Math.abs(e.position.y) < 0.6) {
                     this.joystickOrientation = 'center'
-                }else{
+                } else {
                     this.joystickOrientation = e.position.y < 0 ? 'bottom' : 'top'
                 }
             }
@@ -66,26 +61,27 @@ export default class Target {
 
     // Get random color
     getColor() {
-       return this.playerID === 1 ? 0x0000FF :  0x00FFFF;
+        return this.playerID === 1 ? 0x0000FF : 0x00FFFF;
     }
 
 
     remove() {
-        this.container.removeChild(this.circleGraphics);
         this.container.removeChild(this.background);
     }
 
+  
+  
     isHitCorrect() {
         return this.isInHitRange()
     }
 
     isInHitRange() {
         return this.circlePos > hitRange[0] && this.circlePos < hitRange[1] ? true : false
-     }
+    }
 
     isMissed() {
-        if(this.playerID === 1) return this.circlePos > hitRange[1]
-        if(this.playerID === 2) return this.circlePos < hitRange[0]
+        if (this.playerID === 1) return this.circlePos > hitRange[1]
+        if (this.playerID === 2) return this.circlePos < hitRange[0]
         // if direction 
     }
 }

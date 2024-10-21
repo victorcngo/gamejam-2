@@ -1,5 +1,5 @@
 import Chou from './Target.js'
-import { precision, holdBarHeight, timelineY} from '../settings.js'
+import { precision, holdBarHeight, timelineY } from '../settings.js'
 import * as PIXI from 'pixi.js'
 export default class Hold extends Chou {
     constructor(length, container, direction, index, initXPos, playerId, arrowType) {
@@ -85,7 +85,7 @@ export default class Hold extends Chou {
     }
 
     showFeedback() {
-        //this.color = this.isHoldCorrect() ? 0x00FF00 : 0xFF0000;
+        // console.log("success hold", this.isHoldCorrect())
     }
 
     timeIsUp() {
