@@ -14,5 +14,18 @@ export default class Mix extends Chou {
         this.container.addChild(this.barGraphics);
     }
 
+    // TODO : implement a new type of target here that has 
+    // Update the timer (for holding action)
+    updateTimer() {
+        this.timer -= this.game.speed;
+    }
+
+    isMixCorrect() {
+        
+    }
+
+    remove() {
+    }
+
     
 }
