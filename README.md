@@ -12,3 +12,5 @@ npm run build
 
 un déploimenent automatique sur Netlify est mis en place depuis la branche master
 Les buttons de la borne sont mappés sur l'ordinateur sur AZER pour le player 1 et UIOP pour le player 2
+
+deployed at https://keen-basbousa-b47969.netlify.app/
