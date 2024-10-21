@@ -7,7 +7,7 @@ export default class Hit extends Chou {
         super(container, direction, index, initXPos, playerId)
         this.type = 'hit'
         this.direction = this.playerID === 1 ? -1 : 1
-        this.arrowType =  arrowType
+        this.arrowType = arrowType
         this.texture = PIXI.Texture.from('/assets/icons/fleche.svg');
         this.fleche = new PIXI.Sprite(this.texture);
         this.fleche.x = this.circlePos;
@@ -17,7 +17,7 @@ export default class Hit extends Chou {
     }
 
     showFeedback() {
-        this.color =  this.isHitCorrect() ? 0x00FF00 : 0xFF0000;
+        this.color = this.isHitCorrect() ? 0x00FF00 : 0xFF0000;
         this.drawChou()
         if (currTarget.isHitCorrect()) {
             this.showProut(this.targetsContainer)
@@ -43,17 +43,12 @@ export default class Hit extends Chou {
                 break;
         }
 
-       
+
         this.container.addChild(this.fleche);
     }
 
-    isSuccessful() {
-        this.isHitCorrect()
-    }
-
     showFeedback() {
-        // this.color = this.isHitCorrect() ? 0x00FF00 : 0xFF0000;
-        console.log("success", this.isHitCorrect())
+        console.log("success hit", this.isHitCorrect())
     }
 
     drawChou() {
@@ -67,7 +62,7 @@ export default class Hit extends Chou {
     }
 
     move() {
-        this.circlePos += (-this.direction)*this.game.speed;
+        this.circlePos += (-this.direction) * this.game.speed;
         this.drawChou();
     }
 }

@@ -138,11 +138,12 @@ export default class Game {
     }
 
     updateAll() {
-        if(!this.hasStarted) return
+        if (!this.hasStarted) return
         this.update(1)
         this.update(2)
     }
 
+    // TODO: logic for checkResults & end condition
     checkResults() {
 
     }
