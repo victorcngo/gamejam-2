@@ -178,7 +178,7 @@ export default class MelodyPlayer {
                         //Chou type === Hold
 
                         /**
-                         * TO DO : Create choux duration logic
+                         * TODO : Create choux duration logic
                          * 
                          */
 

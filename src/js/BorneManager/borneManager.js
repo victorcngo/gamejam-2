@@ -6,7 +6,6 @@ export let player2
 export const setUpButtons = async () => {
 
     //Button registering
-
     Axis.registerKeys(["a","A"], "a", 1);
     Axis.registerKeys(["z","Z"], "x", 1);
     Axis.registerKeys(["e","E"], "i", 1);

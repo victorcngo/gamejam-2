@@ -4,11 +4,12 @@ import Game from './Game.js'
 
 import * as PIXI from 'pixi.js'
 
+
+// All targets type extend this base class. Put all logic common to all targets here
 export default class Target {
     constructor(container, direction, index, initXPos, playerId) {
         this.direction = direction;
         this.game = new Game()
-        // this.speed = this.game.speed
         this.index = index;
         this.radius = radius;
         this.circlePos = initXPos;
@@ -17,7 +18,7 @@ export default class Target {
         this.color = this.playerID === 1 ? '0xE63C49' : '0xFFA541';
         this.container = container;
 
-        //init joystick
+        //init joystick 
         this.joystickPosition = {
             x: 0,
             y: 0
@@ -27,7 +28,8 @@ export default class Target {
 
         this.loadBackground(`/assets/icons/chou-${this.playerID}.svg`);
     }
-
+  
+// TODO : move it outside and run it one time per player. Make values of controller accessible in each target
     initJoystick() {
         player1.joysticks[0].addEventListener('joystick:move', (e) => {
             this.joystickPosition = e.position
@@ -67,6 +69,8 @@ export default class Target {
         this.container.removeChild(this.background);
     }
 
+  
+  
     isHitCorrect() {
         return this.isInHitRange()
     }

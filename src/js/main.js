@@ -5,7 +5,7 @@ import { debounce } from './utils/debounce.js'
 import { longFarts, smallFarts, timelineY } from './settings.js'
 
 const createApp = async () => {
-    // Create a new PixiJS application
+    // Create a new PixiJS application to handle canvas rendering
     const app = new PIXI.Application({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -14,15 +14,18 @@ const createApp = async () => {
         transparent: true
     });
     document.body.appendChild(app.view); // Append canvas to the document
-    await setUpButtons()
-    const game = new Game(app,)
-    game.init()
+    await setUpButtons() // map game to arcade controls
+    const game = new Game(app) // singleton that handles global logic 
+    game.init() 
 
+    // each character is controlled by one player
+    // this function make the background sprite change on user button press
     const animateChar = (playerID) => {
         document.querySelector(`div.char${playerID}`).classList.toggle(('active'))
         document.querySelector(`div.char${playerID}Fart`).classList.toggle(('active'))
     }
 
+    // debounce is used to prevent lagging when user spams the button
     const debouncedAnimateChar1 = debounce(() => animateChar(1), 500);
     const debouncedAnimateChar2 = debounce(() => animateChar(2), 500);
 
@@ -55,6 +58,7 @@ const createApp = async () => {
         }
     }
 
+    // used for the target type hold -> on hold correct, should increase score += 1
     const handleButtonAUp = (playerID) => {
         const target = game.targets[playerID][0]
         if (!target) return
@@ -72,6 +76,7 @@ const createApp = async () => {
     player2.buttons[0].addEventListener('keyup', () => handleButtonAUp(2))
 
     const update = () => {
+        // update targets and score for both player
         game.updateAll()
     }
 
@@ -82,6 +87,8 @@ const createApp = async () => {
         app.renderer.resize(window.innerWidth, window.innerHeight);
     });
 
+
+    // green shape that appears on hit === success
     const showProut = () => {
         const texture = PIXI.Texture.from('./assets/icons/prout.svg');
         const prout = new PIXI.Sprite(texture);

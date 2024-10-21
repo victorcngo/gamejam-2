@@ -17,6 +17,11 @@ export default class Game {
         this.playersHaveLost = false;
         this.targetsContainer = new PIXI.Container();
         this.targets = {}
+        //TODO: keep two arrays, one per player and keep track for each target of success.
+        // Example : if player1 has hit the two first targets correctly and misses the third score should be score {1: [1, 1, 0] }
+        // At the end of a sequence compute points by looping through both arrays and check both player have a score of 1 at index i to grant a point. 
+        // defeat condition should be if 90% of targets have been hit correctly by both players
+        this.score = {}  
         this.app = app
         this.userIsHolding = false;
         this.speed = startSpeed;
@@ -25,13 +30,6 @@ export default class Game {
         this.melodyPlayer = null
         Game.instance = this;
     }
-
-    // static getInstance(app) {
-    //     if (!Game.instance) {
-    //         Game.instance = new Game(app); // Create new instance if none exists
-    //     }
-    //     return Game.instance;
-    // }
 
     init() {
         //this.setMelodyPlayer();
