@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js'
 import { radius, hitZonePosition, numOfTargets, hitRange, timelineY, arrowTypes, startSpeed } from '../settings.js'
 import Hit from './Hit.js'
-import Hold from './Hold.js'
 import MelodyPlayer from './MelodyPlayer.js';
 import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
@@ -83,26 +82,14 @@ export default class Game {
 
         // player one
         for (let i = 0; i < numOfTargets; i++) {
-            type = Math.random() < 0.5 ? 1 : 0;
-            length = Math.random() * (100) + 100;
-
-            if (type === 0) {
-                // for hit target
-                xPos1 -= radius * 2
-                xPos2 += radius * 2
-                targetsPlayer1[i] = new Hit(this.targetsContainer, 'left', i, xPos1, 1, arrowTypes[Math.floor(Math.random() * 4)]);
-                targetsPlayer2[i] = new Hit(this.targetsContainer, 'left', i, xPos2, 2, arrowTypes[Math.floor(Math.random() * 4)]);
-            } else if (type === 1) {
-                // for hold target
-                xPos1 -= radius * 2 + length
-                xPos2 += radius * 2 + length
-                targetsPlayer1[i] = new Hold(100, this.targetsContainer, 'left', i, xPos1, 1, arrowTypes[Math.floor(Math.random() * 4)]);
-                targetsPlayer2[i] = new Hold(100, this.targetsContainer, 'left', i, xPos2, 2, arrowTypes[Math.floor(Math.random() * 4)]);
-            }
+            xPos1 -= radius * 2
+            xPos2 += radius * 2
+            targetsPlayer1[i] = new Hit(this.targetsContainer, 'left', i, xPos1, 1, arrowTypes[Math.floor(Math.random() * 4)]);
+            targetsPlayer2[i] = new Hit(this.targetsContainer, 'left', i, xPos2, 2, arrowTypes[Math.floor(Math.random() * 4)]);
         }
+
         this.targets[1] = targetsPlayer1
         this.targets[2] = targetsPlayer2
-
     }
 
     update(playerID) {

@@ -40,17 +40,9 @@ const createApp = async () => {
             game.audioManager.debouncedPlay(randomFart.name);
         }
 
-        else if (target.type === 'hold') {
-            const randomFart = longFarts[Math.floor(Math.random() * longFarts.length)]
-            game.audioManager.debouncedPlay(randomFart.name);
-        }
-
         target.showFeedback()
         // TODO: au lieu de showProut, faire une fonction pour stocker le résultat de chaque joueur. Puis on regarde si les 2 joueurs ont chacun réussi leur action. S'ils ont réussi tous les 2, on appelle showProut
         if (target.isHitCorrect() && target.type === 'hit') showProut()
-        if (target.isHitCorrect() && target.type === 'hold') {
-            game.userIsHolding = true;
-        }
 
         if (playerID === 1) {
             debouncedAnimateChar1()
@@ -75,9 +67,7 @@ const createApp = async () => {
     }
 
     game.player1.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(1))
-    game.player1.instance.buttons[0].addEventListener('keyup', () => handleButtonAUp(1))
     game.player2.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(2))
-    game.player2.instance.buttons[0].addEventListener('keyup', () => handleButtonAUp(2))
 
     const update = () => {
         // update targets and score for both player

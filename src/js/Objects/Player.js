@@ -1,4 +1,5 @@
 import Axis from 'axis-api'
+import * as PIXI from 'pixi.js'
 
 export default class Player {
     constructor(playerID) {
