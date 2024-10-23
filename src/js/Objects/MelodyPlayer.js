@@ -43,7 +43,6 @@ export default class MelodyPlayer {
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
                 this.player.loadArrayBuffer(arrayBuffer);
-                this.startNewWave(this.tempo)
                 this.setPlayerEvents()
             })
             .catch(error => {
@@ -146,8 +145,10 @@ export default class MelodyPlayer {
 
 
         setTimeout(() => {
+            console.log("Start playing");
+
             this.player.play()
             this.game.audioManager.play("music")
-        },this.intervalBetweenBeats*3)
+        },this.intervalBetweenBeats)
     }
 }

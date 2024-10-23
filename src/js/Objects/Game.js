@@ -95,7 +95,7 @@ export default class Game {
             onComplete: () => {
                 countdown.setAttribute('data-state', 'hidden');
                 this.hasStarted = true;
-                this.melodyPlayer.start();
+                this.melodyPlayer.startNewWave(120);
                 tl.kill();
             }
         });
