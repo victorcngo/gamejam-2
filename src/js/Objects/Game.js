@@ -8,6 +8,10 @@ import { AudioManager } from '../AudioManager.js'
 export default class Game {
     static instance
 
+    score = 0
+    userIsHolding = false
+    hasStarted = false
+
     constructor(app) {
         if (Game.instance) {
             return Game.instance; // Return existing instance if already created
@@ -15,18 +19,9 @@ export default class Game {
 
         Game.instance = this;
 
-        this.hasStarted = false;
-        this.isDone = false;
-        this.playersHaveLost = false;
         this.targetsContainer = new PIXI.Container();
         this.targets = {}
-        //TODO: keep two arrays, one per player and keep track for each target of success.
-        // Example : if player1 has hit the two first targets correctly and misses the third score should be score {1: [1, 1, 0] }
-        // At the end of a sequence compute points by looping through both arrays and check both player have a score of 1 at index i to grant a point.
-        // defeat condition should be if 90% of targets have been hit correctly by both players
-        this.score = {}
         this.app = app
-        this.userIsHolding = false;
         this.speed = startSpeed;
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
@@ -44,7 +39,7 @@ export default class Game {
 
         // TODO - set the melody player on the splash screen
 
-        // HACK - Need click to allow audioContext, remove when startingpage completed
+        // HACK - Need click to allow audioContext, remove when starting page completed
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
     }
 
@@ -54,6 +49,7 @@ export default class Game {
             document.querySelector('.start').style.display = "none";
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
+
         this.hasStarted = true
     }
 
@@ -83,12 +79,27 @@ export default class Game {
         let xPos1 = 0
         let xPos2 = window.innerWidth
 
-        // player one
         for (let i = 0; i < numOfTargets; i++) {
             xPos1 -= radius * 2
             xPos2 += radius * 2
-            targetsPlayer1[i] = new Hit(this.targetsContainer, 'left', i, xPos1, 1, arrowTypes[Math.floor(Math.random() * 4)]);
-            targetsPlayer2[i] = new Hit(this.targetsContainer, 'left', i, xPos2, 2, arrowTypes[Math.floor(Math.random() * 4)]);
+
+            targetsPlayer1[i] = new Hit(
+                this.targetsContainer,
+                'left',
+                i,
+                xPos1,
+                1,
+                arrowTypes[Math.floor(Math.random() * 4)]
+            );
+
+            targetsPlayer2[i] = new Hit(
+                this.targetsContainer,
+                'left',
+                i,
+                xPos2,
+                2,
+                arrowTypes[Math.floor(Math.random() * 4)]
+            );
         }
 
         this.targets[1] = targetsPlayer1

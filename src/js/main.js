@@ -35,12 +35,7 @@ const createApp = async () => {
         let target = game.targets[playerID][0];
         if (!target) return
 
-        if (target.type === 'hit') {
-            const randomFart = smallFarts[Math.floor(Math.random() * smallFarts.length)]
-            game.audioManager.debouncedPlay(randomFart.name);
-        }
-
-        target.showFeedback()
+        target.showFeedback(playerID)
 
         if (playerID === 1) {
             debouncedAnimateChar1()

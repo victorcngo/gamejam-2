@@ -21,33 +21,30 @@ export default class Player {
             buttons: Axis.buttonManager.getButtonsById(this.playerID)
         })
 
-        // Create PIXI.Text object for displaying combo
         this.text = new PIXI.Text(
-            'x0',  // Initial combo text
+            'x0',
             {
                 fontFamily: 'Arial',
                 fontSize: 32,
-                fill: 0xff1010,  // Red color
+                fill: 0xffffff,
                 align: 'center'
             }
         );
 
-        // Set the position of the text on the screen
-        this.text.x = this.playerID === 1 ? window.innerWidth * 0.5 - 100 : window.innerWidth * 0.5 + 100
-        this.app.stage.addChild(this.text);
+        this.text.x = this.playerID === 1
+            ? window.innerWidth * 0.5 - 100
+            : window.innerWidth * 0.5 + 100
+        this.app.stage.addChild(this.text)
     }
 
-    // Function to increase combo and update the PIXI.Text
-    increaseCombo() {
-        // Increment combo
-        this.combo++;
+    increaseCombo(amount = 1) {
+        this.combo += amount
+        this.maxCombo = Math.max(this.maxCombo, this.combo)
+        this.text.text = 'x' + this.combo
+    }
 
-        // Check if the combo exceeds the max combo and update maxCombo
-        if (this.combo > this.maxCombo) {
-            this.maxCombo = this.combo;
-        }
-
-        // Update the PIXI.Text with the new combo value
-        this.text.text = 'x' + this.combo;
+    resetCombo() {
+        this.combo = 0
+        this.text.text = 'x' + this.combo
     }
 }
