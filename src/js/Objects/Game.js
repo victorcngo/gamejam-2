@@ -95,6 +95,7 @@ export default class Game {
             onComplete: () => {
                 countdown.setAttribute('data-state', 'hidden');
                 this.hasStarted = true;
+
                 this.melodyPlayer.startNewWave(120);
                 tl.kill();
             }
@@ -118,7 +119,6 @@ export default class Game {
         if (!this.melodyPlayer) {
             this.melodyPlayer = new MelodyPlayer(120)
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
-            this.showCountdown()
         }
     }
 
