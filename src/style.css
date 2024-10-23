@@ -52,27 +52,6 @@ canvas {
     background-size: cover;
 }
 
-.ui {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-}
-
-.start {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  width: 45vw;
-  opacity: 0.9;
-  color: #fff;
-  background-image: url("./assets/start-screen.webp");
-  background-size: contain;
-  aspect-ratio: 16 / 9;
-}
-
 .overlay {
     width: 100%;
     height: 100%;
@@ -187,6 +166,35 @@ canvas {
         display: block;
 }
 
+/* -----------------------------------------------
+    * TUTORIAL
+* ----------------------------------------------- */
+
+.a-Tutorial {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.a-Tutorial img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.a-Tutorial[data-state="hidden"] {
+    display: none;
+}
+
+.a-Tutorial[data-state="visible"] {
+    display: block;
+}
 
 
 /* -----------------------------------------------
