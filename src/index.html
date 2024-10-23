@@ -6,12 +6,37 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="./assets/icons/chou-1.svg" type="image/x-icon">
   </head>
+
   <body>
-    <div class="ui"></div>
+    <div class="o-Splashscreen js-splashscreen" data-state="visible">
+        <div class="o-Splashscreen_content">
+            <div class="o-Splashscreen_logo">
+                <img src="./assets/ui/splashscreen/logo.svg" alt="Logo">
+            </div>
+            <div class="o-Splashscreen_actions">
+                <img src="./assets/ui/splashscreen/start-button.svg" alt="Start button" class="o-Splashscreen-start js-start"/>
+                <img src="./assets/ui/splashscreen/leaderboard-button.svg" alt="Leaderboard button" class="o-Splashscreen-leaderboard js-leaderboard"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="a-Countdown js-countdown" data-state="hidden">
+        <img src="./assets/ui/countdown/3.png" alt="3"/>
+
+        <img src="./assets/ui/countdown/2.png" alt="2"/>
+
+        <img src="./assets/ui/countdown/1.png" alt="1"/>
+
+        <img src="./assets/ui/countdown/go.png" alt="Go"/>
+    </div>
+
+    <canvas id="scene"></canvas>
+
     <div class="background"></div>
     <div class="overlay">
         <img src="./assets/overlay.png" alt="Overlay">
     </div>
-    <canvas id="scene"></canvas>
+
   </body>
+
 </html>

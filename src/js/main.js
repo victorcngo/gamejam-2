@@ -2,6 +2,8 @@ import { setUpButtons } from './InputManager'
 import Game from './objects/Game.js'
 import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
+import { longFarts, smallFarts, timelineY } from './settings.js'
+import Splashscreen from './ui/Splashscreen.js'
 
 const createApp = async () => {
     const app = new PIXI.Application({
@@ -16,6 +18,9 @@ const createApp = async () => {
     await setUpButtons()
     const game = new Game(app)
     game.init()
+
+    const splashscreen = new Splashscreen({ element: document.querySelector('.js-splashscreen')})
+    splashscreen.init()
 
     const handleButtonADown = (playerID) => {
         let target = game.targets[playerID][0];
