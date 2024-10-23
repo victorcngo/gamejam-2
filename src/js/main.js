@@ -3,6 +3,7 @@ import Game from './Objects/Game.js'
 import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
 import { longFarts, smallFarts, timelineY } from './settings.js'
+import Splashscreen from './ui/Splashscreen.js'
 
 const createApp = async () => {
     // Create a new PixiJS application to handle canvas rendering
@@ -17,6 +18,10 @@ const createApp = async () => {
     await setUpButtons() // map game to arcade controls
     const game = new Game(app) // singleton that handles global logic
     game.init()
+
+    //ui
+    const splashscreen = new Splashscreen({ element: document.querySelector('.js-splashscreen')})
+    splashscreen.init()
 
     // each character is controlled by one player
     // this function make the background sprite change on user button press
