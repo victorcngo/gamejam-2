@@ -12,6 +12,7 @@ import Target from './Target.js'
 import MelodyPlayer from './MelodyPlayer.js';
 import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
+import gsap from 'gsap'
 
 const BASE_TIMELINE_SIZE = 2
 const BASE_HIT_ZONE_SIZE = 3.5
@@ -56,13 +57,43 @@ export default class Game {
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
     }
 
+    showCountdown() {
+        const countdown = document.querySelector('.js-countdown');
+        const images = countdown.querySelectorAll('img');
+
+        const tl = gsap.timeline({
+            delay: 2,
+            onStart: () => {
+                countdown.setAttribute('data-state', 'visible');
+            },
+            onComplete: () => {
+                countdown.setAttribute('data-state', 'hidden');
+                this.hasStarted = true;
+                this.melodyPlayer.start();
+                tl.kill();
+            }
+        });
+
+        for (let i = 0; i < images.length; i++) {
+            tl.to(images[i], {
+                duration: 0.5,
+                opacity: 1,
+                scale: 1.2
+            });
+            tl.to(images[i], {
+                duration: 0.5,
+                opacity: 0,
+                scale: 1
+            });
+        }
+    }
+
     setMelodyPlayer() {
         if (!this.melodyPlayer) {
             this.melodyPlayer = new MelodyPlayer(120)
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
+            this.showCountdown()
         }
-
-        this.hasStarted = true
     }
 
     setStaticObjects() {

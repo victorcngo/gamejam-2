@@ -7,38 +7,16 @@ import Target from "./Target";
 
 export default class MelodyPlayer {
 
-
     constructor(tempo) {
-
-        /**
-         * Tempo = La vitesse d'éxécution de la musique, pour gérer la difficulté; la musique de base est à 110,
-         * mais il faudrait la baisser pour la difficulté facile
-         *
-         * CurrentTick = le tick actuel de la musique, la valeur qui va se faire comparer à la valeur d'apparition du chou
-         * Sachant que la musique loopera, elle repassera souvent à 0
-         */
-
-
-        this.tempo = tempo
-        this.game = new Game() // singleton
-
-        /**
-         * Le Player du fichier MIDI. Il ne fait pas de son, il trigger juste un event lorsque qu'un note est jouée
-         * La fonction à l'intérieur est joué à chaque note jouée, et je ne sais pas pourquoi met le tempo est reset à chaque note
-         * jouée donc il faut le remettre à la bonne value à chaque fois.
-         *
-         */
+        this.tempo = tempo;
+        this.currentTick = 0;
+        this.game = new Game(); // singleton
 
         this.player = new MidiPlayer.Player(() => {
-            this.player.setTempo(this.tempo)
-        })
+            this.player.setTempo(this.tempo);
+        });
 
         this.context = new AudioContext();
-
-        /**
-         * L'instrument choisi. J'ai mis le kalimba, mais vous pouvez voir la liste disponible ici :
-         * https://danigb.github.io/smplr/
-         */
 
         this.instrument = new Soundfont(
             this.context,
@@ -60,7 +38,6 @@ export default class MelodyPlayer {
     /**
      * Récupération du fichier MID
      */
-
     fetchMelody() {
         fetch('../../assets/merge.mid')
             .then(response => response.arrayBuffer())
@@ -71,9 +48,7 @@ export default class MelodyPlayer {
             })
             .catch(error => {
                 console.error('Error loading the MIDI file:', error);
-            })
-
-
+            });
     }
 
     setPlayerEvents() {
@@ -84,8 +59,6 @@ export default class MelodyPlayer {
             this.player.tempo = this.tempo
         })
 
-
-        //A REMOVE, C'EST PAS PROPRE, C'EST UN LOOP DE LA MELLODY POUR LA DEMO
         this.player.on('endOfFile', () => {
 
         })
@@ -116,10 +89,7 @@ export default class MelodyPlayer {
     /**
      * Cette fonction sera à call a chaque fois qu'on veut accélérer la musique. Elle va changer le tempo, et
      * regénérer des choux
-     *
      */
-
-
     startNewWave(tempo) {
         this.tempo = tempo
         this.intervalBetweenBeats = (60 / tempo) * 1000;
@@ -165,7 +135,6 @@ export default class MelodyPlayer {
     }
 
     /**
-     *
      * Logique de création des choux
      */
     createRandomChoux() {
