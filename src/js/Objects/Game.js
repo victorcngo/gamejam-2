@@ -57,6 +57,30 @@ export default class Game {
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
     }
 
+    showTutorial() {
+        const tutorial = document.querySelector('.js-tutorial');
+        tutorial.setAttribute('data-state', 'visible');
+
+        gsap.set(tutorial, { opacity: 0 });
+
+        gsap.to(tutorial, {
+            duration: 1,
+            opacity: 1,
+            delay: 1,
+            onComplete: () => {
+                setTimeout(() => {
+                    gsap.to(tutorial, {
+                        duration: 1,
+                        opacity: 0,
+                        onComplete: () => {
+                            tutorial.setAttribute('data-state', 'hidden');
+                        }
+                    });
+                }, 2000)
+            }
+        });
+    }
+
     showCountdown() {
         const countdown = document.querySelector('.js-countdown');
         const images = countdown.querySelectorAll('img');
@@ -65,6 +89,7 @@ export default class Game {
             delay: 2,
             onStart: () => {
                 countdown.setAttribute('data-state', 'visible');
+                this.showTutorial();
             },
             onComplete: () => {
                 countdown.setAttribute('data-state', 'hidden');
