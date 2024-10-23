@@ -21,7 +21,7 @@ const createApp = async () => {
     // each character is controlled by one player
     // this function make the background sprite change on user button press
     const animateChar = (playerID) => {
-        console.log("ouais");
+
 
         document.querySelector(`div.char${playerID}`).classList.toggle(('active'))
         document.querySelector(`div.char${playerID}Fart`).classList.toggle(('active'))
@@ -41,8 +41,6 @@ const createApp = async () => {
         }
 
         target.showFeedback()
-        // TODO: au lieu de showProut, faire une fonction pour stocker le résultat de chaque joueur. Puis on regarde si les 2 joueurs ont chacun réussi leur action. S'ils ont réussi tous les 2, on appelle showProut
-        if (target.isHitCorrect() && target.type === 'hit') showProut()
 
         if (playerID === 1) {
             debouncedAnimateChar1()
@@ -50,20 +48,6 @@ const createApp = async () => {
         if (playerID === 2) {
             debouncedAnimateChar2()
         }
-    }
-
-    // used for the target type hold -> on hold correct, should increase score += 1
-    const handleButtonAUp = (playerID) => {
-        console.log("handle button A up");
-
-        const target = game.targets[playerID][0]
-        if (!target) return
-        game.userIsHolding = false;
-        target.showFeedback()
-        if (target.type === 'hold' && target.isHoldCorrect()) showProut()
-
-        game.audioManager.clearDebouncedPlay()
-        game.audioManager.stop()
     }
 
     game.player1.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(1))
@@ -80,19 +64,5 @@ const createApp = async () => {
     window.addEventListener('resize', () => {
         app.renderer.resize(window.innerWidth, window.innerHeight);
     });
-
-    // green shape that appears on hit === success
-    const showProut = () => {
-        const texture = PIXI.Texture.from('./assets/icons/prout.svg');
-        const prout = new PIXI.Sprite(texture);
-        prout.anchor.set(0.5);
-        prout.x = window.innerWidth / 2;
-        prout.y = timelineY;
-        app.stage.addChild(prout);
-
-        setTimeout(() => {
-            app.stage.removeChild(prout);
-        }, 500);
-    }
 }
 createApp()

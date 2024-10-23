@@ -7,10 +7,14 @@ import { AudioManager } from '../AudioManager.js'
 
 export default class Game {
     static instance
+
     constructor(app) {
         if (Game.instance) {
             return Game.instance; // Return existing instance if already created
         }
+
+        Game.instance = this;
+
         this.hasStarted = false;
         this.isDone = false;
         this.playersHaveLost = false;
@@ -27,7 +31,6 @@ export default class Game {
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
-        Game.instance = this;
     }
 
     init() {
@@ -98,12 +101,7 @@ export default class Game {
         for (let i = 0; i < this.targets[playerID].length; i++) {
             const target = this.targets[playerID][i]
             if (!target) return;
-            if (target.type === 'hold') {
-                target.moveBar()
-                if (!this.userIsHolding || i !== 0) {
-                    target.move();
-                }
-            } else if (target.type === 'hit') {
+            if (target.type === 'hit') {
                 target.move()
             }
         }
@@ -111,19 +109,6 @@ export default class Game {
         if (currTarget.isMissed()) {
             currTarget.remove();
             this.targets[playerID].splice(0, 1);
-        }
-
-
-        if (this.userIsHolding && currTarget.type === 'hold') {
-            currTarget.updateTimer()
-            currTarget.updateBar()
-            // reduce bar width
-            currTarget.bar
-            if (currTarget.timeIsUp()) {
-                currTarget.remove()
-                this.targets[playerID].splice(0, 1)
-                this.userIsHolding = false
-            }
         }
     }
 
