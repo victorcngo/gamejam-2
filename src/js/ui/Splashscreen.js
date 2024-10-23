@@ -66,6 +66,6 @@ export default class Splashscreen {
 
     handleLeaderboardButtonClick(event) {
         console.log('Leaderboard button clicked', event);
-        this.destroy();
+        // this.destroy();
     }
 }
