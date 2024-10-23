@@ -1,4 +1,3 @@
-import { player1 } from '../BorneManager/borneManager.js';
 import { radius, hitRange, timelineY, startSpeed } from '../settings.js'
 import Game from './Game.js'
 
@@ -18,7 +17,9 @@ export default class Target {
         this.color = this.playerID === 1 ? '0xE63C49' : '0xFFA541';
         this.container = container;
 
-        //init joystick 
+        this.player1 = this.game.player1.instance
+
+        //init joystick
         this.joystickPosition = {
             x: 0,
             y: 0
@@ -28,10 +29,10 @@ export default class Target {
 
         this.loadBackground(`/assets/icons/chou-${this.playerID}.svg`);
     }
-  
+
 // TODO : move it outside and run it one time per player. Make values of controller accessible in each target
     initJoystick() {
-        player1.joysticks[0].addEventListener('joystick:move', (e) => {
+        this.player1.joysticks[0].addEventListener('joystick:move', (e) => {
             this.joystickPosition = e.position
             if (Math.abs(e.position.x) > Math.abs(e.position.y)) {
                 if (Math.abs(e.position.x) < 0.6) {
@@ -69,8 +70,8 @@ export default class Target {
         this.container.removeChild(this.background);
     }
 
-  
-  
+
+
     isHitCorrect() {
         return this.isInHitRange()
     }
@@ -82,6 +83,6 @@ export default class Target {
     isMissed() {
         if (this.playerID === 1) return this.circlePos > hitRange[1]
         if (this.playerID === 2) return this.circlePos < hitRange[0]
-        // if direction 
+        // if direction
     }
 }

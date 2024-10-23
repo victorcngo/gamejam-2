@@ -1,7 +1,7 @@
-import { setUpButtons, player1, player2 } from './BorneManager/borneManager.js'
+import { setUpButtons } from './BorneManager/borneManager.js'
 import Game from './Objects/Game.js'
 import * as PIXI from 'pixi.js'
-import { debounce } from './utils/debounce.js'
+import { debounce } from './utils/async/debounce'
 import { longFarts, smallFarts, timelineY } from './settings.js'
 
 const createApp = async () => {
@@ -15,12 +15,14 @@ const createApp = async () => {
     });
     document.body.appendChild(app.view); // Append canvas to the document
     await setUpButtons() // map game to arcade controls
-    const game = new Game(app) // singleton that handles global logic 
-    game.init() 
+    const game = new Game(app) // singleton that handles global logic
+    game.init()
 
     // each character is controlled by one player
     // this function make the background sprite change on user button press
     const animateChar = (playerID) => {
+        console.log("ouais");
+
         document.querySelector(`div.char${playerID}`).classList.toggle(('active'))
         document.querySelector(`div.char${playerID}Fart`).classList.toggle(('active'))
     }
@@ -60,6 +62,8 @@ const createApp = async () => {
 
     // used for the target type hold -> on hold correct, should increase score += 1
     const handleButtonAUp = (playerID) => {
+        console.log("handle button A up");
+
         const target = game.targets[playerID][0]
         if (!target) return
         game.userIsHolding = false;
@@ -70,10 +74,10 @@ const createApp = async () => {
         game.audioManager.stop()
     }
 
-    player1.buttons[0].addEventListener('keydown', () => handleButtonADown(1))
-    player1.buttons[0].addEventListener('keyup', () => handleButtonAUp(1))
-    player2.buttons[0].addEventListener('keydown', () => handleButtonADown(2))
-    player2.buttons[0].addEventListener('keyup', () => handleButtonAUp(2))
+    game.player1.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(1))
+    game.player1.instance.buttons[0].addEventListener('keyup', () => handleButtonAUp(1))
+    game.player2.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(2))
+    game.player2.instance.buttons[0].addEventListener('keyup', () => handleButtonAUp(2))
 
     const update = () => {
         // update targets and score for both player
@@ -86,7 +90,6 @@ const createApp = async () => {
     window.addEventListener('resize', () => {
         app.renderer.resize(window.innerWidth, window.innerHeight);
     });
-
 
     // green shape that appears on hit === success
     const showProut = () => {

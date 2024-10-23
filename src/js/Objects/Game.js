@@ -3,8 +3,8 @@ import { radius, hitZonePosition, numOfTargets, hitRange, timelineY, arrowTypes,
 import Hit from './Hit.js'
 import Hold from './Hold.js'
 import MelodyPlayer from './MelodyPlayer.js';
+import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
-import { player1 } from '../BorneManager/borneManager.js'
 
 export default class Game {
     static instance
@@ -19,9 +19,9 @@ export default class Game {
         this.targets = {}
         //TODO: keep two arrays, one per player and keep track for each target of success.
         // Example : if player1 has hit the two first targets correctly and misses the third score should be score {1: [1, 1, 0] }
-        // At the end of a sequence compute points by looping through both arrays and check both player have a score of 1 at index i to grant a point. 
+        // At the end of a sequence compute points by looping through both arrays and check both player have a score of 1 at index i to grant a point.
         // defeat condition should be if 90% of targets have been hit correctly by both players
-        this.score = {}  
+        this.score = {}
         this.app = app
         this.userIsHolding = false;
         this.speed = startSpeed;
@@ -32,20 +32,25 @@ export default class Game {
     }
 
     init() {
-        //this.setMelodyPlayer();
-        // Need click to allow audioContext, remove when startingpage completed
-        player1.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
+        // Create the players
+        this.player1 = new Player(1)
+        this.player2 = new Player(2)
 
         this.setStaticObjects()
         this.createTargets()
         this.app.stage.addChild(this.targetsContainer);
+
+        // TODO - set the melody player on the splash screen
+
+        // HACK - Need click to allow audioContext, remove when startingpage completed
+        this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
     }
 
     setMelodyPlayer() {
         if (!this.melodyPlayer) {
             this.melodyPlayer = new MelodyPlayer(90)
             document.querySelector('.start').style.display = "none";
-            player1.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
+            this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
         this.hasStarted = true
     }
