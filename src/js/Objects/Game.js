@@ -8,27 +8,25 @@ import gsap from 'gsap'
 
 export default class Game {
     static instance
+
+    score = 0
+    userIsHolding = false
+    hasStarted = false
+
     constructor(app) {
         if (Game.instance) {
             return Game.instance; // Return existing instance if already created
         }
-        this.hasStarted = false;
-        this.isDone = false;
-        this.playersHaveLost = false;
+
+        Game.instance = this;
+
         this.targetsContainer = new PIXI.Container();
         this.targets = {}
-        //TODO: keep two arrays, one per player and keep track for each target of success.
-        // Example : if player1 has hit the two first targets correctly and misses the third score should be score {1: [1, 1, 0] }
-        // At the end of a sequence compute points by looping through both arrays and check both player have a score of 1 at index i to grant a point.
-        // defeat condition should be if 90% of targets have been hit correctly by both players
-        this.score = {}
         this.app = app
-        this.userIsHolding = false;
         this.speed = startSpeed;
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
-        Game.instance = this;
     }
 
     init() {
@@ -42,7 +40,7 @@ export default class Game {
 
         // TODO - set the melody player on the splash screen
 
-        // HACK - Need click to allow audioContext, remove when startingpage completed
+        // HACK - Need click to allow audioContext, remove when starting page completed
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
     }
 
@@ -111,12 +109,27 @@ export default class Game {
         let xPos1 = 0
         let xPos2 = window.innerWidth
 
-        // player one
         for (let i = 0; i < numOfTargets; i++) {
             xPos1 -= radius * 2
             xPos2 += radius * 2
-            targetsPlayer1[i] = new Hit(this.targetsContainer, 'left', i, xPos1, 1, arrowTypes[Math.floor(Math.random() * 4)]);
-            targetsPlayer2[i] = new Hit(this.targetsContainer, 'left', i, xPos2, 2, arrowTypes[Math.floor(Math.random() * 4)]);
+
+            targetsPlayer1[i] = new Hit(
+                this.targetsContainer,
+                'left',
+                i,
+                xPos1,
+                1,
+                arrowTypes[Math.floor(Math.random() * 4)]
+            );
+
+            targetsPlayer2[i] = new Hit(
+                this.targetsContainer,
+                'left',
+                i,
+                xPos2,
+                2,
+                arrowTypes[Math.floor(Math.random() * 4)]
+            );
         }
 
         this.targets[1] = targetsPlayer1
@@ -129,12 +142,7 @@ export default class Game {
         for (let i = 0; i < this.targets[playerID].length; i++) {
             const target = this.targets[playerID][i]
             if (!target) return;
-            if (target.type === 'hold') {
-                target.moveBar()
-                if (!this.userIsHolding || i !== 0) {
-                    target.move();
-                }
-            } else if (target.type === 'hit') {
+            if (target.type === 'hit') {
                 target.move()
             }
         }
@@ -142,19 +150,6 @@ export default class Game {
         if (currTarget.isMissed()) {
             currTarget.remove();
             this.targets[playerID].splice(0, 1);
-        }
-
-
-        if (this.userIsHolding && currTarget.type === 'hold') {
-            currTarget.updateTimer()
-            currTarget.updateBar()
-            // reduce bar width
-            currTarget.bar
-            if (currTarget.timeIsUp()) {
-                currTarget.remove()
-                this.targets[playerID].splice(0, 1)
-                this.userIsHolding = false
-            }
         }
     }
 
