@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Pète un coup !</title>
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="./assets/icons/chou-1.svg" type="image/x-icon">
   </head>
@@ -63,7 +64,7 @@
         </div>
     </div>
 
-    <div class="o-Splashscreen js-splashscreen" data-state="hidden">
+    <div class="o-Splashscreen js-splashscreen" data-state="visible">
         <div class="o-Splashscreen_content">
             <div class="o-Splashscreen_logo">
                 <img src="./assets/ui/splashscreen/logo.svg" alt="Logo">
@@ -98,10 +99,24 @@
         <canvas id="scene"></canvas>
     </div>
 
-    <div class="background"></div>
-    <div class="overlay">
-        <img src="./assets/overlay.png" alt="Overlay">
+    <div class="ui">
+        <div class="score">0</div>
+        <div class="combo player-1">
+            <img src="./assets/icons/player-1-combo.png" alt="Combo"/>
+            <p class="text">0</p>
+            <p class="mult">x</p>
+        </div>
+        <div class="combo player-2">
+            <img src="./assets/icons/player-2-combo.png" alt="Combo"/>
+            <p class="text">0</p>
+            <p class="mult">x</p>
+        </div>
     </div>
+
+    <div class="background"></div>
+    <!-- <div class="overlay">
+        <img src="./assets/overlay.png" alt="Overlay">
+    </div> -->
 
   </body>
 
