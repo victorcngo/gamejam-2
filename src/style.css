@@ -2,6 +2,21 @@
     * GLOBAL
 * ----------------------------------------------- */
 
+@font-face {
+    font-family: 'Hussar Gothic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hussar Gothic'), url('./assets/fonts/HussarGothic.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Hussar Gothic Obl';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hussar Gothic Obl'), url('./assets/fonts/HussarGothicObl.woff') format('woff');
+}
+
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
         transform: translateY(0);
@@ -28,6 +43,7 @@ body {
     margin: 0;
     overflow: hidden;
     background: transparent;
+    font-family: 'Hussar Gothic';
 }
 
 canvas {
@@ -39,14 +55,19 @@ canvas {
     position: absolute;
 }
 
-.background {
+.page-background {
     width: 100%;
     height: 100%;
     opacity: 1;
     z-index: -1;
     position: fixed;
-    background-image: url("./assets/background.jpg");
-    background-size: cover;
+}
+
+.page-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: fixed;
 }
 
 .overlay {
@@ -70,8 +91,8 @@ canvas {
     height: 100%;
     opacity: 1;
     position: fixed;
-    /* transform: scale(2); */
-    /* transition: transform 0.5s; */
+    transform: scale(2);
+    transition: transform 0.5s;
 }
 
 .ui {
@@ -80,40 +101,102 @@ canvas {
     opacity: 1;
     position: fixed;
     z-index: 1;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s 1.5s;
+}
+
+.ui.is-active {
+    opacity: 1;
 }
 
 .score {
     position: absolute;
-    top: 0;
+    top: -1vw;
+    padding: 1vw;
+    font-size: 4vw;
+    width: 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     left: 50%;
     transform: translateX(-50%);
-    padding: 1vw;
-    font-size: 5vw;
+    gap: 1vw;
+}
+
+.score .text {
     color: white;
+    -webkit-text-stroke: 0.2vw #9BAE55;
+    text-stroke: 0.2vw #9BAE55;
+    margin-top: -0.5vw;
+    font-size: 4vw;
+}
+
+.score .cabbage {
+    width: 4vw;
+    margin-top: -0.5vw;
+}
+
+.score .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 .combo {
     position: absolute;
     top: 2vw;
     width: 12vw;
+}
+
+.combo .inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    width: fit-content;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.combo .text {
+    font-size: 5vw;
     color: white;
-    border: 1px solid red;
 }
 
 .combo .mult {
     font-size: 4vw;
-    color: white;
-    position: absolute;
-    top: 0;
-    left: 0;
+    -webkit-text-stroke: 0.2vw #FFFFFF;
+    text-stroke: 0.2vw #FFFFFF;
 }
 
 .combo.player-1 {
     left: 2vw;
 }
 
+.combo.player-1 .text {
+    -webkit-text-stroke: 0.3vw #EE6DAA;
+    text-stroke: 0.3vw #EE6DAA;
+}
+
+.combo.player-1 .mult {
+    color: #E64591;
+}
+
 .combo.player-2 {
     right: 2vw;
+}
+
+.combo.player-2 .text {
+    -webkit-text-stroke: 0.3vw #BE8E08;
+    text-stroke: 0.3vw #BE8E08;
+}
+
+.combo.player-2 .mult {
+    color: #FFC107;
 }
 
 .combo img {

@@ -71,6 +71,9 @@ export default class Splashscreen {
         const element =  document.querySelector('.js-start');
         if (!element) return;
 
+        const $$ui = document.querySelector('.ui');
+        $$ui.classList.add('is-active');
+
         element.classList.add('hide');
         element.addEventListener('animationend', () => {
             element.classList.remove('hide');

@@ -135,14 +135,11 @@ export default class MelodyPlayer {
 
         Object.keys(objBeats1).forEach(key => {
             this.game.targets[1].push(new Target(0,this.game.distP1,1,key,this.intervalBetweenBeats,objBeats1))
-
         })
 
         Object.keys(objBeats2).forEach(key => {
             this.game.targets[2].push(new Target(0,this.game.distP2,2,key,this.intervalBetweenBeats,objBeats2))
         })
-
-
 
         setTimeout(() => {
             console.log("Start playing");

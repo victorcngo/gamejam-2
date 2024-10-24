@@ -5,7 +5,7 @@
     <title>Pète un coup !</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="./assets/icons/chou-1.svg" type="image/x-icon">
+    <link rel="icon" href="./assets/icons/target-1.png" type="image/x-icon">
   </head>
 
   <body>
@@ -100,20 +100,32 @@
     </div>
 
     <div class="ui">
-        <div class="score">0</div>
+        <div class="score">
+            <p class="text">0</p>
+            <div class="cabbage">
+                <img src="./assets/score-cabbage.png" alt="Score Cabbage"/>
+            </div>
+            <img class="background" src="./assets/score-background.png" alt="Score"/>
+        </div>
         <div class="combo player-1">
             <img src="./assets/icons/player-1-combo.png" alt="Combo"/>
-            <p class="text">0</p>
-            <p class="mult">x</p>
+            <div class="inner">
+                <p class="text">0</p>
+                <p class="mult">x</p>
+            </div>
         </div>
         <div class="combo player-2">
             <img src="./assets/icons/player-2-combo.png" alt="Combo"/>
-            <p class="text">0</p>
-            <p class="mult">x</p>
+            <div class="inner">
+                <p class="text">0</p>
+                <p class="mult">x</p>
+            </div>
         </div>
     </div>
 
-    <div class="background"></div>
+    <div class="page-background">
+        <video src="./assets/background.mp4" loop muted playsinline></video>
+    </div>
     <div class="overlay">
         <img src="./assets/overlay.png" alt="Overlay">
     </div>

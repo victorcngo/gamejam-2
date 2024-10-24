@@ -5,6 +5,8 @@ import { debounce } from './utils/async/debounce'
 import Splashscreen from './ui/Splashscreen.js'
 import { wait } from './utils/async/wait.js'
 
+const $$video = document.querySelector('.page-background video')
+
 const createApp = async () => {
     const app = new PIXI.Application({
         width: window.innerWidth,
@@ -13,6 +15,8 @@ const createApp = async () => {
         antialias: true,
         transparent: true
     });
+
+    $$video.play()
 
     document.body.appendChild(app.view)
     await setUpButtons()
@@ -24,8 +28,7 @@ const createApp = async () => {
 
     const handleButtonADown = (playerID) => {
         if(!game.targets[playerID]) return
-
-        let target = game.targets[playerID][0];
+        let target = game.targets[playerID][game.idxTarget[playerID]-1];
         if (!target) return
         target.showFeedback(playerID)
     }

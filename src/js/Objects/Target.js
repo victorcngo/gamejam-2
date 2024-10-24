@@ -11,6 +11,7 @@ import {
 import Game from './Game.js'
 import { wait } from '../utils/async/wait.js'
 import Feedback from './Feedback.js';
+import {gsap} from "gsap"
 
 import * as PIXI from "pixi.js";
 
@@ -33,7 +34,9 @@ export default class Target {
         this._intervalBetweenBeats = intervalBetweenBeats;
         this._objectBeat = objectBeat
         this._iBeat = 0
-
+        this._inDestroy = false
+        this._alreadyCheck = false
+        this._isHit = false
     }
 
     // TODO!! - Move it outside and run it one time per player. Make values of controller accessible in each target
@@ -45,7 +48,7 @@ export default class Target {
         this.background.scale.set(BASE_TARGET_SIZE * SCREEN_RATIO);
         this.background.x = this.circlePos;
         this.background.y = TIMELINE_Y;
-        this.background.zIndex = 2;
+        this.background.visible = false;
         this.app.stage.addChild(this.background);
     }
 
@@ -84,11 +87,15 @@ export default class Target {
     }
 
     async showFeedback(playerID) {
-        const feedback = new Feedback(this.checkHitAccuracy(), playerID)
-        feedback.init()
+        if(!this._alreadyCheck && !this._inDestroy){
+            this._alreadyCheck = true
+            const feedback = new Feedback(this.checkHitAccuracy(), playerID)
+            feedback.init()
 
-        if (this.isHitCorrect()) {
-            this.game['player' + playerID].triggerAnimation("success")
+            if (this.isHitCorrect()) {
+                this._inDestroy = true
+                this._isHit = true
+                this.animHit()
 
             this.game['player' + playerID].increaseCombo(1)
             this.game['player' + playerID].incrementScore(100)
@@ -99,6 +106,23 @@ export default class Target {
             this.game['player' + playerID].resetCombo()
             this.game['player' + playerID].triggerAnimation("missed")
         }
+
+    }
+
+    animHit(){
+        gsap.timeline().to(this.background.scale,{
+            x: this.background.scale.x * 1.25,
+            y: this.background.scale.y * 1.25,
+            duration: (this._intervalBetweenBeats/1000)*.5,
+            ease: "elastic.out(1, 0.3)",
+        }).to(this.background,{
+            alpha:0,
+            duration:this._intervalBetweenBeats/1000*.75,
+            ease: "power2.out",
+            onComplete: () => {
+                this.app.stage.removeChild(this.background)
+            }
+        })
     }
 
     draw() {
@@ -106,39 +130,71 @@ export default class Target {
     }
 
     remove() {
-        this.app.stage.removeChild(this.background);
+        if(!this._isHit){
+            this._inDestroy = true
+            gsap.timeline()
+                .to(this.background,{
+                    y: this.background.y + 200*SCREEN_RATIO,
+                    duration: (this._intervalBetweenBeats/1000),
+                    ease: "power2.out",
+                })
+                .to(this.background,{
+                    alpha:0,
+                    duration:this._intervalBetweenBeats/1000,
+                    ease: "power2.out",
+
+                },"<")
+                .to(this.background.scale,{
+                    x: this.background.scale.x *.75,
+                    y: this.background.scale.y *.75,
+                    duration: (this._intervalBetweenBeats/1000),
+                    ease: "back.out(2)",
+                    onComplete: () => {
+                        this.app.stage.removeChild(this.background)
+                    }
+                },"<")
+        }
+
     }
 
     _lerp(start, end, t) {
         return start + (end - start) * t;
     }
+
     move() {
-        if(!this._startTime){
-            this._startTime = Date.now()
-            this._lastBeatTime = Date.now()
-        }
-
-        this._currentTime = Date.now()
-        let targetPos = window.innerWidth*.5;
-
-
-        if(this._currentTime - this._lastBeatTime >= this._intervalBetweenBeats  ) {
-            this._lastBeatTime = this._currentTime;
-            this._moveSpeed = 0
-            if(this.game.melodyPlayer.player.isPlaying()){
-                this._iBeat += 1
+        if(!this._inDestroy && !this._isHit){
+            if(!this._startTime){
+                this._startTime = Date.now()
+                this._lastBeatTime = Date.now()
             }
-            if(this._iBeat > this._indexTargetBeat){
-                this.remove()
+
+            this._currentTime = Date.now()
+            let targetPos = window.innerWidth*.5;
+
+
+            if(this._currentTime - this._lastBeatTime >= this._intervalBetweenBeats  ) {
+                this._lastBeatTime = this._currentTime;
+                if(this.game.melodyPlayer.player.isPlaying()){
+                    this._iBeat += 1
+                    if(this._iBeat === this._indexTargetBeat-1){
+                        this.game.idxTarget[this.playerID] = this._indexTargetBeat
+
+                    }
+                }
+                if(this._iBeat > this._indexTargetBeat-1){
+                    this.remove()
+                }
+            }
+            this._timeSinceLastBeat = this._currentTime - this._lastBeatTime
+
+            if(this._iBeat === this._indexTargetBeat-1 && this._objectBeat[this._iBeat] && this._objectBeat[this._iBeat].length > 0){
+                this.background.visible = true
+                this._moveSpeed = Math.min(1, this._timeSinceLastBeat / this._intervalBetweenBeats)
+                this.circlePos = this._lerp(this.circlePos, targetPos, this._moveSpeed )
+                this.draw();
             }
         }
-        this._timeSinceLastBeat = this._currentTime - this._lastBeatTime
 
-        if(this._iBeat === this._indexTargetBeat-1 && this._objectBeat[this._iBeat] && this._objectBeat[this._iBeat].length > 0){
-            this._moveSpeed = Math.min(1, this._timeSinceLastBeat / this._intervalBetweenBeats)
-            this.circlePos = this._lerp(this.circlePos, targetPos, this._moveSpeed )
-            this.draw();
-        }
 
     }
 }
