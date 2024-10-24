@@ -8,6 +8,8 @@ import { SCREEN_RATIO } from '../settings';
 const BASE_SPRITE_SIZE = 0.6
 
 const $$score = document.querySelector('.score')
+const $$player1Combo = document.querySelector('.combo.player-1 p')
+const $$player2Combo = document.querySelector('.combo.player-2 p')
 
 export default class Player {
     combo = 0
@@ -29,6 +31,10 @@ export default class Player {
             buttons: Axis.buttonManager.getButtonsById(this.playerID)
         })
 
+        this.leaderboard = Axis.createLeaderboard({
+            id: "la-soupe-aux-choux-24",
+        });
+
         if (PIXI.Loader.shared.loading) {
             await new Promise((resolve, reject) => {
                 PIXI.Loader.shared.onComplete.add(() => {
@@ -39,32 +45,6 @@ export default class Player {
         } else {
             this.setupSprite();
         }
-
-        this.leaderboard = Axis.createLeaderboard({
-            id: "la-soupe-aux-choux-24",
-        });
-
-        this.comboText = new PIXI.Text(
-            'x0',
-            {
-                fontFamily: 'Arial',
-                fontSize: 64 * (SCREEN_RATIO * 2),
-                fill: 0x000000,
-                align: 'center',
-                fontWeight: 'bold',
-                stroke: 0xffffff,
-                strokeThickness: SCREEN_RATIO * 8,
-            }
-        );
-
-        const margin = 220 * SCREEN_RATIO
-        this.comboText.x = this.playerID === 1
-        ? margin
-        : (window.innerWidth - this.comboText.width - margin);
-
-        this.comboText.y = (window.innerHeight * 0.5);
-
-        this.app.stage.addChild(this.comboText)
     }
 
     setupSprite() {
@@ -94,12 +74,16 @@ export default class Player {
     increaseCombo(amount = 1) {
         this.combo += amount
         this.maxCombo = Math.max(this.maxCombo, this.combo)
-        this.comboText.text = 'x' + this.combo
+
+        $$player1Combo.innerHTML = this.combo
+        $$player2Combo.innerHTML = this.combo
     }
 
     resetCombo() {
         this.combo = 0
-        this.comboText.text = 'x' + this.combo
+
+        $$player1Combo.innerHTML = this.combo
+        $$player2Combo.innerHTML = this.combo
     }
 
     incrementScore(amount) {

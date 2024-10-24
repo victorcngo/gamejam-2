@@ -33,7 +33,6 @@ export default class Target {
         this._intervalBetweenBeats = intervalBetweenBeats;
         this._objectBeat = objectBeat
         this._iBeat = 0
-
     }
 
     // TODO!! - Move it outside and run it one time per player. Make values of controller accessible in each target
@@ -135,6 +134,7 @@ export default class Target {
     _lerp(start, end, t) {
         return start + (end - start) * t;
     }
+
     move() {
         if(!this._startTime){
             this._startTime = Date.now()

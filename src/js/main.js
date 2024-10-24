@@ -4,6 +4,8 @@ import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
 import Splashscreen from './ui/Splashscreen.js'
 
+const $$video = document.querySelector('.background video')
+
 const createApp = async () => {
     const app = new PIXI.Application({
         width: window.innerWidth,
@@ -12,6 +14,8 @@ const createApp = async () => {
         antialias: true,
         transparent: true
     });
+
+    $$video.play()
 
     document.body.appendChild(app.view)
     await setUpButtons()

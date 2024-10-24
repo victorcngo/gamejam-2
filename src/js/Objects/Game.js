@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import Axis from 'axis-api'
 import {
     RADIUS,
     HIT_ZONE_POSITION,
@@ -52,8 +53,6 @@ export default class Game {
 
         this.setStaticObjects()
 
-        // TODO - set the melody player on the splash screen
-
         // HACK - Need click to allow audioContext, remove when starting page completed
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
     }
@@ -86,6 +85,10 @@ export default class Game {
         const countdown = document.querySelector('.js-countdown');
         const images = countdown.querySelectorAll('img');
 
+        countdown.setAttribute('data-state', 'hidden');
+        this.hasStarted = true;
+        this.melodyPlayer.startNewWave(120);
+
         const tl = gsap.timeline({
             delay: 2,
             onStart: () => {
@@ -93,11 +96,10 @@ export default class Game {
                 this.showTutorial();
             },
             onComplete: () => {
-                countdown.setAttribute('data-state', 'hidden');
-                this.hasStarted = true;
-
-                this.melodyPlayer.startNewWave(120);
-                tl.kill();
+                // countdown.setAttribute('data-state', 'hidden');
+                // this.hasStarted = true;
+                // this.melodyPlayer.startNewWave(120);
+                // tl.kill();
             }
         });
 
@@ -131,7 +133,7 @@ export default class Game {
         const timelineTexture = PIXI.Texture.from('./assets/timeline.png');
         const timeline = new PIXI.Sprite(timelineTexture);
         timeline.anchor.set(0.5, 0.5);
-        timeline.x = HIT_ZONE_POSITION;
+        timeline.x = HIT_ZONE_POSITION - (SCREEN_RATIO * 60); // HACK - This is arbitrary
         timeline.y = TIMELINE_Y;
         timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(timeline);
@@ -140,7 +142,7 @@ export default class Game {
         const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
         const hitZone = new PIXI.Sprite(hitZoneTexture);
         hitZone.anchor.set(0.5, 0.5);
-        hitZone.x = HIT_ZONE_POSITION + (hitZone.width * 100);
+        hitZone.x = HIT_ZONE_POSITION;
         hitZone.y = TIMELINE_Y;
         hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(hitZone);
@@ -179,42 +181,41 @@ export default class Game {
     }
 
     end() {
-        const scorespopup = document.querySelector('.js-scorespopup');
-        const leaderboardpopup = document.querySelector('.js-leaderboardpopup');
-        scorespopup.setAttribute('data-state', 'visible');
+        // const scorespopup = document.querySelector('.js-scorespopup');
+        // const leaderboardpopup = document.querySelector('.js-leaderboardpopup');
+        // scorespopup.setAttribute('data-state', 'visible');
 
-        const buttons = [
-            this.player1.instance.buttons[0],
-            this.player2.instance.buttons[0]
-        ]
+        // const buttons = [
+        //     this.player1.instance.buttons[0],
+        //     this.player2.instance.buttons[0]
+        // ]
 
-        const keydownHandler = (event) => {
-            scorespopup.setAttribute('data-state', 'hidden');
+        // const keydownHandler = (event) => {
+        //     scorespopup.setAttribute('data-state', 'hidden');
 
-            buttons.forEach(button => {
-                button.removeEventListener('keydown', keydownHandler);
-            });
+        //     buttons.forEach(button => {
+        //         button.removeEventListener('keydown', keydownHandler);
+        //     });
 
-            this.player1.leaderboard.postScore({
-            username: "Team test",
-            value: Math.random() * 100
-            }).then(() => {
-            this.player1.leaderboard.getScores().then((response) => {
-                new LeaderboardPopup({
-                element: leaderboardpopup,
-                response: response
-                }).show();
-            });
-            });
-        };
+        //     this.player1.leaderboard.postScore({
+        //     username: "Team test",
+        //     value: Math.random() * 100
+        //     }).then(() => {
+        //     this.player1.leaderboard.getScores().then((response) => {
+        //         new LeaderboardPopup({
+        //         element: leaderboardpopup,
+        //         response: response
+        //         }).show();
+        //     });
+        //     });
+        // };
 
-        buttons.forEach(button => {
-            button.addEventListener('keydown', keydownHandler);
-        });
+        // buttons.forEach(button => {
+        //     button.addEventListener('keydown', keydownHandler);
+        // });
 
-        this.hasStarted = false
-        this.targetsContainer.removeChildren()
-        this.targets = {}
+        // this.hasStarted = false
+        // this.targets = {}
     }
 
     restart(){
