@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Pète un coup !</title>
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="./assets/icons/chou-1.svg" type="image/x-icon">
   </head>
@@ -38,7 +39,6 @@
             <div class="o-Scorespopup_content">
                 <h2 class="o-Scorespopup-title">Fin</h2>
                 <p class="o-Scorespopup-score"><span class="js-score">0</span> pts</p>
-
                 <div class="o-Scorespopup_players">
                     <div class="o-Scorespopup_player">
                         <h3 class="o-Scorespopup_player-title">Joueur 1</h3>
@@ -57,7 +57,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="o-Scorespopup_actions">
                     <p>Press A to show leaderscore</p>
                 </div>
@@ -65,7 +64,7 @@
         </div>
     </div>
 
-    <div class="o-Splashscreen js-splashscreen" data-state="visible">
+    <div class="o-Splashscreen js-splashscreen" data-state="hidden">
         <div class="o-Splashscreen_content">
             <div class="o-Splashscreen_logo">
                 <img src="./assets/ui/splashscreen/logo.svg" alt="Logo">
@@ -99,6 +98,26 @@
             <img src="./assets/overlay.png" alt="Overlay">
         </div>
     </div>
+
+    <div class="ui">
+        <div class="score">0</div>
+        <div class="combo player-1">
+            <img src="./assets/icons/player-1-combo.png" alt="Combo"/>
+            <p class="text">0</p>
+            <p class="mult">x</p>
+        </div>
+        <div class="combo player-2">
+            <img src="./assets/icons/player-2-combo.png" alt="Combo"/>
+            <p class="text">0</p>
+            <p class="mult">x</p>
+        </div>
+    </div>
+
+    <div class="background"></div>
+    <div class="overlay">
+        <img src="./assets/overlay.png" alt="Overlay">
+    </div>
+
   </body>
 
 </html>

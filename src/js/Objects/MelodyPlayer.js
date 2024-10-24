@@ -1,6 +1,7 @@
 import MidiPlayer from 'midi-player-js';
 import { Soundfont } from "smplr";
 import Game from './Game'
+import Target from "./Target";
 
 //Onjectif de cette class : Analyser le fichier midi pour timer l'apparition des choux
 
@@ -24,17 +25,25 @@ export default class MelodyPlayer {
             }
         );
 
-        this.setPlayerEvents();
+        this.instrument2 = new Soundfont(
+            this.context,
+            {
+                instrument: "koto"
+            }
+        );
+
+        this.fetchMelody()
     }
 
     /**
      * Récupération du fichier MID
      */
     fetchMelody() {
-        return fetch('../../assets/soupeWithTimings.MID')
+        fetch('../../assets/merge.mid')
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
                 this.player.loadArrayBuffer(arrayBuffer);
+                this.setPlayerEvents()
             })
             .catch(error => {
                 console.error('Error loading the MIDI file:', error);
@@ -42,25 +51,31 @@ export default class MelodyPlayer {
     }
 
     setPlayerEvents() {
-        this.player.on('playing', () => {
-            this.currentTick = this.player.tick;
-        });
+
+        //Update du currentTick
+
+        this.player.on('playing', (e) => {
+            this.player.tempo = this.tempo
+        })
 
         this.player.on('endOfFile', () => {
             this.game.end();
         });
 
         this.player.on('midiEvent', (note) => {
-            if (note.noteName) {
-                if (note.name === 'Note on' && note.track === 2) {
-                    this.instrument.start({
-                        note: note.noteNumber,
-                        velocity: 80,
-                        duration: 0.1
-                    });
-                }
-            }
-        });
+            // if (note.noteName) {
+            //     if (note.name === 'Note on' && note.track === 1) {
+            //         this.instrument.start({
+            //             note: note.noteNumber,
+            //         });
+            //     }
+            //     if (note.name === 'Note on' && note.track === 2) {
+            //         this.instrument2.start({
+            //             note: note.noteNumber,
+            //         });
+            //     }
+            // }
+        })
     }
 
     /**
@@ -68,53 +83,72 @@ export default class MelodyPlayer {
      * regénérer des choux
      */
     startNewWave(tempo) {
-        this.tempo = tempo;
-        this.createRandomChoux();
-        this.player.play();
+        this.tempo = tempo
+        this.intervalBetweenBeats = (60 / tempo) * 1000;
+        this.createRandomChoux()
+
+    }
+
+    getObjectBeats(trackIdx){
+        const rythmTrack = this.player.tracks[trackIdx]
+        const events = rythmTrack.events
+        let indexBeat = 0
+        const timeBeat = 60/this.tempo * 1000
+        const objBeats = {}
+
+        const a = this.player.totalTicks / (this.player.getSongTime() * 1000)
+        const tTick =  a * timeBeat;
+
+        function incrementBeat(e){
+            const i = indexBeat*tTick
+            const i2 = (indexBeat+1)*tTick
+            if( i <= e.tick && i2 > e.tick){
+                objBeats[indexBeat+1].push(e)
+            }
+            else{
+                indexBeat++;
+                objBeats[indexBeat+1] = []
+                incrementBeat(e)
+            }
+        }
+
+
+        const rythmNotes = events.filter((e) => {
+            if(e.name === 'Note on' && e.track == trackIdx +1 ){
+                if(!objBeats[indexBeat+1]){
+                    objBeats[indexBeat+1] = []
+                }
+                incrementBeat(e)
+            }
+            return e.name === 'Note on' && e.track == trackIdx+1
+        })
+
+        return objBeats
     }
 
     /**
      * Logique de création des choux
      */
     createRandomChoux() {
-        const choux = [];
-        const rythmTrack = this.player.tracks[2];
-        const rythmNotes = [];
+        const objBeats1 = this.getObjectBeats(0)
+        const objBeats2 = this.getObjectBeats(1)
 
-        for (const note of rythmTrack.events) {
-            if (note.name === 'Note on') {
-                rythmNotes.push(note);
-            }
-        }
+        Object.keys(objBeats1).forEach(key => {
+            this.game.targets[1].push(new Target(0,this.game.distP1,1,key,this.intervalBetweenBeats,objBeats1))
 
-        let lastChouStartTime = 0;
-        let lastChouDuration = 0;
+        })
 
-        for (const note of rythmNotes) {
-            if (note.tick > lastChouStartTime + lastChouDuration + 1000) {
-                if (Math.random() > 1 / 3) {
-                    const chouTypeIndice = Math.floor(Math.random() * 2.99);
-                    if (chouTypeIndice === 0) {
-                        choux.push({
-                            type: 'hit',
-                            tick: note.tick,
-                            duration: 0
-                        });
+        Object.keys(objBeats2).forEach(key => {
+            this.game.targets[2].push(new Target(0,this.game.distP2,2,key,this.intervalBetweenBeats,objBeats2))
+        })
 
-                        lastChouStartTime = note.tick;
-                        lastChouDuration = 0;
-                    }
-                }
-            }
-        }
-    }
 
-    /**
-     * Start function to initialize and start the melody player
-     */
-    start() {
-        this.fetchMelody().then(() => {
-            this.startNewWave(this.tempo);
-        });
+
+        setTimeout(() => {
+            console.log("Start playing");
+
+            this.player.play()
+            this.game.audioManager.play("music")
+        },this.intervalBetweenBeats)
     }
 }

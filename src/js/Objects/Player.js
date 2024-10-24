@@ -7,6 +7,8 @@ import { SCREEN_RATIO } from '../settings';
 
 const BASE_SPRITE_SIZE = 0.6
 
+const $$score = document.querySelector('.score')
+
 export default class Player {
     combo = 0
     maxCombo = 0
@@ -79,8 +81,8 @@ export default class Player {
             const frameWidth = this.sprite.width / this.sprite.totalFrames;
             this.sprite.anchor.set(0.5);
             this.sprite.x = this.playerID === 1
-            ? (window.innerWidth * 0.5) - ((frameWidth) * SCREEN_RATIO)
-            : (window.innerWidth * 0.5) + ((frameWidth) * SCREEN_RATIO);
+            ? (window.innerWidth * 0.5) - ((frameWidth * 0.5) * SCREEN_RATIO)
+            : (window.innerWidth * 0.5) + ((frameWidth * 0.5) * SCREEN_RATIO);
             this.sprite.y = (window.innerHeight * 0.5) + (SCREEN_RATIO * 100);
             this.sprite.scale.set(BASE_SPRITE_SIZE * SCREEN_RATIO);
             this.sprite.zIndex = 1;
@@ -101,8 +103,8 @@ export default class Player {
     }
 
     incrementScore(amount) {
-        // TODO - Handle the display of the score
         this.game.score += amount * this.combo
+        $$score.innerHTML = this.game.score
     }
 
     async triggerAnimation(animationName) {
@@ -120,7 +122,6 @@ export default class Player {
                 break;
         }
 
-        // Attendre 200ms avant de revenir à la frame initiale
         await wait(200);
         this.sprite.gotoAndStop(0);
     }

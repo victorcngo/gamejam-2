@@ -2,7 +2,6 @@ import { setUpButtons } from './InputManager'
 import Game from './objects/Game.js'
 import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
-import { longFarts, smallFarts, timelineY } from './settings.js'
 import Splashscreen from './ui/Splashscreen.js'
 import { wait } from './utils/async/wait.js'
 

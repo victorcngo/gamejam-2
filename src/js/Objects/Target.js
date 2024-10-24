@@ -14,10 +14,10 @@ import Feedback from './Feedback.js';
 
 import * as PIXI from "pixi.js";
 
-const BASE_TARGET_SIZE = 3.5
+const BASE_TARGET_SIZE = 0.5
 
 export default class Target {
-    constructor(index, initXPos, playerId) {
+    constructor(index, initXPos, playerId,indexTargetBeat,intervalBetweenBeats,objectBeat) {
         this.game = new Game()
         this.app = this.game.app;
         this.index = index;
@@ -26,8 +26,14 @@ export default class Target {
         this.radius = RADIUS;
         this.direction = this.playerID === 1 ? -1 : 1
         this.player1 = this.game.player1.instance
-        this.loadBackground(`/assets/icons/target-${this.playerID}.svg`);
+        this.loadBackground(`/assets/icons/target-${this.playerID}.png`);
         this.draw()
+
+        this._indexTargetBeat = indexTargetBeat;
+        this._intervalBetweenBeats = intervalBetweenBeats;
+        this._objectBeat = objectBeat
+        this._iBeat = 0
+
     }
 
     // TODO!! - Move it outside and run it one time per player. Make values of controller accessible in each target
@@ -58,11 +64,9 @@ export default class Target {
 
             if (successInPercentage > ACCURACY.bad) {
                 if (successInPercentage > ACCURACY.good) {
-
                     if (successInPercentage > ACCURACY.perfect) {
                         return "perfect";
                     }
-
                     return "good";
                 }
                 return "bad";
@@ -87,6 +91,7 @@ export default class Target {
             this.game['player' + playerID].triggerAnimation("success")
 
             this.game['player' + playerID].increaseCombo(1)
+            this.game['player' + playerID].incrementScore(100)
 
             await wait(200)
             this.app.stage.removeChild(feedback)
@@ -104,9 +109,37 @@ export default class Target {
         this.app.stage.removeChild(this.background);
     }
 
+    _lerp(start, end, t) {
+        return start + (end - start) * t;
+    }
     move() {
-        this.circlePos += (-this.direction) * this.game.speed;
-        this.draw();
+        if(!this._startTime){
+            this._startTime = Date.now()
+            this._lastBeatTime = Date.now()
+        }
+
+        this._currentTime = Date.now()
+        let targetPos = window.innerWidth*.5;
+
+
+        if(this._currentTime - this._lastBeatTime >= this._intervalBetweenBeats  ) {
+            this._lastBeatTime = this._currentTime;
+            this._moveSpeed = 0
+            if(this.game.melodyPlayer.player.isPlaying()){
+                this._iBeat += 1
+            }
+            if(this._iBeat > this._indexTargetBeat){
+                this.remove()
+            }
+        }
+        this._timeSinceLastBeat = this._currentTime - this._lastBeatTime
+
+        if(this._iBeat === this._indexTargetBeat-1 && this._objectBeat[this._iBeat] && this._objectBeat[this._iBeat].length > 0){
+            this._moveSpeed = Math.min(1, this._timeSinceLastBeat / this._intervalBetweenBeats)
+            this.circlePos = this._lerp(this.circlePos, targetPos, this._moveSpeed )
+            this.draw();
+        }
+
     }
 }
 
