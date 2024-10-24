@@ -1,5 +1,5 @@
 export const RADIUS = 100;
-export const HIT_ZONE_POSITION = window.innerWidth / 2;
+export const HIT_ZONE_POSITION = window.innerWidth * 0.5;
 export const PRECISION = 15;
 export const hitRangeMaxInPercentage = 200;
 

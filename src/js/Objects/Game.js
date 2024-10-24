@@ -122,33 +122,23 @@ export default class Game {
     }
 
     setStaticObjects() {
-        // Hit zone
-        const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
-        const hitZone = new PIXI.Sprite(hitZoneTexture);
-        hitZone.anchor.set(0.5, 0.5);
-        hitZone.x = HIT_ZONE_POSITION;
-        hitZone.y = TIMELINE_Y;
-        hitZone.zIndex = 2;
-        hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
-
-        console.log(hitZone);
-
-
-        // hitZone.sprite.zIndex = 1000;
-        this.app.stage.addChild(hitZone);
-
         // Timeline
         const timelineTexture = PIXI.Texture.from('./assets/timeline.png');
         const timeline = new PIXI.Sprite(timelineTexture);
         timeline.anchor.set(0.5, 0.5);
         timeline.x = HIT_ZONE_POSITION;
         timeline.y = TIMELINE_Y;
-        timeline.zIndex = 1;
-        // timeline.sprite.zIndex = 0;
         timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(timeline);
 
-        console.log(timeline._zIndex);
+        // Hit zone
+        const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
+        const hitZone = new PIXI.Sprite(hitZoneTexture);
+        hitZone.anchor.set(0.5, 0.5);
+        hitZone.x = HIT_ZONE_POSITION + (hitZone.width * 100);
+        hitZone.y = TIMELINE_Y;
+        hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
+        this.app.stage.addChild(hitZone);
     }
 
     createTargets() {

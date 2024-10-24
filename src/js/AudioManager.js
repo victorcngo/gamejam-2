@@ -1,4 +1,3 @@
-import { smallFarts, longFarts } from "./settings";
 import { debounce } from './utils/async/debounce'
 
 export class AudioManager {

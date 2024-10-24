@@ -44,7 +44,6 @@ export default class Target {
 
     // TODO - Plug this with the feedback range & sprites
     isHitCorrect() {
-        // console.log(this.checkHitAccuracy());
         return this.checkHitAccuracy() !== "missed";
     }
 
@@ -72,11 +71,9 @@ export default class Target {
 
             if (successInPercentage > ACCURACY.bad) {
                 if (successInPercentage > ACCURACY.good) {
-
                     if (successInPercentage > ACCURACY.perfect) {
                         return "perfect";
                     }
-
                     return "good";
                 }
                 return "bad";
@@ -110,6 +107,7 @@ export default class Target {
             this.app.stage.addChild(prout)
 
             this.game['player' + playerID].increaseCombo(1)
+            this.game['player' + playerID].incrementScore(100)
 
             await wait(200)
             this.app.stage.removeChild(prout)
