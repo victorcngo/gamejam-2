@@ -13,6 +13,7 @@ import MelodyPlayer from './MelodyPlayer.js';
 import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
 import gsap from 'gsap'
+import LeaderboardPopup from '../ui/LeaderboardPopup.js';
 
 const BASE_TIMELINE_SIZE = 2
 const BASE_HIT_ZONE_SIZE = 3.5
@@ -174,7 +175,46 @@ export default class Game {
     }
 
     end() {
+        const scorespopup = document.querySelector('.js-scorespopup');
+        const leaderboardpopup = document.querySelector('.js-leaderboardpopup');
+        scorespopup.setAttribute('data-state', 'visible');
 
+        const buttons = [
+            this.player1.instance.buttons[0],
+            this.player2.instance.buttons[0]
+        ]
+
+        const keydownHandler = (event) => {
+            scorespopup.setAttribute('data-state', 'hidden');
+
+            buttons.forEach(button => {
+                button.removeEventListener('keydown', keydownHandler);
+            });
+
+            this.player1.leaderboard.postScore({
+            username: "Team test",
+            value: Math.random() * 100
+            }).then(() => {
+            this.player1.leaderboard.getScores().then((response) => {
+                new LeaderboardPopup({
+                element: leaderboardpopup,
+                response: response
+                }).show();
+            });
+            });
+        };
+
+        buttons.forEach(button => {
+            button.addEventListener('keydown', keydownHandler);
+        });
+
+        this.hasStarted = false
+        this.targetsContainer.removeChildren()
+        this.targets = {}
+    }
+
+    restart(){
+        console.log('restart')
     }
 
     increaseSpeed(num) {

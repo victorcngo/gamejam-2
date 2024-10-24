@@ -60,15 +60,8 @@ export default class MelodyPlayer {
         })
 
         this.player.on('endOfFile', () => {
-
-        })
-
-        /**
-         * Autre fonction qui se lance à event du midi player;
-         * à chaque event, on va vérifier si cette event est l'event "Note on", qui correspond au moment
-         * où une note est jouée, et si cette note est de la track 2, la track de la melody,
-         * et si ces 2 conditions sont réunies, on demande à l'intrument de jouer la note.
-         */
+            this.game.end();
+        });
 
         this.player.on('midiEvent', (note) => {
             // if (note.noteName) {

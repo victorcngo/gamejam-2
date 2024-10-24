@@ -38,6 +38,10 @@ export default class Player {
             this.setupSprite();
         }
 
+        this.leaderboard = Axis.createLeaderboard({
+            id: "la-soupe-aux-choux-24",
+        });
+
         this.comboText = new PIXI.Text(
             'x0',
             {
