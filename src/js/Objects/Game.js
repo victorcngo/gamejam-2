@@ -12,9 +12,11 @@ import Target from './Target.js'
 import MelodyPlayer from './MelodyPlayer.js';
 import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
+import gsap from 'gsap'
+import LeaderboardPopup from '../ui/LeaderboardPopup.js';
 
-const BASE_TIMELINE_SIZE = 2
-const BASE_HIT_ZONE_SIZE = 3.5
+const BASE_TIMELINE_SIZE = 0.5
+const BASE_HIT_ZONE_SIZE = 4
 
 export default class Game {
     static instance
@@ -56,33 +58,92 @@ export default class Game {
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
     }
 
+    showTutorial() {
+        const tutorial = document.querySelector('.js-tutorial');
+        tutorial.setAttribute('data-state', 'visible');
+
+        gsap.set(tutorial, { opacity: 0 });
+
+        gsap.to(tutorial, {
+            duration: 1,
+            opacity: 1,
+            delay: 1,
+            onComplete: () => {
+                setTimeout(() => {
+                    gsap.to(tutorial, {
+                        duration: 1,
+                        opacity: 0,
+                        onComplete: () => {
+                            tutorial.setAttribute('data-state', 'hidden');
+                        }
+                    });
+                }, 2000)
+            }
+        });
+    }
+
+    showCountdown() {
+        const countdown = document.querySelector('.js-countdown');
+        const images = countdown.querySelectorAll('img');
+
+        const tl = gsap.timeline({
+            delay: 2,
+            onStart: () => {
+                countdown.setAttribute('data-state', 'visible');
+                this.showTutorial();
+            },
+            onComplete: () => {
+                countdown.setAttribute('data-state', 'hidden');
+                this.hasStarted = true;
+
+                this.melodyPlayer.startNewWave(120);
+                tl.kill();
+            }
+        });
+
+        for (let i = 0; i < images.length; i++) {
+            tl.to(images[i], {
+                duration: 0.5,
+                opacity: 1,
+                scale: 1.2
+            });
+            tl.to(images[i], {
+                duration: 0.5,
+                opacity: 0,
+                scale: 1
+            });
+        }
+    }
+
     setMelodyPlayer() {
         if (!this.melodyPlayer) {
             this.melodyPlayer = new MelodyPlayer(120)
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
 
-        this.hasStarted = true
+        // // HACK - Fast start
+        // this.hasStarted = true;
+        // this.melodyPlayer.start();
     }
 
     setStaticObjects() {
-        // Hit zone
-        const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
-        const hitZone = new PIXI.Sprite(hitZoneTexture);
-        hitZone.anchor.set(0.5, 0.5);
-        hitZone.x = HIT_ZONE_POSITION;
-        hitZone.y = TIMELINE_Y;
-        hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
-        this.app.stage.addChild(hitZone);
-
         // Timeline
-        const timelineTexture = PIXI.Texture.from('./assets/timeline-background.svg');
+        const timelineTexture = PIXI.Texture.from('./assets/timeline.png');
         const timeline = new PIXI.Sprite(timelineTexture);
         timeline.anchor.set(0.5, 0.5);
         timeline.x = HIT_ZONE_POSITION;
         timeline.y = TIMELINE_Y;
         timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(timeline);
+
+        // Hit zone
+        const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
+        const hitZone = new PIXI.Sprite(hitZoneTexture);
+        hitZone.anchor.set(0.5, 0.5);
+        hitZone.x = HIT_ZONE_POSITION + (hitZone.width * 100);
+        hitZone.y = TIMELINE_Y;
+        hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
+        this.app.stage.addChild(hitZone);
     }
 
     // TODO! - Do this inside the player class
@@ -118,7 +179,46 @@ export default class Game {
     }
 
     end() {
+        const scorespopup = document.querySelector('.js-scorespopup');
+        const leaderboardpopup = document.querySelector('.js-leaderboardpopup');
+        scorespopup.setAttribute('data-state', 'visible');
 
+        const buttons = [
+            this.player1.instance.buttons[0],
+            this.player2.instance.buttons[0]
+        ]
+
+        const keydownHandler = (event) => {
+            scorespopup.setAttribute('data-state', 'hidden');
+
+            buttons.forEach(button => {
+                button.removeEventListener('keydown', keydownHandler);
+            });
+
+            this.player1.leaderboard.postScore({
+            username: "Team test",
+            value: Math.random() * 100
+            }).then(() => {
+            this.player1.leaderboard.getScores().then((response) => {
+                new LeaderboardPopup({
+                element: leaderboardpopup,
+                response: response
+                }).show();
+            });
+            });
+        };
+
+        buttons.forEach(button => {
+            button.addEventListener('keydown', keydownHandler);
+        });
+
+        this.hasStarted = false
+        this.targetsContainer.removeChildren()
+        this.targets = {}
+    }
+
+    restart(){
+        console.log('restart')
     }
 
     increaseSpeed(num) {

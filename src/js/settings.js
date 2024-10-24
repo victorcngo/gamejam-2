@@ -1,5 +1,5 @@
 export const RADIUS = 100;
-export const HIT_ZONE_POSITION = window.innerWidth / 2;
+export const HIT_ZONE_POSITION = window.innerWidth * 0.5;
 export const PRECISION = 15;
 export const hitRangeMaxInPercentage = 200;
 
@@ -18,7 +18,7 @@ export const HIT_RANGE = [
 ];
 
 export const numOfTargets = 200;
-export const TIMELINE_Y = window.innerHeight - 100;
+export const TIMELINE_Y = window.innerHeight - (SCREEN_RATIO * 200);
 export const iconScale = 2;
 
 export const music = [

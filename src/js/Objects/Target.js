@@ -14,7 +14,7 @@ import Feedback from './Feedback.js';
 
 import * as PIXI from "pixi.js";
 
-const BASE_TARGET_SIZE = 3.5
+const BASE_TARGET_SIZE = 0.5
 
 export default class Target {
     constructor(index, initXPos, playerId,indexTargetBeat,intervalBetweenBeats,objectBeat) {
@@ -26,7 +26,7 @@ export default class Target {
         this.radius = RADIUS;
         this.direction = this.playerID === 1 ? -1 : 1
         this.player1 = this.game.player1.instance
-        this.loadBackground(`/assets/icons/target-${this.playerID}.svg`);
+        this.loadBackground(`/assets/icons/target-${this.playerID}.png`);
         this.draw()
 
         this._indexTargetBeat = indexTargetBeat;
@@ -50,7 +50,6 @@ export default class Target {
 
     // TODO - Plug this with the feedback range & sprites
     isHitCorrect() {
-        // console.log(this.checkHitAccuracy());
         return this.checkHitAccuracy() !== "missed";
     }
 
@@ -78,11 +77,9 @@ export default class Target {
 
             if (successInPercentage > ACCURACY.bad) {
                 if (successInPercentage > ACCURACY.good) {
-
                     if (successInPercentage > ACCURACY.perfect) {
                         return "perfect";
                     }
-
                     return "good";
                 }
                 return "bad";
@@ -110,11 +107,13 @@ export default class Target {
             const texture = PIXI.Texture.from('./assets/icons/prout.svg')
             const prout = new PIXI.Sprite(texture)
             prout.anchor.set(0.5)
+            prout.scale.set(BASE_TARGET_SIZE * SCREEN_RATIO)
             prout.x = window.innerWidth / 2
             prout.y = TIMELINE_Y
             this.app.stage.addChild(prout)
 
             this.game['player' + playerID].increaseCombo(1)
+            this.game['player' + playerID].incrementScore(100)
 
             await wait(200)
             this.app.stage.removeChild(prout)

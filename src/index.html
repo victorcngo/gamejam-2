@@ -3,15 +3,108 @@
   <head>
     <meta charset="UTF-8">
     <title>Pète un coup !</title>
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="./assets/icons/chou-1.svg" type="image/x-icon">
   </head>
+
   <body>
-    <div class="ui"></div>
+    <div class="o-Leaderboardpopup js-leaderboardpopup" data-state="hidden">
+        <div class="o-Leaderboardpopup_container">
+            <div class="o-Leaderboardpopup_content">
+                <h2 class="o-Leaderboardpopup-title">Leaderboard</h2>
+
+                <table class="o-Leaderboardpopup_players">
+                    <thead class="o-Leaderboardpopup_players-head">
+                        <tr>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Player</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="o-Leaderboardpopup_players-body js-players">
+                    </tbody>
+                </table>
+
+                <div class="o-Leaderboardpopup_actions">
+                    <p>Press A to return to home</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="o-Scorespopup js-scorespopup" data-state="hidden">
+        <div class="o-Scorespopup_container">
+            <div class="o-Scorespopup_content">
+                <h2 class="o-Scorespopup-title">Fin</h2>
+                <p class="o-Scorespopup-score"><span class="js-score">0</span> pts</p>
+                <div class="o-Scorespopup_players">
+                    <div class="o-Scorespopup_player">
+                        <h3 class="o-Scorespopup_player-title">Joueur 1</h3>
+                        <div class="o-Scorespopup_combo">
+                            <img src="./assets/ui/scorespopup/star.svg" alt="star"/>
+                            <p>Best combo</p>
+                            <p class="js-player0-combo">0</p>
+                        </div>
+                    </div>
+                    <div class="o-Scorespopup_player">
+                        <h3 class="o-Scorespopup_player-title">Joueur 2</h3>
+                        <div class="o-Scorespopup_combo">
+                            <img src="./assets/ui/scorespopup/star.svg" alt="star"/>
+                            <p>Best combo</p>
+                            <p class="js-player0-combo">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="o-Scorespopup_actions">
+                    <p>Press A to show leaderscore</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="o-Splashscreen js-splashscreen" data-state="hidden">
+        <div class="o-Splashscreen_content">
+            <div class="o-Splashscreen_logo">
+                <img src="./assets/ui/splashscreen/logo.svg" alt="Logo">
+            </div>
+            <div class="o-Splashscreen_actions">
+                <img src="./assets/ui/splashscreen/start-button.svg" alt="Start button" class="o-Splashscreen-start js-start"/>
+                <img src="./assets/ui/splashscreen/leaderboard-button.svg" alt="Leaderboard button" class="o-Splashscreen-leaderboard js-leaderboard"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="a-Countdown js-countdown" data-state="hidden">
+        <img src="./assets/ui/countdown/3.png" alt="3"/>
+
+        <img src="./assets/ui/countdown/2.png" alt="2"/>
+
+        <img src="./assets/ui/countdown/1.png" alt="1"/>
+
+        <img src="./assets/ui/countdown/go.png" alt="Go"/>
+    </div>
+
+    <div class="ui">
+        <div class="score">0</div>
+        <div class="combo player-1">
+            <img src="./assets/icons/player-1-combo.png" alt="Combo"/>
+            <p class="text">0</p>
+            <p class="mult">x</p>
+        </div>
+        <div class="combo player-2">
+            <img src="./assets/icons/player-2-combo.png" alt="Combo"/>
+            <p class="text">0</p>
+            <p class="mult">x</p>
+        </div>
+    </div>
+
     <div class="background"></div>
     <div class="overlay">
         <img src="./assets/overlay.png" alt="Overlay">
     </div>
-    <canvas id="scene"></canvas>
+
   </body>
+
 </html>
