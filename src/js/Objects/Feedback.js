@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Game from './Game';
+import { gsap } from 'gsap';
+import { SCREEN_RATIO, TIMELINE_Y } from '../settings';
 
 export default class Feedback {
     text = ""
@@ -23,6 +25,20 @@ export default class Feedback {
                 align: 'center'
             }
         );
+
+        this.text.anchor.set(0.5);
+        this.text.x = window.innerWidth / 2;
+        this.text.y = TIMELINE_Y;
+        this.app.stage.addChild(this.text);
+
+        gsap.to(this.text, {
+            y: this.text.y - (SCREEN_RATIO * 100),
+            alpha: 0,
+            duration: 1,
+            onComplete: () => {
+                this.remove();
+            }
+        })
     }
 
     draw() {

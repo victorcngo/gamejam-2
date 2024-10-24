@@ -20,6 +20,11 @@ import FartTarget from './FartTarget.js';
 const BASE_TIMELINE_SIZE = 0.5
 const BASE_HIT_ZONE_SIZE = 4
 
+const $$score = document.querySelector('.score p')
+
+const $$player1Combo = document.querySelector('.combo.player-1 p')
+const $$player2Combo = document.querySelector('.combo.player-2 p')
+
 export default class Game {
     static instance
 
@@ -29,7 +34,7 @@ export default class Game {
 
     constructor(app) {
         if (Game.instance) {
-            return Game.instance; // Return existing instance if already created
+            return Game.instance;
         }
 
         Game.instance = this;
@@ -41,7 +46,7 @@ export default class Game {
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
         this.fartTargetTimes = [1000, 17000, 33000, 49000, 65000]
-    
+
         this.fartTarget = {
             1: [],
             2: []
@@ -59,8 +64,8 @@ export default class Game {
 
     init() {
         // Create the players
-        this.player1 = new Player(1)
-        this.player2 = new Player(2)
+        this.player1 = new Player(1, $$score, $$player1Combo)
+        this.player2 = new Player(2, $$score, $$player2Combo)
 
         this.setStaticObjects()
 
@@ -85,8 +90,6 @@ export default class Game {
 
         this.fartTarget[1].push(fartTarget1);
         this.fartTarget[2].push(fartTarget2);
-
-        console.log(this.fartTarget)
     }
 
     moveFartTargets() {
@@ -96,7 +99,6 @@ export default class Game {
             });
         }
     }
-
 
     showTutorial() {
         const tutorial = document.querySelector('.js-tutorial');

@@ -53,8 +53,8 @@ export default class Target {
     }
 
     // TODO - Plug this with the feedback range & sprites
-    isHitCorrect() {
-        return this.checkHitAccuracy() !== "missed";
+    isHitCorrect(accuracy) {
+        return accuracy !== "missed";
     }
 
     checkHitAccuracy() {
@@ -89,16 +89,40 @@ export default class Target {
     async showFeedback(playerID) {
         if(!this._alreadyCheck && !this._inDestroy){
             this._alreadyCheck = true
-            const feedback = new Feedback(this.checkHitAccuracy(), playerID)
+
+            const accuracy = this.checkHitAccuracy()
+            const feedback = new Feedback(accuracy, playerID)
             feedback.init()
 
-            if (this.isHitCorrect()) {
+            if (this.isHitCorrect(accuracy)) {
                 this._inDestroy = true
                 this._isHit = true
                 this.animHit()
 
-            this.game['player' + playerID].increaseCombo(1)
-            this.game['player' + playerID].incrementScore(100)
+                if (accuracy === "perfect") {
+                    this.game['player' + playerID].triggerAnimation("success")
+                    this.game['player' + playerID].incrementScore(100)
+                    this.game['player' + playerID].increaseCombo(1)
+                }
+
+                if (accuracy === "good") {
+                    this.game['player' + playerID].incrementScore(50)
+                }
+
+                if (accuracy === "bad") {
+                    this.game['player' + playerID].incrementScore(10)
+                }
+
+                // // TODO - Replace the fart by a visual and audio feedback
+                // const texture = PIXI.Texture.from('./assets/icons/prout.svg')
+                // const prout = new PIXI.Sprite(texture)
+                // prout.anchor.set(0.5)
+                // prout.scale.set(BASE_TARGET_SIZE * SCREEN_RATIO)
+                // prout.x = window.innerWidth / 2
+                // prout.y = TIMELINE_Y
+                // this.app.stage.addChild(prout)
+                // await wait(200)
+                // this.app.stage.removeChild(prout)
 
             await wait(200)
             this.app.stage.removeChild(feedback)
