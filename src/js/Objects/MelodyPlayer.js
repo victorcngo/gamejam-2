@@ -147,10 +147,10 @@ export default class MelodyPlayer {
         }
 
         Object.keys(objBeats1).forEach((key,i) => {
-            if(i < 15 && objBeats1[key].length  >= 2 ){
+            if(i < 15 && objBeats1[key].length  >= 2){
                 objBeats1[key] = []
             }
-            else if(i > 130 && objBeats1[key].length  == 2 && i%5 == 0){
+             if(i > 130 && objBeats1[key].length  == 2 || i%5 == 0){
                 objBeats2[key] = []
             }
             easyStart(i,objBeats1,key)
@@ -159,10 +159,10 @@ export default class MelodyPlayer {
         })
 
         Object.keys(objBeats2).forEach((key,i) => {
-            if(i < 15 && objBeats2[key].length  == 1 ){
+            if(i < 15 && objBeats2[key].length == 1 ){
                 objBeats2[key] = []
             }
-            else if(i > 130 && objBeats2[key].length  === 4){
+             if(i > 130 && objBeats2[key].length  === 4){
                 objBeats2[key] = []
             }
             easyStart(i,objBeats2,key)

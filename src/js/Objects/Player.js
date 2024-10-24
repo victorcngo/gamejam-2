@@ -4,6 +4,7 @@ import * as PIXI from 'pixi.js'
 import { AnimatedSprite, Assets } from 'pixi.js';
 import { wait } from '../utils/async/wait'
 import { SCREEN_RATIO } from '../settings';
+import {gsap} from "gsap"
 
 const BASE_SPRITE_SIZE = 0.6
 
@@ -18,6 +19,7 @@ export default class Player {
         this.playerID = playerID
         this.$$score = scoreNode
         this.$$playerCombo = comboNode
+        this._tlScore = null
 
         this.init()
     }
@@ -71,8 +73,32 @@ export default class Player {
     increaseCombo(amount = 1) {
         this.combo += amount
         this.maxCombo = Math.max(this.maxCombo, this.combo)
+        console.log(this.$$playerCombo.parentElement.parentElement)
+        const elt = this.$$playerCombo.parentElement.parentElement
+        this._tlScore?.kill()
+        this._tlScore = gsap.timeline()
+            .to(elt,{
+                scale:1.1,
+                duration: this.game.melodyPlayer.intervalBetweenBeats/1000,
+                ease: "elastic.out(1, 0.3)",
 
-        this.$$playerCombo.innerHTML = this.combo
+            })
+            .to(this.$$playerCombo,{
+                scale:1.25,
+                duration: this.game.melodyPlayer.intervalBetweenBeats/1000,
+                ease: "elastic.out(1, 0.3)",
+                onComplete: () => {
+                    this.$$playerCombo.innerHTML = this.combo
+                }
+            },"<")
+            .to(elt,{
+                scale:1,
+                duration: (this.game.melodyPlayer.intervalBetweenBeats/1000) *.5,
+                ease: "power2.out"})
+            .to(this.$$playerCombo,{
+                scale:1,
+                duration: (this.game.melodyPlayer.intervalBetweenBeats/1000) *.5,
+                ease: "power2.out"},"<")
     }
 
     resetCombo() {

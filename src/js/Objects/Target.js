@@ -132,7 +132,7 @@ export default class Target {
             await wait(300)
             this.app.stage.removeChild(feedback)
             } else {
-                this.game['player' + playerID].resetCombo()
+                // this.game['player' + playerID].resetCombo()
                 this.game['player' + playerID].triggerAnimation("missed")
             }
 
@@ -161,6 +161,7 @@ export default class Target {
 
     remove() {
         if(!this._isHit){
+            // this.game['player' + this.playerID].resetCombo()
             this._inDestroy = true
             gsap.timeline()
                 .to(this.background,{
@@ -208,7 +209,13 @@ export default class Target {
                     this._iBeat += 1
                     if(this._iBeat === this._indexTargetBeat-1){
                         this.game.idxTarget[this.playerID] = this._indexTargetBeat
-
+                        console.log(this._indexTargetBeat)
+                        gsap.fromTo(this.background.scale,{x:BASE_TARGET_SIZE * SCREEN_RATIO * 0.75,y:BASE_TARGET_SIZE * SCREEN_RATIO *.75}, {
+                            x:BASE_TARGET_SIZE * SCREEN_RATIO,
+                            y:BASE_TARGET_SIZE * SCREEN_RATIO,
+                            duration: this._indexTargetBeat/4,
+                            ease: "power2.out",
+                        })
                     }
                 }
                 if(this._iBeat > this._indexTargetBeat-1){
@@ -219,7 +226,7 @@ export default class Target {
 
             if(this._iBeat === this._indexTargetBeat-1 && this._objectBeat[this._iBeat] && this._objectBeat[this._iBeat].length > 0){
                 this.background.visible = true
-                this._moveSpeed = Math.min(1, this._timeSinceLastBeat / this._intervalBetweenBeats)
+                this._moveSpeed = Math.min(.25, this._timeSinceLastBeat / this._intervalBetweenBeats)
                 this.circlePos = this._lerp(this.circlePos, targetPos, this._moveSpeed )
                 this.draw();
             }
