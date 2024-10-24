@@ -84,6 +84,8 @@ export default class Game {
 
         this.fartTarget[1].push(fartTarget1);
         this.fartTarget[2].push(fartTarget2);
+
+        console.log(this.fartTarget)
     }
 
     moveFartTargets() {
@@ -126,6 +128,7 @@ export default class Game {
         countdown.setAttribute('data-state', 'hidden');
         this.hasStarted = true;
         this.melodyPlayer.startNewWave(120);
+        this.scheduleFartTargets();
 
         const tl = gsap.timeline({
             delay: 2,
@@ -213,7 +216,6 @@ export default class Game {
         if (!this.hasStarted) return
         this.update(1)
         this.update(2)
-        // this.moveFartTargets()
         this.updateFartTargets(1)
         this.updateFartTargets(2)
     }

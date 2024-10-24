@@ -102,11 +102,12 @@ export default class Target {
 
             await wait(200)
             this.app.stage.removeChild(feedback)
-        } else {
-            this.game['player' + playerID].resetCombo()
-            this.game['player' + playerID].triggerAnimation("missed")
-        }
+            } else {
+                this.game['player' + playerID].resetCombo()
+                this.game['player' + playerID].triggerAnimation("missed")
+            }
 
+        }
     }
 
     animHit(){
