@@ -20,7 +20,6 @@ export default class MelodyPlayer {
 
 
         this.tempo = tempo
-        this.currentTick = 0
         this.game = new Game() // singleton
 
         /**
@@ -56,7 +55,7 @@ export default class MelodyPlayer {
      */
 
     fetchMelody() {
-        fetch('../../assets/PLAYER_1.mid')
+        fetch('../../assets/merge.mid')
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
                 this.player.loadArrayBuffer(arrayBuffer);
@@ -75,9 +74,7 @@ export default class MelodyPlayer {
         //Update du currentTick
 
         this.player.on('playing', (e) => {
-            if(this.notes){
-                // this.checkCanSpawnFirst(e.tick,this.notes)
-            }
+            this.player.tempo = this.tempo
         })
 
 
@@ -119,27 +116,8 @@ export default class MelodyPlayer {
 
     }
 
-    /**
-     *
-     * Logique de création des choux
-     */
-
-    checkCanSpawnFirst(tick,notes){
-        if(notes.length > 0){
-            const firstElt = notes[0]
-            const diff = Math.max(firstElt.tick - this.intervalBetweenBeats,0);
-            // console.log(diff)
-            if(diff <= tick){
-                this.game.targets[1].push(new Target(0,this.game.distP1,1,firstElt.tick,this.intervalBetweenBeats))
-                this.game.targets[2].push(new Target(0,this.game.distP2,2,firstElt.tick,this.intervalBetweenBeats))
-                this.notes.shift();
-
-            }
-        }
-    }
-
-    createRandomChoux() {
-        const rythmTrack = this.player.tracks[0]
+    getObjectBeats(trackIdx){
+        const rythmTrack = this.player.tracks[trackIdx]
         const events = rythmTrack.events
         let indexBeat = 0
         const timeBeat = 60/this.tempo * 1000
@@ -163,20 +141,36 @@ export default class MelodyPlayer {
 
 
         const rythmNotes = events.filter((e) => {
-            if(e.name === 'Note on' && e.track == 1 ){
+            if(e.name === 'Note on' && e.track == trackIdx +1 ){
                 if(!objBeats[indexBeat+1]){
                     objBeats[indexBeat+1] = []
                 }
                 incrementBeat(e)
             }
-            return e.name === 'Note on' && e.track == 1
+            return e.name === 'Note on' && e.track == trackIdx+1
         })
 
-        Object.keys(objBeats).forEach(key => {
-            this.game.targets[1].push(new Target(0,this.game.distP1,1,key,this.intervalBetweenBeats,objBeats))
-            this.game.targets[2].push(new Target(0,this.game.distP2,2,key,this.intervalBetweenBeats,objBeats))
+        return objBeats
+    }
+
+    /**
+     *
+     * Logique de création des choux
+     */
+    createRandomChoux() {
+        const objBeats1 = this.getObjectBeats(0)
+        const objBeats2 = this.getObjectBeats(1)
+
+        Object.keys(objBeats1).forEach(key => {
+            this.game.targets[1].push(new Target(0,this.game.distP1,1,key,this.intervalBetweenBeats,objBeats1))
 
         })
+
+        Object.keys(objBeats2).forEach(key => {
+            this.game.targets[2].push(new Target(0,this.game.distP2,2,key,this.intervalBetweenBeats,objBeats2))
+        })
+
+
 
         setTimeout(() => {
             this.player.play()

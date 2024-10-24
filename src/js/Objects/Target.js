@@ -32,7 +32,6 @@ export default class Target {
         this._indexTargetBeat = indexTargetBeat;
         this._intervalBetweenBeats = intervalBetweenBeats;
         this._objectBeat = objectBeat
-        this._timeLaunch = Date.now()
         this._iBeat = 0
 
     }
