@@ -3,9 +3,9 @@ import Game from './Game'
 import * as PIXI from 'pixi.js'
 import { AnimatedSprite, Assets } from 'pixi.js';
 import { wait } from '../utils/async/wait'
+import { SCREEN_RATIO } from '../settings';
 
 const BASE_SPRITE_SIZE = 0.6
-const SCREEN_RATIO = (window.innerWidth / 2880)
 
 export default class Player {
     combo = 0
@@ -51,7 +51,7 @@ export default class Player {
             }
         );
 
-        const margin = 50 * SCREEN_RATIO
+        const margin = 220 * SCREEN_RATIO
         this.comboText.x = this.playerID === 1
         ? margin
         : (window.innerWidth - this.comboText.width - margin);

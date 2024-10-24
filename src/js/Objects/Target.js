@@ -1,4 +1,4 @@
-import { radius, hitRange, timelineY, startSpeed, hitZonePosition, hitRangeMaxInPercentage, accuracy } from '../settings.js'
+import { radius, HIT_RANGE, timelineY, START_SPEED, hitZonePosition, hitRangeMaxInPercentage, ACCURACY } from '../settings.js'
 import Game from './Game.js'
 import { wait } from '../utils/async/wait.js'
 import Feedback from './Feedback.js';
@@ -42,7 +42,7 @@ export default class Target {
         const distance = Math.abs(this.circlePos - hitZonePosition);
         const distanceMax = (width / 2) * hitRangeMaxInPercentage * 0.01;
 
-        // show hit zone in this container avec la hitRangeMaxInPercentage
+        // show hit zone in this container avec la HIT_RANGEMaxInPercentage
         // if (!this.hitZoneGraphics) {
         //   this.hitZoneGraphics = new PIXI.Graphics()
         //     .beginFill(0xff0000, 0.2) // Set the fill color and transparency
@@ -59,10 +59,10 @@ export default class Target {
         if (distance < distanceMax) {
             const successInPercentage = 100 - (distance / distanceMax) * 100;
 
-            if (successInPercentage > accuracy.bad) {
-                if (successInPercentage > accuracy.good) {
+            if (successInPercentage > ACCURACY.bad) {
+                if (successInPercentage > ACCURACY.good) {
 
-                    if (successInPercentage > accuracy.perfect) {
+                    if (successInPercentage > ACCURACY.perfect) {
                         return "perfect";
                     }
 
@@ -78,8 +78,8 @@ export default class Target {
     }
 
     hasExpired() {
-        if (this.playerID === 1) return this.circlePos > hitRange[1];
-        if (this.playerID === 2) return this.circlePos < hitRange[0];
+        if (this.playerID === 1) return this.circlePos > HIT_RANGE[1];
+        if (this.playerID === 2) return this.circlePos < HIT_RANGE[0];
     }
 
     async showFeedback(playerID) {

@@ -80,9 +80,8 @@ export default class MelodyPlayer {
 
         //A REMOVE, C'EST PAS PROPRE, C'EST UN LOOP DE LA MELLODY POUR LA DEMO
         this.player.on('endOfFile', () => {
-            this.game.increaseSpeed(5)
-            new MelodyPlayer(this.tempo + 30)
-
+            this.game.increaseSpeed(2)
+            new MelodyPlayer(this.tempo + 15)
         })
 
         /**
@@ -100,7 +99,6 @@ export default class MelodyPlayer {
                         velocity: 80,
                         duration: 0.1
                     });
-
                 }
             }
         })

@@ -1,9 +1,19 @@
 import * as PIXI from 'pixi.js'
-import { radius, hitZonePosition, numOfTargets, hitRange, timelineY, arrowTypes, startSpeed } from '../settings.js'
+import {
+    radius,
+    hitZonePosition,
+    numOfTargets,
+    HIT_RANGE,
+    START_SPEED,
+    SCREEN_RATIO
+} from '../settings.js'
 import Target from './Target.js'
 import MelodyPlayer from './MelodyPlayer.js';
 import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
+
+const BASE_TIMELINE_SIZE = 1
+const BASE_HIT_ZONE_SIZE = 1.5
 
 export default class Game {
     static instance
@@ -19,10 +29,9 @@ export default class Game {
 
         Game.instance = this;
 
-        this.targetsContainer = new PIXI.Container();
         this.targets = {}
         this.app = app
-        this.speed = startSpeed;
+        this.speed = START_SPEED;
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
@@ -35,7 +44,6 @@ export default class Game {
 
         this.setStaticObjects()
         this.createTargets()
-        this.app.stage.addChild(this.targetsContainer);
 
         // TODO - set the melody player on the splash screen
 
@@ -58,7 +66,8 @@ export default class Game {
         const hitZone = new PIXI.Sprite(hitZoneTexture);
         hitZone.anchor.set(0.5, 0.5);
         hitZone.x = hitZonePosition;
-        hitZone.y = timelineY;
+        hitZone.y = window.innerHeight / 2;
+        hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(hitZone);
 
         // Timeline
@@ -66,7 +75,8 @@ export default class Game {
         const timeline = new PIXI.Sprite(timelineTexture);
         timeline.anchor.set(0.5, 0.5);
         timeline.x = hitZonePosition;
-        timeline.y = timelineY;
+        timeline.y = window.innerHeight / 2;
+        timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(timeline);
     }
 
