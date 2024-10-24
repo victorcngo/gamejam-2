@@ -2,7 +2,7 @@
     * RESET
 * ----------------------------------------------- */
 
-
+html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select{margin:0}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}img,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
 
 /* -----------------------------------------------
     * GLOBAL
@@ -196,6 +196,149 @@ canvas {
     display: block;
 }
 
+/* -----------------------------------------------
+    * SCORESPOPUP
+* ----------------------------------------------- */
+
+.o-Scorespopup {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.o-Scorespopup[data-state="hidden"] {
+        display: none;
+}
+
+.o-Scorespopup[data-state="visible"] {
+        display: block;
+}
+
+.o-Scorespopup_container {
+    position: relative;
+    width: 85%;
+    height: 75%;
+    background-color: #D9D9D9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 3vw;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.o-Scorespopup_content {
+    padding: 5vh;
+    max-width: 50vw;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.o-Scorespopup-title {
+    font-size: 5vw;
+    color: #2A5776;
+}
+
+.o-Scorespopup-score {
+    font-size: 4vw;
+    color: white;
+}
+
+.o-Scorespopup_players {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.o-Scorespopup_player {
+   width: 50%;
+   display: flex;
+    flex-direction: column;
+   gap: 2vw;
+}
+
+.o-Scorespopup_player-title {
+    font-size: 2vw;
+    text-transform: initial;
+    background-color: #AFAFAF;
+    padding: 1vh 4vh;
+    width: max-content;
+    display: block;
+    margin: auto;
+    border-radius: 1vh;
+}
+
+.o-Scorespopup_combo {
+    font-size: 1vw;
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+    color: #2A5776;
+}
+
+.o-Scorespopup_actions {
+    font-size: 1vw;
+}
+
+/* -----------------------------------------------
+    * SCORESPOPUP
+* ----------------------------------------------- */
+
+.o-Leaderboardpopup {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.o-Leaderboardpopup[data-state="hidden"] {
+        display: none;
+}
+
+.o-Leaderboardpopup[data-state="visible"] {
+        display: block;
+}
+
+.o-Leaderboardpopup_container {
+    position: relative;
+    width: 85%;
+    height: 75%;
+    background-color: #D9D9D9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 3vw;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.o-Leaderboardpopup_content {
+    padding: 5vh;
+    max-width: 50vw;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.o-Leaderboardpopup-title {
+    font-size: 5vw;
+    color: #2A5776;
+}
+
+.o-Leaderboardpopup_players {
+    font-size: 1vw;
+    border-collapse: collapse;
+}
+
+.o-Leaderboardpopup_actions {
+    font-size: 1vw;
+}
 
 /* -----------------------------------------------
     * ANIMATIONS

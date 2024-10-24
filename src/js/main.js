@@ -23,6 +23,8 @@ const createApp = async () => {
     splashscreen.init()
 
     const handleButtonADown = (playerID) => {
+        if(!game.targets[playerID]) return
+
         let target = game.targets[playerID][0];
         if (!target) return
         target.showFeedback(playerID)
