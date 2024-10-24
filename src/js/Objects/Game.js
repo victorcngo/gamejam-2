@@ -15,6 +15,7 @@ import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
 import gsap from 'gsap'
 import LeaderboardPopup from '../ui/LeaderboardPopup.js';
+import FartTarget from './FartTarget.js';
 
 const BASE_TIMELINE_SIZE = 0.5
 const BASE_HIT_ZONE_SIZE = 4
@@ -39,6 +40,11 @@ export default class Game {
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
+        this.fartTargetTimes = [1000, 5000, 11000]
+        this.fartTarget = {
+            1: [],
+            2: []
+        }
 
         const distToTraverse = window.innerWidth*.5
         const offset = window.innerWidth * .5
@@ -60,6 +66,36 @@ export default class Game {
         // HACK - Need click to allow audioContext, remove when starting page completed
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
     }
+
+    scheduleFartTargets() {
+        this.fartTargetTimes.forEach(time => {
+            setTimeout(() => {
+                this.createFartTarget();
+            }, time);
+        });
+    }
+
+    createFartTarget() {
+        const xPos1 = 0;
+        const xPos2 = window.innerWidth;
+
+        const fartTarget1 = new FartTarget(this.targets[1].length, xPos1, 1);
+        const fartTarget2 = new FartTarget(this.targets[2].length, xPos2, 2);
+
+        this.fartTarget[1].push(fartTarget1);
+        this.fartTarget[2].push(fartTarget2);
+
+        console.log(this.fartTarget)
+    }
+
+    moveFartTargets() {
+        for (let playerID in this.fartTarget) {
+            this.fartTarget[playerID].forEach((fartTarget, index) => {
+                fartTarget.move();
+            });
+        }
+    }
+
 
     showTutorial() {
         const tutorial = document.querySelector('.js-tutorial');
@@ -92,6 +128,7 @@ export default class Game {
         countdown.setAttribute('data-state', 'hidden');
         this.hasStarted = true;
         this.melodyPlayer.startNewWave(120);
+        this.scheduleFartTargets();
 
         const tl = gsap.timeline({
             delay: 2,
@@ -103,6 +140,7 @@ export default class Game {
                 // countdown.setAttribute('data-state', 'hidden');
                 // this.hasStarted = true;
                 // this.melodyPlayer.startNewWave(120);
+                // this.scheduleFartTargets();
                 // tl.kill();
             }
         });
@@ -143,6 +181,16 @@ export default class Game {
         this.app.stage.addChild(hitZone);
     }
 
+    checkFartSuccess() {
+        if(this.player1.hasFart && this.player2.hasFart) {
+            this.fartSuccess = true
+            console.log('Both players farted')
+        }else {
+            this.fartSuccess = false
+            console.log('One or both players did not fart')
+        }
+    }
+
     // TODO! - Do this inside the player class
     update(playerID) {
         if(this.targets.length >= 0) return
@@ -168,7 +216,29 @@ export default class Game {
         if (!this.hasStarted) return
         this.update(1)
         this.update(2)
+        this.updateFartTargets(1)
+        this.updateFartTargets(2)
     }
+
+    updateFartTargets(playerID) {
+        if (this.fartTarget[playerID].length === 0) return
+        if (!this.fartTarget[playerID]) return
+
+        for (let i = 0; i < this.fartTarget[playerID].length; i++) {
+            const fartTarget = this.fartTarget[playerID][i]
+            if (!fartTarget) return;
+            fartTarget.move()
+        }
+
+        const currFartTarget = this.fartTarget[playerID][0];
+
+        if (currFartTarget.hasExpired()) {
+            currFartTarget.remove();
+            this.fartTarget[playerID].splice(0, 1);
+        }
+    }
+
+
 
     // TODO: logic for checkResults & end condition
     checkResults() {
