@@ -1,5 +1,5 @@
 import { setUpButtons } from './InputManager'
-import Game from './Objects/Game.js'
+import Game from './objects/Game.js'
 import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
 import { longFarts, smallFarts, timelineY } from './settings.js'
@@ -21,10 +21,7 @@ const createApp = async () => {
     const handleButtonADown = (playerID) => {
         let target = game.targets[playerID][0];
         if (!target) return
-
         target.showFeedback(playerID)
-
-        // TODO! - Animate the spritesheet, maybe with a debounce
     }
 
     game.player1.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(1))

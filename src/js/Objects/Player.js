@@ -2,7 +2,7 @@ import Axis from 'axis-api'
 import Game from './Game'
 import * as PIXI from 'pixi.js'
 import { AnimatedSprite, Assets } from 'pixi.js';
-import { wait } from './../utils/async/wait'
+import { wait } from '../utils/async/wait'
 
 const BASE_SPRITE_SIZE = 0.6
 const SCREEN_RATIO = (window.innerWidth / 2880)
@@ -38,20 +38,27 @@ export default class Player {
             this.setupSprite();
         }
 
-        this.text = new PIXI.Text(
+        this.comboText = new PIXI.Text(
             'x0',
             {
                 fontFamily: 'Arial',
-                fontSize: 32,
-                fill: 0xffffff,
-                align: 'center'
+                fontSize: 64 * (SCREEN_RATIO * 2),
+                fill: 0x000000,
+                align: 'center',
+                fontWeight: 'bold',
+                stroke: 0xffffff,
+                strokeThickness: SCREEN_RATIO * 8,
             }
         );
 
-        this.text.x = this.playerID === 1
-            ? window.innerWidth * 0.5 - 100
-            : window.innerWidth * 0.5 + 100
-        this.app.stage.addChild(this.text)
+        const margin = 50 * SCREEN_RATIO
+        this.comboText.x = this.playerID === 1
+        ? margin
+        : (window.innerWidth - this.comboText.width - margin);
+
+        this.comboText.y = (window.innerHeight * 0.5);
+
+        this.app.stage.addChild(this.comboText)
     }
 
     setupSprite() {
@@ -81,12 +88,12 @@ export default class Player {
     increaseCombo(amount = 1) {
         this.combo += amount
         this.maxCombo = Math.max(this.maxCombo, this.combo)
-        this.text.text = 'x' + this.combo
+        this.comboText.text = 'x' + this.combo
     }
 
     resetCombo() {
         this.combo = 0
-        this.text.text = 'x' + this.combo
+        this.comboText.text = 'x' + this.combo
     }
 
     incrementScore(amount) {

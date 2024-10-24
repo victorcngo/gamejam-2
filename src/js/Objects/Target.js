@@ -1,6 +1,6 @@
 import { radius, hitRange, timelineY, startSpeed, hitZonePosition, hitRangeMaxInPercentage, accuracy } from '../settings.js'
 import Game from './Game.js'
-import { wait } from './../utils/async/wait.js'
+import { wait } from '../utils/async/wait.js'
 import Feedback from './Feedback.js';
 
 import * as PIXI from "pixi.js";
