@@ -204,6 +204,10 @@ canvas {
     height: 100%;
 }
 
+/* .timeline img {
+    border: 5px solid red;
+} */
+
 /* -----------------------------------------------
     * SPLASHSCREEN
 * ----------------------------------------------- */
@@ -300,7 +304,7 @@ canvas {
 
 .a-Tutorial {
     position: absolute;
-    bottom: 20%;
+    bottom: 25%;
     left: 50%;
     transform: translateX(-50%);
     width: 15vw;

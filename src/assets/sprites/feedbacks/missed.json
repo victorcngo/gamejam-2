@@ -1,0 +1,31 @@
+{"frames": {
+
+"missed-1.png":
+{
+	"frame": {"x":898,"y":0,"w":679,"h":231},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":6,"w":679,"h":231},
+	"sourceSize": {"w":684,"h":238}
+},
+"missed-2.png":
+{
+	"frame": {"x":0,"y":0,"w":898,"h":305},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":102,"w":898,"h":305},
+	"sourceSize": {"w":909,"h":452}
+}},
+"animations": {
+	"missed": ["missed-1.png","missed-2.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "missed.png",
+	"format": "RGBA8888",
+	"size": {"w":1577,"h":305},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4475c17b67b1921d8782e00cddfeba3a:7dc258e29ceacbccd4d530380666550b:25cdee3c3e1c2b8286aabab7ef6806a3$"
+}
+}

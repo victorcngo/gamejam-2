@@ -18,7 +18,7 @@ import LeaderboardPopup from '../ui/LeaderboardPopup.js';
 import FartTarget from './FartTarget.js';
 
 const BASE_TIMELINE_SIZE = 0.5
-const BASE_HIT_ZONE_SIZE = 4
+const BASE_HIT_ZONE_SIZE = 0.2
 
 const $$score = document.querySelector('.score p')
 
@@ -174,8 +174,17 @@ export default class Game {
     }
 
     setStaticObjects() {
+        // Timeline
+        const timelineTexture = PIXI.Texture.from('./assets/timeline.png');
+        const timeline = new PIXI.Sprite(timelineTexture);
+        timeline.anchor.set(0.5, 0.5);
+        timeline.x = window.innerWidth * 0.5;
+        timeline.y = TIMELINE_Y;
+        timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
+        this.app.stage.addChild(timeline);
+
         // Hit zone
-        const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
+        const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.png');
         const hitZone = new PIXI.Sprite(hitZoneTexture);
         hitZone.anchor.set(0.5, 0.5);
         hitZone.x = HIT_ZONE_POSITION;

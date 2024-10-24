@@ -46,7 +46,7 @@ export default class Player {
     }
 
     setupSprite() {
-        const basePath = 'assets/sprites/';
+        const basePath = 'assets/sprites/characters/';
         const baseFileName = this.playerID === 1 ? 'rose' : 'orange';
 
         const spritePath = `${basePath}${baseFileName}.png`;
@@ -100,7 +100,7 @@ export default class Player {
                 break;
         }
 
-        await wait(200);
+        await wait(300);
         this.sprite.gotoAndStop(0);
     }
 }

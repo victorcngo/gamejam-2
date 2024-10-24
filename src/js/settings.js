@@ -7,8 +7,8 @@ export const hitRangeMaxInPercentage = 200;
 export const SCREEN_RATIO = (window.innerWidth / 2880)
 export const ACCURACY = {
   perfect: 80,
-  good: 70,
-  bad: 50
+  cool: 70,
+  bof: 50
 };
 
 export const START_SPEED = 3;

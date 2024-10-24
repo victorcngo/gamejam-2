@@ -70,14 +70,14 @@ export default class Target {
         if (distance < distanceMax) {
             const successInPercentage = 100 - (distance / distanceMax) * 100;
 
-            if (successInPercentage > ACCURACY.bad && percent > ACCURACY.bad) {
-                if (successInPercentage > ACCURACY.good && percent > ACCURACY.good) {
+            if (successInPercentage > ACCURACY.bof && percent > ACCURACY.bof) {
+                if (successInPercentage > ACCURACY.cool && percent > ACCURACY.cool) {
                     if (successInPercentage > ACCURACY.perfect && percent > ACCURACY.perfect) {
                         return "perfect";
                     }
-                    return "good";
+                    return "cool";
                 }
-                return "bad";
+                return "bof";
             }
             return "missed";
         }
@@ -110,11 +110,11 @@ export default class Target {
                     this.game['player' + playerID].increaseCombo(1)
                 }
 
-                if (accuracy === "good") {
+                if (accuracy === "cool") {
                     this.game['player' + playerID].incrementScore(50)
                 }
 
-                if (accuracy === "bad") {
+                if (accuracy === "bof") {
                     this.game['player' + playerID].incrementScore(10)
                 }
 
@@ -129,7 +129,7 @@ export default class Target {
                 // await wait(200)
                 // this.app.stage.removeChild(prout)
 
-            await wait(200)
+            await wait(300)
             this.app.stage.removeChild(feedback)
             } else {
                 this.game['player' + playerID].resetCombo()
