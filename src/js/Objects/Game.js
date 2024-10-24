@@ -30,12 +30,17 @@ export default class Game {
 
         Game.instance = this;
 
-        this.targets = {}
+        this.targets = {1:[],2:[]}
         this.app = app
         this.speed = START_SPEED;
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
+
+        const distToTraverse = window.innerWidth*.5
+        const offset = window.innerWidth * .5
+        this.distP1 = offset - distToTraverse
+        this.distP2 = offset + distToTraverse
     }
 
     init() {
@@ -44,7 +49,6 @@ export default class Game {
         this.player2 = new Player(2)
 
         this.setStaticObjects()
-        this.createTargets()
 
         // TODO - set the melody player on the splash screen
 
@@ -81,37 +85,11 @@ export default class Game {
         this.app.stage.addChild(timeline);
     }
 
-    createTargets() {
-        let targetsPlayer1 = []
-        let targetsPlayer2 = []
-        let xPos1 = 0
-        let xPos2 = window.innerWidth
-
-        for (let i = 0; i < numOfTargets; i++) {
-            xPos1 -= radius * 2
-            xPos2 += radius * 2
-
-            targetsPlayer1[i] = new Target(
-                i,
-                xPos1,
-                1,
-            );
-
-            targetsPlayer2[i] = new Target(
-                i,
-                xPos2,
-                2,
-            );
-        }
-
-        this.targets[1] = targetsPlayer1
-        this.targets[2] = targetsPlayer2
-    }
-
     // TODO! - Do this inside the player class
     update(playerID) {
-        if (this.targets[playerID].length === 0) return
+        if(this.targets.length >= 0) return
         if (!this.targets[playerID]) return
+        if (this.targets[playerID].length === 0) return
 
         for (let i = 0; i < this.targets[playerID].length; i++) {
             const target = this.targets[playerID][i]

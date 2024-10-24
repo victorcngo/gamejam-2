@@ -17,7 +17,7 @@ import * as PIXI from "pixi.js";
 const BASE_TARGET_SIZE = 3.5
 
 export default class Target {
-    constructor(index, initXPos, playerId) {
+    constructor(index, initXPos, playerId,tick,intervalBetweenBeats) {
         this.game = new Game()
         this.app = this.game.app;
         this.index = index;
@@ -28,6 +28,11 @@ export default class Target {
         this.player1 = this.game.player1.instance
         this.loadBackground(`/assets/icons/target-${this.playerID}.svg`);
         this.draw()
+
+        this._tick = tick;
+        this._intervalBetweenBeats = intervalBetweenBeats;
+        this._timeLaunch = Date.now()
+
     }
 
     // TODO!! - Move it outside and run it one time per player. Make values of controller accessible in each target
@@ -128,8 +133,30 @@ export default class Target {
     }
 
     move() {
-        this.circlePos += (-this.direction) * this.game.speed;
-        this.draw();
+        if(!this._startTime){
+            this._startTime = Date.now()
+            this._lastBeatTime = Date.now()
+        }
+
+        this._timeSinceStart = Date.now() - this._startTime
+        if(this._timeSinceStart >= this._timeLaunch && !this._isDestroy){
+            this._currentTime = Date.now()
+
+            if(this._currentTime - this._lastBeatTime >= this._intervalBetweenBeats) {
+                this._lastBeatTime = this._currentTime;
+                if(this._timeSinceStart >= this._tick){
+                    this._isDestroy = true
+                    this.remove()
+                }
+            }
+
+            this._timeSinceLastBeat = this._currentTime - this._lastBeatTime
+            this._moveSpeed = Math.min(1, this._timeSinceLastBeat / this._intervalBetweenBeats)
+            const targetPos = window.innerWidth * .5;
+            this.circlePos = this._lerp(this.circlePos, targetPos, this._moveSpeed )
+            this.draw();
+        }
+
     }
 }
 

@@ -27,13 +27,9 @@ const createApp = async () => {
     game.player1.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(1))
     game.player2.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(2))
 
-    const update = () => {
-        // TODO - This will be removed later
-        game.updateAll()
-    }
+
 
     app.ticker.maxFPS = 60
-    app.ticker.add(update);
 
     window.addEventListener('resize', () => {
         app.renderer.resize(window.innerWidth, window.innerHeight);
