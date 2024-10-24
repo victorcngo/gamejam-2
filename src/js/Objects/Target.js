@@ -132,7 +132,7 @@ export default class Target {
             await wait(200)
             this.app.stage.removeChild(feedback)
             } else {
-                this.game['player' + playerID].resetCombo()
+                // this.game['player' + playerID].resetCombo()
                 this.game['player' + playerID].triggerAnimation("missed")
             }
 
@@ -161,6 +161,7 @@ export default class Target {
 
     remove() {
         if(!this._isHit){
+            // this.game['player' + this.playerID].resetCombo()
             this._inDestroy = true
             gsap.timeline()
                 .to(this.background,{
