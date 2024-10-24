@@ -73,31 +73,35 @@ export default class Target {
         // }
 
         if (distance < distanceMax) {
-        const successInPercentage = 100 - (distance / distanceMax) * 100;
+            const successInPercentage = 100 - (distance / distanceMax) * 100;
 
-        if (successInPercentage > accuracy.bad) {
-            if (successInPercentage > accuracy.good) {
-            if (successInPercentage > accuracy.perfect) {
-                return "perfect";
+            if (successInPercentage > accuracy.bad) {
+                if (successInPercentage > accuracy.good) {
+
+                    if (successInPercentage > accuracy.perfect) {
+                        return "perfect";
+                    }
+
+                    return "good";
+                }
+                return "bad";
             }
-            return "good";
-            }
-            return "bad";
+            return "missed";
         }
-        return "missed";
-        } else {
-        return "missed";
+        else {
+            return "missed";
         }
     }
 
     isMissed() {
-    if (this.playerID === 1) return this.circlePos > hitRange[1];
-    if (this.playerID === 2) return this.circlePos < hitRange[0];
-    // if direction
+        if (this.playerID === 1) return this.circlePos > hitRange[1];
+        if (this.playerID === 2) return this.circlePos < hitRange[0];
     }
 
     async showFeedback(playerID) {
         if (this.isHitCorrect()) {
+
+            // TODO! - Replace the prout by a feedback
             const texture = PIXI.Texture.from('./assets/icons/prout.svg')
             const prout = new PIXI.Sprite(texture)
             prout.anchor.set(0.5)
