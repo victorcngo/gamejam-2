@@ -99,6 +99,9 @@ export default class Player {
             case "success":
                 this.sprite.gotoAndStop(1);
                 break;
+            case "fart":
+                this.sprite.gotoAndStop(2);
+                break;
             case "missed":
                 this.sprite.gotoAndStop(3);
                 break;

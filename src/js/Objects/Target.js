@@ -4,7 +4,6 @@ import { wait } from './../utils/async/wait.js'
 
 import * as PIXI from "pixi.js";
 
-// All targets type extend this base class. Put all logic common to all targets here
 export default class Target {
     constructor(index, initXPos, playerId) {
         this.game = new Game()
@@ -13,16 +12,10 @@ export default class Target {
         this.circlePos = initXPos;
         this.barPos = initXPos;
         this.playerID = playerId;
-        this.color = this.playerID === 1 ? '0xE63C49' : '0xFFA541';
         this.app = this.game.app;
-
-        this.type = 'hit'
         this.direction = this.playerID === 1 ? -1 : 1
-
         this.player1 = this.game.player1.instance
-
         this.loadBackground(`/assets/icons/chou-${this.playerID}.svg`);
-
         this.drawChou()
     }
 
@@ -36,14 +29,6 @@ export default class Target {
         this.background.x = this.circlePos;
         this.background.y = timelineY;
         this.app.stage.addChild(this.background);
-    }
-
-    getColor() {
-        return this.playerID === 1 ? 0x0000ff : 0x00ffff;
-    }
-
-    remove() {
-        this.app.stage.removeChild(this.background);
     }
 
     isHitCorrect() {
