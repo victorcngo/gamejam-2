@@ -128,52 +128,23 @@ export default class MelodyPlayer {
         const choux = []
 
         /**
-         * On récupère la track 3 du fichier MID, qui est la track sur laquelle on à créer des notes qui donne le tempo
+         * On récupère la track 3 du fichier MID, qui est la track   sur laquelle on à créer des notes qui donne le tempo
          * de la melody, et qui réprésente des timings sur lesquels on peut accrocher des choux
+         *
          */
 
 
-        const rythmTrack = this.player.tracks[2]
-        const rythmNotes = []
+        const rythmTrack = this.player.tracks[0]
+        const events = rythmTrack.events
 
-        /**
-         * On push tout les event "Note on" de la track du tempo
-         */
 
-        for (const note of rythmTrack.events) {
-            if (note.name === 'Note on') {
-                rythmNotes.push(note)
-            }
-        }
+        const rythmNotes = events.filter((e) => {
+            return e.name === 'Note on' && e.track == 1
+        })
 
-        /**
-         * Les deux valeurs ci-dessous permette de ne pas avoir des choux qui se superposent
-         */
+        this.game.notes = rythmNotes
+        this.game.createTargets(rythmNotes,this.player.tempo)
 
-        let lastChouStartTime = 0
-        let lastChouDuration = 0
-
-        for (const note of rythmNotes) {
-            if (note.tick > lastChouStartTime + lastChouDuration + 1000) {
-
-                // Add random to choux's creation, avoiding getting the same pattern
-                if (Math.random() > 1 / 3) {
-
-                    const chouTypeIndice = Math.floor(Math.random() * 2.99)
-                    if (chouTypeIndice === 0) {
-
-                        choux.push({
-                            type: 'hit',
-                            tick: note.tick,
-                            duration: 0
-                        })
-
-                        lastChouStartTime = note.tick
-                        lastChouDuration = 0
-                    }
-                }
-            }
-        }
 
         //Array d'object avec un type de chou, sa duration, et le timing auxquels il est censé être interagit
         // console.log(choux)
