@@ -39,12 +39,12 @@ export default class Target {
         this.background.scale.set(BASE_TARGET_SIZE * SCREEN_RATIO);
         this.background.x = this.circlePos;
         this.background.y = TIMELINE_Y;
+        this.background.zIndex = 2;
         this.app.stage.addChild(this.background);
     }
 
     // TODO - Plug this with the feedback range & sprites
     isHitCorrect() {
-        // console.log(this.checkHitAccuracy());
         return this.checkHitAccuracy() !== "missed";
     }
 
@@ -52,20 +52,6 @@ export default class Target {
         const width = this.background.texture.frame.width * this.background.scale.x;
         const distance = Math.abs(this.circlePos - HIT_ZONE_POSITION);
         const distanceMax = (width / 2) * hitRangeMaxInPercentage * 0.01;
-
-        // show hit zone in this container avec la HIT_RANGEMaxInPercentage
-        // if (!this.hitZoneGraphics) {
-        //   this.hitZoneGraphics = new PIXI.Graphics()
-        //     .beginFill(0xff0000, 0.2) // Set the fill color and transparency
-        //     .drawRect(
-        //       HIT_ZONE_POSITION - distanceMax,
-        //       TIMELINE_Y - 50,
-        //       distanceMax * 2,
-        //       100
-        //     )
-        //     .endFill();
-        //   this.container.addChild(this.hitZoneGraphics);
-        // }
 
         if (distance < distanceMax) {
             const successInPercentage = 100 - (distance / distanceMax) * 100;
@@ -100,19 +86,10 @@ export default class Target {
         if (this.isHitCorrect()) {
             this.game['player' + playerID].triggerAnimation("success")
 
-            // TODO - Replace the prout by a visual and audio feedback
-            const texture = PIXI.Texture.from('./assets/icons/prout.svg')
-            const prout = new PIXI.Sprite(texture)
-            prout.anchor.set(0.5)
-            prout.x = window.innerWidth / 2
-            prout.y = TIMELINE_Y
-            this.app.stage.addChild(prout)
-
             this.game['player' + playerID].increaseCombo(1)
 
             await wait(200)
-            this.app.stage.removeChild(prout)
-
+            this.app.stage.removeChild(feedback)
         } else {
             this.game['player' + playerID].resetCombo()
             this.game['player' + playerID].triggerAnimation("missed")

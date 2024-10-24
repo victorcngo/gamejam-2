@@ -7,11 +7,15 @@ export const setUpButtons = async () => {
     Axis.registerKeys(["z","Z"], "x", 1);
     Axis.registerKeys(["e","E"], "i", 1);
     Axis.registerKeys(["r","R"], "s", 1);
+    Axis.registerKeys(" ", "w", 1);
+
 
     Axis.registerKeys(["u","U"], "a", 2);
     Axis.registerKeys(["i","I"], "x", 2);
     Axis.registerKeys(["o","O"], "i", 2);
     Axis.registerKeys(["p","P"], "s", 2);
+    Axis.registerKeys("Enter", "w", 2);
+
 
     const gamepadEmulator = Axis.createGamepadEmulator(0);
 
