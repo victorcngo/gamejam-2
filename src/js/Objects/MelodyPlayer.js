@@ -47,8 +47,7 @@ export default class MelodyPlayer {
         });
 
         this.player.on('endOfFile', () => {
-            this.game.increaseSpeed(5);
-            new MelodyPlayer(this.tempo + 30);
+            this.game.end();
         });
 
         this.player.on('midiEvent', (note) => {
@@ -71,7 +70,6 @@ export default class MelodyPlayer {
     startNewWave(tempo) {
         this.tempo = tempo;
         this.createRandomChoux();
-        this.player.playLoop();
         this.player.play();
     }
 

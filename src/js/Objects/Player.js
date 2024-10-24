@@ -21,6 +21,10 @@ export default class Player {
             buttons: Axis.buttonManager.getButtonsById(this.playerID)
         })
 
+        this.leaderboard = Axis.createLeaderboard({
+            id: "la-soupe-aux-choux-24",
+        });
+
         this.text = new PIXI.Text(
             'x0',
             {

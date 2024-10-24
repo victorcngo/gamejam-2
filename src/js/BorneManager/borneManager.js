@@ -14,6 +14,7 @@ export const setUpButtons = async () => {
     Axis.registerKeys(["p","P"], "s", 2);
 
     const gamepadEmulator = Axis.createGamepadEmulator(0);
+
     function update() {
         gamepadEmulator.update();
         requestAnimationFrame(update);

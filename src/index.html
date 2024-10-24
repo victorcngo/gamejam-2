@@ -9,6 +9,63 @@
   </head>
 
   <body>
+    <div class="o-Leaderboardpopup js-leaderboardpopup" data-state="hidden">
+        <div class="o-Leaderboardpopup_container">
+            <div class="o-Leaderboardpopup_content">
+                <h2 class="o-Leaderboardpopup-title">Leaderboard</h2>
+
+                <table class="o-Leaderboardpopup_players">
+                    <thead class="o-Leaderboardpopup_players-head">
+                        <tr>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Player</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="o-Leaderboardpopup_players-body js-players">
+                    </tbody>
+                </table>
+
+                <div class="o-Leaderboardpopup_actions">
+                    <p>Press A to return to home</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="o-Scorespopup js-scorespopup" data-state="hidden">
+        <div class="o-Scorespopup_container">
+            <div class="o-Scorespopup_content">
+                <h2 class="o-Scorespopup-title">Fin</h2>
+                <p class="o-Scorespopup-score"><span class="js-score">0</span> pts</p>
+
+                <div class="o-Scorespopup_players">
+                    <div class="o-Scorespopup_player">
+                        <h3 class="o-Scorespopup_player-title">Joueur 1</h3>
+                        <div class="o-Scorespopup_combo">
+                            <img src="./assets/ui/scorespopup/star.svg" alt="star"/>
+                            <p>Best combo</p>
+                            <p class="js-player0-combo">0</p>
+                        </div>
+                    </div>
+                    <div class="o-Scorespopup_player">
+                        <h3 class="o-Scorespopup_player-title">Joueur 2</h3>
+                        <div class="o-Scorespopup_combo">
+                            <img src="./assets/ui/scorespopup/star.svg" alt="star"/>
+                            <p>Best combo</p>
+                            <p class="js-player0-combo">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="o-Scorespopup_actions">
+                    <p>Press A to show leaderscore</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="o-Splashscreen js-splashscreen" data-state="visible">
         <div class="o-Splashscreen_content">
             <div class="o-Splashscreen_logo">

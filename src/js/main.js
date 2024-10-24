@@ -37,6 +37,8 @@ const createApp = async () => {
     const debouncedAnimateChar2 = debounce(() => animateChar(2), 500);
 
     const handleButtonADown = (playerID) => {
+        if(!game.targets[playerID]) return
+
         let target = game.targets[playerID][0];
         if (!target) return
 
