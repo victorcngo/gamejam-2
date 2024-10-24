@@ -28,8 +28,7 @@ export default class Target {
         this.drawChou()
     }
 
-  // TODO : move it outside and run it one time per player. Make values of controller accessible in each target
-
+    // TODO!! - Move it outside and run it one time per player. Make values of controller accessible in each target
     loadBackground(svgPath) {
         const texture = PIXI.Texture.from(svgPath);
         this.background = new PIXI.Sprite(texture);

@@ -1,0 +1,47 @@
+{"frames": {
+
+"orange-1.png":
+{
+	"frame": {"x":1,"y":1,"w":748,"h":1732},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":125,"w":748,"h":1732},
+	"sourceSize": {"w":957,"h":1953}
+},
+"orange-2.png":
+{
+	"frame": {"x":751,"y":1,"w":748,"h":1732},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":125,"w":748,"h":1732},
+	"sourceSize": {"w":957,"h":1953}
+},
+"orange-3.png":
+{
+	"frame": {"x":1501,"y":1,"w":748,"h":1732},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":105,"y":125,"w":748,"h":1732},
+	"sourceSize": {"w":958,"h":1953}
+},
+"orange-4.png":
+{
+	"frame": {"x":2251,"y":1,"w":748,"h":1732},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":104,"y":125,"w":748,"h":1732},
+	"sourceSize": {"w":957,"h":1953}
+}},
+"animations": {
+	"orange": ["orange-1.png","orange-2.png","orange-3.png","orange-4.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "orange.png",
+	"format": "RGBA8888",
+	"size": {"w":3000,"h":1734},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8b107ed6dccb298e25d3e4806e3f538d:9fd50e1de1521ca230f0b9ba17a499e1:6c1f86cb1a02c05c77f78af5aabd332f$"
+}
+}

@@ -46,7 +46,6 @@ export default class Game {
     setMelodyPlayer() {
         if (!this.melodyPlayer) {
             this.melodyPlayer = new MelodyPlayer(90)
-            document.querySelector('.start').style.display = "none";
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
 
@@ -104,23 +103,26 @@ export default class Game {
         this.targets[2] = targetsPlayer2
     }
 
+    // TODO! - Do this inside the player class
     update(playerID) {
         if (this.targets[playerID].length === 0) return
         if (!this.targets[playerID]) return
+
         for (let i = 0; i < this.targets[playerID].length; i++) {
             const target = this.targets[playerID][i]
             if (!target) return;
-            if (target.type === 'hit') {
-                target.move()
-            }
+            target.move()
         }
+
         const currTarget = this.targets[playerID][0]
+
         if (currTarget.isMissed()) {
             currTarget.remove();
             this.targets[playerID].splice(0, 1);
         }
     }
 
+    // TODO! - Remove this function
     updateAll() {
         if (!this.hasStarted) return
         this.update(1)
