@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
 import Splashscreen from './ui/Splashscreen.js'
 
-const $$video = document.querySelector('.background video')
+const $$video = document.querySelector('.page-background video')
 
 const createApp = async () => {
     const app = new PIXI.Application({

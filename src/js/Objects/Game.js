@@ -129,15 +129,6 @@ export default class Game {
     }
 
     setStaticObjects() {
-        // Timeline
-        const timelineTexture = PIXI.Texture.from('./assets/timeline.png');
-        const timeline = new PIXI.Sprite(timelineTexture);
-        timeline.anchor.set(0.5, 0.5);
-        timeline.x = HIT_ZONE_POSITION - (SCREEN_RATIO * 60); // HACK - This is arbitrary
-        timeline.y = TIMELINE_Y;
-        timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
-        this.app.stage.addChild(timeline);
-
         // Hit zone
         const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
         const hitZone = new PIXI.Sprite(hitZoneTexture);
