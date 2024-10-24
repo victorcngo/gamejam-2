@@ -29,6 +29,13 @@ const createApp = async () => {
         target.showFeedback(playerID)
     }
 
+    // TODO!! - Move this code when players are farting simultaneously
+    // const $$overlay = document.querySelector('.overlay')
+    // $$overlay.classList.add('is-active')
+    // setTimeout(() => {
+    //     $$overlay.classList.remove('is-active')
+    // }, 2000)
+
     game.player1.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(1))
     game.player2.instance.buttons[0].addEventListener('keydown', () => handleButtonADown(2))
 
