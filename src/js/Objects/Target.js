@@ -1,9 +1,9 @@
 import {
-    radius,
+    RADIUS,
     HIT_RANGE,
-    timelineY,
+    TIMELINE_Y,
     START_SPEED,
-    hitZonePosition,
+    HIT_ZONE_POSITION,
     hitRangeMaxInPercentage,
     ACCURACY,
     SCREEN_RATIO
@@ -23,7 +23,7 @@ export default class Target {
         this.index = index;
         this.circlePos = initXPos;
         this.playerID = playerId;
-        this.radius = radius;
+        this.radius = RADIUS;
         this.direction = this.playerID === 1 ? -1 : 1
         this.player1 = this.game.player1.instance
         this.loadBackground(`/assets/icons/target-${this.playerID}.svg`);
@@ -38,7 +38,7 @@ export default class Target {
         this.background.anchor.set(0.5, 0.5);
         this.background.scale.set(BASE_TARGET_SIZE * SCREEN_RATIO);
         this.background.x = this.circlePos;
-        this.background.y = timelineY;
+        this.background.y = TIMELINE_Y;
         this.app.stage.addChild(this.background);
     }
 
@@ -50,7 +50,7 @@ export default class Target {
 
     checkHitAccuracy() {
         const width = this.background.texture.frame.width * this.background.scale.x;
-        const distance = Math.abs(this.circlePos - hitZonePosition);
+        const distance = Math.abs(this.circlePos - HIT_ZONE_POSITION);
         const distanceMax = (width / 2) * hitRangeMaxInPercentage * 0.01;
 
         // show hit zone in this container avec la HIT_RANGEMaxInPercentage
@@ -58,8 +58,8 @@ export default class Target {
         //   this.hitZoneGraphics = new PIXI.Graphics()
         //     .beginFill(0xff0000, 0.2) // Set the fill color and transparency
         //     .drawRect(
-        //       hitZonePosition - distanceMax,
-        //       timelineY - 50,
+        //       HIT_ZONE_POSITION - distanceMax,
+        //       TIMELINE_Y - 50,
         //       distanceMax * 2,
         //       100
         //     )
@@ -105,7 +105,7 @@ export default class Target {
             const prout = new PIXI.Sprite(texture)
             prout.anchor.set(0.5)
             prout.x = window.innerWidth / 2
-            prout.y = timelineY
+            prout.y = TIMELINE_Y
             this.app.stage.addChild(prout)
 
             this.game['player' + playerID].increaseCombo(1)

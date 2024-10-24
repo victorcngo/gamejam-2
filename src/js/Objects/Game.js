@@ -1,12 +1,12 @@
 import * as PIXI from 'pixi.js'
 import {
-    radius,
-    hitZonePosition,
+    RADIUS,
+    HIT_ZONE_POSITION,
     numOfTargets,
     HIT_RANGE,
     START_SPEED,
     SCREEN_RATIO,
-    timelineY
+    TIMELINE_Y
 } from '../settings.js'
 import Target from './Target.js'
 import MelodyPlayer from './MelodyPlayer.js';
@@ -66,8 +66,8 @@ export default class Game {
         const hitZoneTexture = PIXI.Texture.from('./assets/hit-zone.svg');
         const hitZone = new PIXI.Sprite(hitZoneTexture);
         hitZone.anchor.set(0.5, 0.5);
-        hitZone.x = hitZonePosition;
-        hitZone.y = timelineY;
+        hitZone.x = HIT_ZONE_POSITION;
+        hitZone.y = TIMELINE_Y;
         hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(hitZone);
 
@@ -75,8 +75,8 @@ export default class Game {
         const timelineTexture = PIXI.Texture.from('./assets/timeline-background.svg');
         const timeline = new PIXI.Sprite(timelineTexture);
         timeline.anchor.set(0.5, 0.5);
-        timeline.x = hitZonePosition;
-        timeline.y = timelineY;
+        timeline.x = HIT_ZONE_POSITION;
+        timeline.y = TIMELINE_Y;
         timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(timeline);
     }
@@ -88,8 +88,8 @@ export default class Game {
         let xPos2 = window.innerWidth
 
         for (let i = 0; i < numOfTargets; i++) {
-            xPos1 -= radius * 2
-            xPos2 += radius * 2
+            xPos1 -= RADIUS * 2
+            xPos2 += RADIUS * 2
 
             targetsPlayer1[i] = new Target(
                 i,

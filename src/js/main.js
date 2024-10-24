@@ -2,7 +2,6 @@ import { setUpButtons } from './InputManager'
 import Game from './objects/Game.js'
 import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
-import { longFarts, smallFarts, timelineY } from './settings.js'
 
 const createApp = async () => {
     const app = new PIXI.Application({
