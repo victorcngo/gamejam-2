@@ -75,12 +75,14 @@ export default class Target {
         //     .endFill();
         //   this.container.addChild(this.hitZoneGraphics);
         // }
+        const currentBeatTime = this._currentTime - this._lastBeatTime
+        const percent = currentBeatTime/this._intervalBetweenBeats * 100
         if (distance < distanceMax) {
             const successInPercentage = 100 - (distance / distanceMax) * 100;
 
-            if (successInPercentage > ACCURACY.bad) {
-                if (successInPercentage > ACCURACY.good) {
-                    if (successInPercentage > ACCURACY.perfect) {
+            if (successInPercentage > ACCURACY.bad && percent > ACCURACY.bad) {
+                if (successInPercentage > ACCURACY.good && percent > ACCURACY.good) {
+                    if (successInPercentage > ACCURACY.perfect && percent > ACCURACY.perfect) {
                         return "perfect";
                     }
                     return "good";

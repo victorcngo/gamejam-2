@@ -6,8 +6,8 @@ export const hitRangeMaxInPercentage = 200;
 // Screen
 export const SCREEN_RATIO = (window.innerWidth / 2880)
 export const ACCURACY = {
-  perfect: 90,
-  good: 80,
+  perfect: 80,
+  good: 70,
   bad: 50
 };
 
