@@ -65,7 +65,6 @@ export default class Splashscreen {
         });
     }
 
-
     handleStartButtonClick(event) {
         if(!this.element) return;
 

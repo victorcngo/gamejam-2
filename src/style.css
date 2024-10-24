@@ -79,16 +79,16 @@ canvas {
 }
 
 .o-Splashscreen[data-state="hidden"] {
-        display: none;
+    display: none;
 }
 
 .o-Splashscreen[data-state="visible"] {
-        display: block;
+    display: block;
 }
 
 
 .o-Splashscreen_logo img{
-        width: 30vw;
+    width: 30vw;
 }
 
 .o-Splashscreen_content, .o-Splashscreen_actions {
@@ -120,41 +120,40 @@ canvas {
 * ----------------------------------------------- */
 
 .a-Countdown {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 10vw;
-        z-index: 1;
-        color: white;
-        width: 15vw;
-        height: 15vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10vw;
+    z-index: 1;
+    color: white;
+    width: 15vw;
+    height: 15vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .a-Countdown img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(2);
-        height: auto;
-        width: auto;
-        max-height: 100%;
-        max-width: 100%;
-        margin: auto;
-        display: block;
-        opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2);
+    height: auto;
+    width: auto;
+    max-height: 100%;
+    max-width: 100%;
+    margin: auto;
+    display: block;
+    opacity: 0;
 }
 
-
 .a-Countdown[data-state="hidden"] {
-        display: none;
+    display: none;
 }
 
 .a-Countdown[data-state="visible"] {
-        display: block;
+    display: block;
 }
 
 /* -----------------------------------------------

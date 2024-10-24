@@ -19,8 +19,8 @@ const createApp = async () => {
     const game = new Game(app)
     game.init()
 
-    const splashscreen = new Splashscreen({ element: document.querySelector('.js-splashscreen')})
-    splashscreen.init()
+    // const splashscreen = new Splashscreen({ element: document.querySelector('.js-splashscreen')})
+    // splashscreen.init()
 
     const handleButtonADown = (playerID) => {
         if(!game.targets[playerID]) return
