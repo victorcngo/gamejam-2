@@ -6,8 +6,7 @@ import * as PIXI from "pixi.js";
 
 // All targets type extend this base class. Put all logic common to all targets here
 export default class Target {
-    constructor(container, direction, index, initXPos, playerId) {
-        this.direction = direction;
+    constructor(index, initXPos, playerId) {
         this.game = new Game()
         this.index = index;
         this.radius = radius;
@@ -15,7 +14,6 @@ export default class Target {
         this.barPos = initXPos;
         this.playerID = playerId;
         this.color = this.playerID === 1 ? '0xE63C49' : '0xFFA541';
-        this.container = container;
         this.app = this.game.app;
 
         this.type = 'hit'
@@ -32,11 +30,12 @@ export default class Target {
     loadBackground(svgPath) {
         const texture = PIXI.Texture.from(svgPath);
         this.background = new PIXI.Sprite(texture);
+        this.background.zIndex = 2;
         this.background.anchor.set(0.5, 0.5);
         this.background.scale.set(2, 2);
         this.background.x = this.circlePos;
         this.background.y = timelineY;
-        this.container.addChild(this.background);
+        this.app.stage.addChild(this.background);
     }
 
     getColor() {
@@ -44,7 +43,7 @@ export default class Target {
     }
 
     remove() {
-        this.container.removeChild(this.background);
+        this.app.stage.removeChild(this.background);
     }
 
     isHitCorrect() {
@@ -99,6 +98,7 @@ export default class Target {
 
     async showFeedback(playerID) {
         if (this.isHitCorrect()) {
+            this.game['player' + playerID].triggerAnimation("success")
 
             // TODO! - Replace the prout by a feedback
             const texture = PIXI.Texture.from('./assets/icons/prout.svg')
@@ -110,11 +110,12 @@ export default class Target {
 
             this.game['player' + playerID].increaseCombo(1)
 
-            await wait(500)
+            await wait(200)
             this.app.stage.removeChild(prout)
 
         } else {
             this.game['player' + playerID].resetCombo()
+            this.game['player' + playerID].triggerAnimation("missed")
         }
     }
 
@@ -123,7 +124,7 @@ export default class Target {
     }
 
     remove() {
-        this.container.removeChild(this.background);
+        this.app.stage.removeChild(this.background);
     }
 
     move() {

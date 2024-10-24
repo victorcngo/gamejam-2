@@ -2,6 +2,7 @@ import Axis from 'axis-api'
 import Game from './Game'
 import * as PIXI from 'pixi.js'
 import { AnimatedSprite, Assets } from 'pixi.js';
+import { wait } from './../utils/async/wait'
 
 const BASE_SPRITE_SIZE = 0.6
 const SCREEN_RATIO = (window.innerWidth / 2880)
@@ -71,6 +72,7 @@ export default class Player {
             : (window.innerWidth * 0.5) + ((frameWidth) * SCREEN_RATIO);
             this.sprite.y = (window.innerHeight * 0.5) + (SCREEN_RATIO * 100);
             this.sprite.scale.set(BASE_SPRITE_SIZE * SCREEN_RATIO);
+            this.sprite.zIndex = 1;
 
             this.app.stage.addChild(this.sprite);
         });
@@ -85,13 +87,27 @@ export default class Player {
     resetCombo() {
         this.combo = 0
         this.text.text = 'x' + this.combo
-
-        console.log("reset the combo");
-
     }
 
     incrementScore(amount) {
         // TODO - Handle the display of the score
         this.game.score += amount * this.combo
+    }
+
+    async triggerAnimation(animationName) {
+        switch (animationName) {
+            case "success":
+                this.sprite.gotoAndStop(1);
+                break;
+            case "missed":
+                this.sprite.gotoAndStop(3);
+                break;
+            default:
+                break;
+        }
+
+        // Attendre 200ms avant de revenir à la frame initiale
+        await wait(200);
+        this.sprite.gotoAndStop(0);
     }
 }

@@ -71,8 +71,6 @@ export default class Game {
     }
 
     createTargets() {
-        let length = 0
-        let type = 1
         let targetsPlayer1 = []
         let targetsPlayer2 = []
         let xPos1 = 0
@@ -83,16 +81,12 @@ export default class Game {
             xPos2 += radius * 2
 
             targetsPlayer1[i] = new Target(
-                this.targetsContainer,
-                'left',
                 i,
                 xPos1,
                 1,
             );
 
             targetsPlayer2[i] = new Target(
-                this.targetsContainer,
-                'left',
                 i,
                 xPos2,
                 2,
