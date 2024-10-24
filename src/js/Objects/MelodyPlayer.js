@@ -47,6 +47,13 @@ export default class MelodyPlayer {
             }
         );
 
+        this.instrument2 = new Soundfont(
+            this.context,
+            {
+                instrument: "koto"
+            }
+        );
+
         this.fetchMelody()
     }
 
@@ -91,13 +98,18 @@ export default class MelodyPlayer {
          */
 
         this.player.on('midiEvent', (note) => {
-            if (note.noteName) {
-                if (note.name === 'Note on' && note.track === 1) {
-                    this.instrument.start({
-                        note: note.noteNumber,
-                    });
-                }
-            }
+            // if (note.noteName) {
+            //     if (note.name === 'Note on' && note.track === 1) {
+            //         this.instrument.start({
+            //             note: note.noteNumber,
+            //         });
+            //     }
+            //     if (note.name === 'Note on' && note.track === 2) {
+            //         this.instrument2.start({
+            //             note: note.noteNumber,
+            //         });
+            //     }
+            // }
         })
     }
 
@@ -109,7 +121,6 @@ export default class MelodyPlayer {
 
 
     startNewWave(tempo) {
-        console.log(tempo)
         this.tempo = tempo
         this.intervalBetweenBeats = (60 / tempo) * 1000;
         this.createRandomChoux()
@@ -174,6 +185,7 @@ export default class MelodyPlayer {
 
         setTimeout(() => {
             this.player.play()
+            this.game.audioManager.play("music")
         },this.intervalBetweenBeats*3)
     }
 }

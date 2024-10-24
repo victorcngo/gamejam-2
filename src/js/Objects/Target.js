@@ -151,8 +151,6 @@ export default class Target {
             this._moveSpeed = 0
             if(this.game.melodyPlayer.player.isPlaying()){
                 this._iBeat += 1
-                console.log(this._iBeat)
-
             }
             if(this._iBeat > this._indexTargetBeat){
                 this.remove()

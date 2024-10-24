@@ -21,3 +21,10 @@ export const HIT_RANGE = [
 export const numOfTargets = 200;
 export const timelineY = window.innerHeight - 100;
 export const iconScale = 2;
+
+export const music = [
+    {
+        name: "music",
+        src: "./assets/audios/GAME_MUSIC.mp3"
+    }
+]
