@@ -18,7 +18,7 @@ import LeaderboardPopup from '../ui/LeaderboardPopup.js';
 import FartTarget from './FartTarget.js';
 
 const BASE_TIMELINE_SIZE = 0.5
-const BASE_HIT_ZONE_SIZE = 0.2
+const BASE_HIT_ZONE_SIZE = 0.18
 
 const $$score = document.querySelector('.score p')
 

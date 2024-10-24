@@ -47,4 +47,40 @@ export default class FartTarget extends Target {
         if (this.playerID === 1) return this.background.x > HIT_RANGE[1];
         if (this.playerID === 2) return this.background.x < HIT_RANGE[0];
     }
+
+    isHitCorrect() {
+        return this.checkHitAccuracy() !== "missed";
+    }
+
+    checkHitAccuracy() {
+        const width = this.background.texture.frame.width * this.background.scale.x;
+        const distance = Math.abs(this.background.x - HIT_ZONE_POSITION);
+        const distanceMax = (width / 2) * hitRangeMaxInPercentage * 0.01;
+
+        if (distance < distanceMax) {
+            const successInPercentage = 100 - (distance / distanceMax) * 100;
+
+            if (successInPercentage > ACCURACY.bad) {
+                return "success";
+            }
+            return "missed";
+        }
+        else {
+            return "missed";
+        }
+    }
+
+    async showFeedback(playerID) {
+        if (this.isHitCorrect()) {
+            this.game['player' + playerID].triggerAnimation("fart")
+            this.game['player' + playerID].hasFart = true
+
+            await wait(200)
+            this.app.stage.removeChild(feedback)
+
+        } else {
+            this.game['player' + playerID].triggerAnimation("missed")
+            this.game['player' + playerID].hasFart = false
+        }
+    }
 }

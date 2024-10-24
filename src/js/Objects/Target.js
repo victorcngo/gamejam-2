@@ -52,7 +52,6 @@ export default class Target {
         this.app.stage.addChild(this.background);
     }
 
-    // TODO - Plug this with the feedback range & sprites
     isHitCorrect(accuracy) {
         return accuracy !== "missed";
     }
@@ -108,6 +107,8 @@ export default class Target {
                     this.game['player' + playerID].triggerAnimation("success")
                     this.game['player' + playerID].incrementScore(100)
                     this.game['player' + playerID].increaseCombo(1)
+                    this.game.audioManager.sounds["perfect"].volume = 0.5
+                    this.game.audioManager.play("perfect")
                 }
 
                 if (accuracy === "cool") {
@@ -118,21 +119,10 @@ export default class Target {
                     this.game['player' + playerID].incrementScore(10)
                 }
 
-                // // TODO - Replace the fart by a visual and audio feedback
-                // const texture = PIXI.Texture.from('./assets/icons/prout.svg')
-                // const prout = new PIXI.Sprite(texture)
-                // prout.anchor.set(0.5)
-                // prout.scale.set(BASE_TARGET_SIZE * SCREEN_RATIO)
-                // prout.x = window.innerWidth / 2
-                // prout.y = TIMELINE_Y
-                // this.app.stage.addChild(prout)
-                // await wait(200)
-                // this.app.stage.removeChild(prout)
-
             await wait(300)
             this.app.stage.removeChild(feedback)
             } else {
-                // this.game['player' + playerID].resetCombo()
+                this.game['player' + playerID].resetCombo()
                 this.game['player' + playerID].triggerAnimation("missed")
             }
 

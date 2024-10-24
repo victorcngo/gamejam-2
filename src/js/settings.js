@@ -23,5 +23,12 @@ export const music = [
     {
         name: "music",
         src: "./assets/audios/GAME_MUSIC.mp3"
-    }
+    },
+]
+
+export const perfect = [
+    {
+        name: "perfect",
+        src: "./assets/audios/perfect.mp3"
+    },
 ]
