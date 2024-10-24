@@ -5,15 +5,16 @@ import {
     numOfTargets,
     HIT_RANGE,
     START_SPEED,
-    SCREEN_RATIO
+    SCREEN_RATIO,
+    timelineY
 } from '../settings.js'
 import Target from './Target.js'
 import MelodyPlayer from './MelodyPlayer.js';
 import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
 
-const BASE_TIMELINE_SIZE = 1
-const BASE_HIT_ZONE_SIZE = 1.5
+const BASE_TIMELINE_SIZE = 2
+const BASE_HIT_ZONE_SIZE = 3.5
 
 export default class Game {
     static instance
@@ -66,7 +67,7 @@ export default class Game {
         const hitZone = new PIXI.Sprite(hitZoneTexture);
         hitZone.anchor.set(0.5, 0.5);
         hitZone.x = hitZonePosition;
-        hitZone.y = window.innerHeight / 2;
+        hitZone.y = timelineY;
         hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(hitZone);
 
@@ -75,7 +76,7 @@ export default class Game {
         const timeline = new PIXI.Sprite(timelineTexture);
         timeline.anchor.set(0.5, 0.5);
         timeline.x = hitZonePosition;
-        timeline.y = window.innerHeight / 2;
+        timeline.y = timelineY;
         timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(timeline);
     }

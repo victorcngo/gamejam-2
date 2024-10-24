@@ -1,9 +1,20 @@
-import { radius, HIT_RANGE, timelineY, START_SPEED, hitZonePosition, hitRangeMaxInPercentage, ACCURACY } from '../settings.js'
+import {
+    radius,
+    HIT_RANGE,
+    timelineY,
+    START_SPEED,
+    hitZonePosition,
+    hitRangeMaxInPercentage,
+    ACCURACY,
+    SCREEN_RATIO
+} from '../settings.js'
 import Game from './Game.js'
 import { wait } from '../utils/async/wait.js'
 import Feedback from './Feedback.js';
 
 import * as PIXI from "pixi.js";
+
+const BASE_TARGET_SIZE = 3.5
 
 export default class Target {
     constructor(index, initXPos, playerId) {
@@ -25,7 +36,7 @@ export default class Target {
         this.background = new PIXI.Sprite(texture);
         this.background.zIndex = 2;
         this.background.anchor.set(0.5, 0.5);
-        this.background.scale.set(2, 2);
+        this.background.scale.set(BASE_TARGET_SIZE * SCREEN_RATIO);
         this.background.x = this.circlePos;
         this.background.y = timelineY;
         this.app.stage.addChild(this.background);
