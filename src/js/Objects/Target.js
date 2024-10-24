@@ -1,5 +1,6 @@
 import { radius, hitRange, timelineY, startSpeed, hitZonePosition, hitRangeMaxInPercentage, accuracy } from '../settings.js'
 import Game from './Game.js'
+import { wait } from './../utils/async/wait.js'
 
 import * as PIXI from "pixi.js";
 
@@ -15,10 +16,16 @@ export default class Target {
         this.playerID = playerId;
         this.color = this.playerID === 1 ? '0xE63C49' : '0xFFA541';
         this.container = container;
+        this.app = this.game.app;
+
+        this.type = 'hit'
+        this.direction = this.playerID === 1 ? -1 : 1
 
         this.player1 = this.game.player1.instance
 
         this.loadBackground(`/assets/icons/chou-${this.playerID}.svg`);
+
+        this.drawChou()
     }
 
   // TODO : move it outside and run it one time per player. Make values of controller accessible in each target
@@ -87,6 +94,38 @@ export default class Target {
     if (this.playerID === 1) return this.circlePos > hitRange[1];
     if (this.playerID === 2) return this.circlePos < hitRange[0];
     // if direction
+    }
+
+    async showFeedback(playerID) {
+        if (this.isHitCorrect()) {
+            const texture = PIXI.Texture.from('./assets/icons/prout.svg')
+            const prout = new PIXI.Sprite(texture)
+            prout.anchor.set(0.5)
+            prout.x = window.innerWidth / 2
+            prout.y = timelineY
+            this.app.stage.addChild(prout)
+
+            this.game['player' + playerID].increaseCombo(1)
+
+            await wait(500)
+            this.app.stage.removeChild(prout)
+
+        } else {
+            this.game['player' + playerID].resetCombo()
+        }
+    }
+
+    drawChou() {
+        this.background.x = this.circlePos
+    }
+
+    remove() {
+        this.container.removeChild(this.background);
+    }
+
+    move() {
+        this.circlePos += (-this.direction) * this.game.speed;
+        this.drawChou();
     }
 }
 

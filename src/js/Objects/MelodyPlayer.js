@@ -164,7 +164,6 @@ export default class MelodyPlayer {
                     const chouTypeIndice = Math.floor(Math.random() * 2.99)
                     if (chouTypeIndice === 0) {
 
-                        // Chou type === Hit
                         choux.push({
                             type: 'hit',
                             tick: note.tick,

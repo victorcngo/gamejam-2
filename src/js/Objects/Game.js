@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import { radius, hitZonePosition, numOfTargets, hitRange, timelineY, arrowTypes, startSpeed } from '../settings.js'
-import Hit from './Hit.js'
+import Target from './Target.js'
 import MelodyPlayer from './MelodyPlayer.js';
 import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
@@ -83,22 +83,20 @@ export default class Game {
             xPos1 -= radius * 2
             xPos2 += radius * 2
 
-            targetsPlayer1[i] = new Hit(
+            targetsPlayer1[i] = new Target(
                 this.targetsContainer,
                 'left',
                 i,
                 xPos1,
                 1,
-                arrowTypes[Math.floor(Math.random() * 4)]
             );
 
-            targetsPlayer2[i] = new Hit(
+            targetsPlayer2[i] = new Target(
                 this.targetsContainer,
                 'left',
                 i,
                 xPos2,
                 2,
-                arrowTypes[Math.floor(Math.random() * 4)]
             );
         }
 
