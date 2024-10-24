@@ -52,32 +52,27 @@ canvas {
     background-size: cover;
 }
 
-.char1 {
-    background-image: url("./assets/char_1_rest.png");
-}
-
-.char2 {
-    background-image: url("./assets/char_2_rest.png");
-}
-
-.char1Fart {
-    background-image: url("./assets/char_1_fart.png");
-}
-
-.char2Fart {
-    background-image: url("./assets/char_2_fart.png");
-}
-
-.char {
+.overlay {
     width: 100%;
     height: 100%;
+    opacity: 1;
     position: fixed;
-    background-size: cover;
-    opacity: 0;
 }
 
-.active {
+.overlay img {
+    width: 100%;
+    height: 100%;
     opacity: 1;
+    position: fixed;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    position: fixed;
+    background-image: url("./assets/background.jpg");
+    background-size: cover;
 }
 
 /* -----------------------------------------------
@@ -361,3 +356,5 @@ canvas {
 .o-Splashscreen.hide {
         opacity: 0;
 }
+
+

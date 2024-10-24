@@ -1,11 +1,22 @@
 import * as PIXI from 'pixi.js'
-import { radius, hitZonePosition, numOfTargets, hitRange, timelineY, arrowTypes, startSpeed } from '../settings.js'
-import Hit from './Hit.js'
+import {
+    radius,
+    hitZonePosition,
+    numOfTargets,
+    HIT_RANGE,
+    START_SPEED,
+    SCREEN_RATIO,
+    timelineY
+} from '../settings.js'
+import Target from './Target.js'
 import MelodyPlayer from './MelodyPlayer.js';
 import Player from './Player.js'
 import { AudioManager } from '../AudioManager.js'
 import gsap from 'gsap'
 import LeaderboardPopup from '../ui/LeaderboardPopup.js';
+
+const BASE_TIMELINE_SIZE = 2
+const BASE_HIT_ZONE_SIZE = 3.5
 
 export default class Game {
     static instance
@@ -21,10 +32,9 @@ export default class Game {
 
         Game.instance = this;
 
-        this.targetsContainer = new PIXI.Container();
         this.targets = {}
         this.app = app
-        this.speed = startSpeed;
+        this.speed = START_SPEED;
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
@@ -37,7 +47,6 @@ export default class Game {
 
         this.setStaticObjects()
         this.createTargets()
-        this.app.stage.addChild(this.targetsContainer);
 
         // TODO - set the melody player on the splash screen
 
@@ -115,6 +124,7 @@ export default class Game {
         hitZone.anchor.set(0.5, 0.5);
         hitZone.x = hitZonePosition;
         hitZone.y = timelineY;
+        hitZone.scale.set(BASE_HIT_ZONE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(hitZone);
 
         // Timeline
@@ -123,12 +133,11 @@ export default class Game {
         timeline.anchor.set(0.5, 0.5);
         timeline.x = hitZonePosition;
         timeline.y = timelineY;
+        timeline.scale.set(BASE_TIMELINE_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(timeline);
     }
 
     createTargets() {
-        let length = 0
-        let type = 1
         let targetsPlayer1 = []
         let targetsPlayer2 = []
         let xPos1 = 0
@@ -138,22 +147,16 @@ export default class Game {
             xPos1 -= radius * 2
             xPos2 += radius * 2
 
-            targetsPlayer1[i] = new Hit(
-                this.targetsContainer,
-                'left',
+            targetsPlayer1[i] = new Target(
                 i,
                 xPos1,
                 1,
-                arrowTypes[Math.floor(Math.random() * 4)]
             );
 
-            targetsPlayer2[i] = new Hit(
-                this.targetsContainer,
-                'left',
+            targetsPlayer2[i] = new Target(
                 i,
                 xPos2,
                 2,
-                arrowTypes[Math.floor(Math.random() * 4)]
             );
         }
 
@@ -161,23 +164,26 @@ export default class Game {
         this.targets[2] = targetsPlayer2
     }
 
+    // TODO! - Do this inside the player class
     update(playerID) {
         if (this.targets[playerID].length === 0) return
         if (!this.targets[playerID]) return
+
         for (let i = 0; i < this.targets[playerID].length; i++) {
             const target = this.targets[playerID][i]
             if (!target) return;
-            if (target.type === 'hit') {
-                target.move()
-            }
+            target.move()
         }
+
         const currTarget = this.targets[playerID][0]
-        if (currTarget.isMissed()) {
+
+        if (currTarget.hasExpired()) {
             currTarget.remove();
             this.targets[playerID].splice(0, 1);
         }
     }
 
+    // TODO! - Remove this function
     updateAll() {
         if (!this.hasStarted) return
         this.update(1)
