@@ -133,11 +133,25 @@ export default class MelodyPlayer {
         const objBeats1 = this.getObjectBeats(0)
         const objBeats2 = this.getObjectBeats(1)
 
-        Object.keys(objBeats1).forEach(key => {
+        console.log(objBeats1, objBeats2    )
+
+        Object.keys(objBeats1).forEach((key,i) => {
+            if(i < 35 && objBeats1[key].length  >= 2 ){
+                objBeats1[key] = []
+            }
+            else if(i > 130 && objBeats1[key].length  == 2 && i%5 == 0){
+                objBeats2[key] = []
+            }
             this.game.targets[1].push(new Target(0,this.game.distP1,1,key,this.intervalBetweenBeats,objBeats1))
         })
 
-        Object.keys(objBeats2).forEach(key => {
+        Object.keys(objBeats2).forEach((key,i) => {
+            if(i < 35 && objBeats2[key].length  == 1 ){
+                objBeats2[key] = []
+            }
+            else if(i > 130 && objBeats2[key].length  === 4){
+                objBeats2[key] = []
+            }
             this.game.targets[2].push(new Target(0,this.game.distP2,2,key,this.intervalBetweenBeats,objBeats2))
         })
 
