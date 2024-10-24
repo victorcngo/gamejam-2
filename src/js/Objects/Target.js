@@ -62,12 +62,17 @@ export default class Target {
         const distance = Math.abs(this.circlePos - HIT_ZONE_POSITION);
         const distanceMax = (width / 2) * hitRangeMaxInPercentage * 0.01;
 
+
+        const currentBeatTime = this._currentTime - this._lastBeatTime
+        const percent = currentBeatTime/this._intervalBetweenBeats * 100
+
+        console.log(percent)
         if (distance < distanceMax) {
             const successInPercentage = 100 - (distance / distanceMax) * 100;
 
-            if (successInPercentage > ACCURACY.bad) {
-                if (successInPercentage > ACCURACY.good) {
-                    if (successInPercentage > ACCURACY.perfect) {
+            if (successInPercentage > ACCURACY.bad && percent > ACCURACY.bad) {
+                if (successInPercentage > ACCURACY.good && percent > ACCURACY.good) {
+                    if (successInPercentage > ACCURACY.perfect && percent > ACCURACY.perfect) {
                         return "perfect";
                     }
                     return "good";
