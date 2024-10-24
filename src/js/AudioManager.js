@@ -5,8 +5,7 @@ export class AudioManager {
     constructor() {
         this.sounds = {};
         this.loaded = {};
-        this.preloadSounds(smallFarts)
-        this.preloadSounds(longFarts)
+        this.preloadSounds([]) // TODO - Add the sounds here
         this.debouncedPlay = debounce(this.play.bind(this), 1000);
         this.activeSounds = [];
     }

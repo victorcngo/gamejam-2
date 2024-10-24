@@ -1,4 +1,4 @@
-import { setUpButtons } from './BorneManager/borneManager.js'
+import { setUpButtons } from './InputManager'
 import Game from './Objects/Game.js'
 import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'

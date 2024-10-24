@@ -110,7 +110,7 @@ export default class Game {
 
         const currTarget = this.targets[playerID][0]
 
-        if (currTarget.isMissed()) {
+        if (currTarget.hasExpired()) {
             currTarget.remove();
             this.targets[playerID].splice(0, 1);
         }
