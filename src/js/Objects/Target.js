@@ -17,7 +17,7 @@ import * as PIXI from "pixi.js";
 const BASE_TARGET_SIZE = 3.5
 
 export default class Target {
-    constructor(index, initXPos, playerId,tick,intervalBetweenBeats) {
+    constructor(index, initXPos, playerId,indexTargetBeat,intervalBetweenBeats,objectBeat) {
         this.game = new Game()
         this.app = this.game.app;
         this.index = index;
@@ -29,9 +29,11 @@ export default class Target {
         this.loadBackground(`/assets/icons/target-${this.playerID}.svg`);
         this.draw()
 
-        this._tick = tick;
+        this._indexTargetBeat = indexTargetBeat;
         this._intervalBetweenBeats = intervalBetweenBeats;
+        this._objectBeat = objectBeat
         this._timeLaunch = Date.now()
+        this._iBeat = 0
 
     }
 
@@ -132,27 +134,35 @@ export default class Target {
         this.app.stage.removeChild(this.background);
     }
 
+    _lerp(start, end, t) {
+        return start + (end - start) * t;
+    }
     move() {
         if(!this._startTime){
             this._startTime = Date.now()
             this._lastBeatTime = Date.now()
         }
 
-        this._timeSinceStart = Date.now() - this._startTime
-        if(this._timeSinceStart >= this._timeLaunch && !this._isDestroy){
-            this._currentTime = Date.now()
+        this._currentTime = Date.now()
+        let targetPos = window.innerWidth*.5;
 
-            if(this._currentTime - this._lastBeatTime >= this._intervalBetweenBeats) {
-                this._lastBeatTime = this._currentTime;
-                if(this._timeSinceStart >= this._tick){
-                    this._isDestroy = true
-                    this.remove()
-                }
+
+        if(this._currentTime - this._lastBeatTime >= this._intervalBetweenBeats  ) {
+            this._lastBeatTime = this._currentTime;
+            this._moveSpeed = 0
+            if(this.game.melodyPlayer.player.isPlaying()){
+                this._iBeat += 1
+                console.log(this._iBeat)
+
             }
+            if(this._iBeat > this._indexTargetBeat){
+                this.remove()
+            }
+        }
+        this._timeSinceLastBeat = this._currentTime - this._lastBeatTime
 
-            this._timeSinceLastBeat = this._currentTime - this._lastBeatTime
+        if(this._iBeat === this._indexTargetBeat-1 && this._objectBeat[this._iBeat] && this._objectBeat[this._iBeat].length > 0){
             this._moveSpeed = Math.min(1, this._timeSinceLastBeat / this._intervalBetweenBeats)
-            const targetPos = window.innerWidth * .5;
             this.circlePos = this._lerp(this.circlePos, targetPos, this._moveSpeed )
             this.draw();
         }

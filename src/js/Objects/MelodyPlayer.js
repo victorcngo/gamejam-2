@@ -56,7 +56,7 @@ export default class MelodyPlayer {
      */
 
     fetchMelody() {
-        fetch('../../assets/Metronome_in_44.mid')
+        fetch('../../assets/PLAYER_1.mid')
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
                 this.player.loadArrayBuffer(arrayBuffer);
@@ -76,8 +76,7 @@ export default class MelodyPlayer {
 
         this.player.on('playing', (e) => {
             if(this.notes){
-                this.game.updateAll()
-                this.checkCanSpawnFirst(e.tick)
+                // this.checkCanSpawnFirst(e.tick,this.notes)
             }
         })
 
@@ -113,11 +112,11 @@ export default class MelodyPlayer {
 
 
     startNewWave(tempo) {
+        console.log(tempo)
         this.tempo = tempo
         this.intervalBetweenBeats = (60 / tempo) * 1000;
         this.createRandomChoux()
-        this.player.playLoop()
-        this.player.play()
+
     }
 
     /**
@@ -125,24 +124,62 @@ export default class MelodyPlayer {
      * Logique de création des choux
      */
 
-    checkCanSpawnFirst(tick){
-        const firstElt = this.notes[0]
-        if(firstElt.tick - this.intervalBetweenBeats >= tick){
-            this.game.targets[1].push(new Target(0,this.game.distP1,1))
-            this.game.targets[2].push(new Target(0,this.game.distP1,2))
-            this.notes.shift();
+    checkCanSpawnFirst(tick,notes){
+        if(notes.length > 0){
+            const firstElt = notes[0]
+            const diff = Math.max(firstElt.tick - this.intervalBetweenBeats,0);
+            // console.log(diff)
+            if(diff <= tick){
+                this.game.targets[1].push(new Target(0,this.game.distP1,1,firstElt.tick,this.intervalBetweenBeats))
+                this.game.targets[2].push(new Target(0,this.game.distP2,2,firstElt.tick,this.intervalBetweenBeats))
+                this.notes.shift();
+
+            }
         }
     }
 
     createRandomChoux() {
         const rythmTrack = this.player.tracks[0]
         const events = rythmTrack.events
+        let indexBeat = 0
+        const timeBeat = 60/this.tempo * 1000
+        const objBeats = {}
+
+        const a = this.player.totalTicks / (this.player.getSongTime() * 1000)
+        const tTick =  a * timeBeat;
+
+        function incrementBeat(e){
+            const i = indexBeat*tTick
+            const i2 = (indexBeat+1)*tTick
+            if( i <= e.tick && i2 > e.tick){
+                objBeats[indexBeat+1].push(e)
+            }
+            else{
+                indexBeat++;
+                objBeats[indexBeat+1] = []
+                incrementBeat(e)
+            }
+        }
 
 
         const rythmNotes = events.filter((e) => {
+            if(e.name === 'Note on' && e.track == 1 ){
+                if(!objBeats[indexBeat+1]){
+                    objBeats[indexBeat+1] = []
+                }
+                incrementBeat(e)
+            }
             return e.name === 'Note on' && e.track == 1
         })
 
-        this.notes = rythmNotes
+        Object.keys(objBeats).forEach(key => {
+            this.game.targets[1].push(new Target(0,this.game.distP1,1,key,this.intervalBetweenBeats,objBeats))
+            this.game.targets[2].push(new Target(0,this.game.distP2,2,key,this.intervalBetweenBeats,objBeats))
+
+        })
+
+        setTimeout(() => {
+            this.player.play()
+        },this.intervalBetweenBeats*3)
     }
 }

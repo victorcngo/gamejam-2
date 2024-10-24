@@ -58,7 +58,7 @@ export default class Game {
 
     setMelodyPlayer() {
         if (!this.melodyPlayer) {
-            this.melodyPlayer = new MelodyPlayer(90)
+            this.melodyPlayer = new MelodyPlayer(120)
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
 
@@ -99,10 +99,10 @@ export default class Game {
 
         const currTarget = this.targets[playerID][0]
 
-        if (currTarget.hasExpired()) {
-            currTarget.remove();
-            this.targets[playerID].splice(0, 1);
-        }
+        // if (currTarget.hasExpired()) {
+        //     currTarget.remove();
+        //     this.targets[playerID].splice(0, 1);
+        // }
     }
 
     // TODO! - Remove this function
