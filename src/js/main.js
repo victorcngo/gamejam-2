@@ -27,8 +27,7 @@ const createApp = async () => {
 
     const handleButtonADown = (playerID) => {
         if(!game.targets[playerID]) return
-
-        let target = game.targets[playerID][0];
+        let target = game.targets[playerID][game.idxTarget[playerID]-1];
         if (!target) return
         target.showFeedback(playerID)
     }

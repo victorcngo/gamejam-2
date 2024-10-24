@@ -44,6 +44,10 @@ export default class Game {
         const offset = window.innerWidth * .5
         this.distP1 = offset - distToTraverse
         this.distP2 = offset + distToTraverse
+        this.idxTarget = {
+            1: 1,
+            2: 1
+        }
     }
 
     init() {
