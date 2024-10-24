@@ -1,5 +1,5 @@
 import { smallFarts, longFarts } from "./settings";
-import { debounce } from './utils/debounce.js'
+import { debounce } from './utils/async/debounce'
 
 export class AudioManager {
     constructor() {
@@ -33,7 +33,6 @@ export class AudioManager {
             this.activeSounds.push(this.sounds[name]);
         }
     }
-
 
     stop() {
         this.activeSounds.forEach(audio => {
