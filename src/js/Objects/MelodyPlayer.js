@@ -29,9 +29,9 @@ export default class MelodyPlayer {
          * 
          */
 
-        this.player = new MidiPlayer.Player(() => {
-            this.player.setTempo(this.tempo)
+        this.player = new MidiPlayer.Player((e) => {
         })
+
 
         this.context = new AudioContext();
 
@@ -56,17 +56,16 @@ export default class MelodyPlayer {
      */
 
     fetchMelody() {
-        fetch('../../assets/soupeWithTimings.MID')
+        fetch('../../assets/Metronome_in_44.mid')
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
                 this.player.loadArrayBuffer(arrayBuffer);
-                this.startNewWave(this.tempo)
+                this.createRandomChoux()
+
             })
             .catch(error => {
                 console.error('Error loading the MIDI file:', error);
             })
-
-
     }
 
     setPlayerEvents() {
@@ -80,8 +79,6 @@ export default class MelodyPlayer {
 
         //A REMOVE, C'EST PAS PROPRE, C'EST UN LOOP DE LA MELLODY POUR LA DEMO
         this.player.on('endOfFile', () => {
-            this.game.increaseSpeed(5)
-            new MelodyPlayer(this.tempo + 30)
 
         })
 
@@ -94,11 +91,9 @@ export default class MelodyPlayer {
 
         this.player.on('midiEvent', (note) => {
             if (note.noteName) {
-                if (note.name === 'Note on' && note.track === 2) {
+                if (note.name === 'Note on' && note.track === 1) {
                     this.instrument.start({
                         note: note.noteNumber,
-                        velocity: 80,
-                        duration: 0.1
                     });
 
                 }
@@ -114,9 +109,6 @@ export default class MelodyPlayer {
 
 
     startNewWave(tempo) {
-        this.tempo = tempo
-        this.createRandomChoux()
-        this.player.playLoop()
         this.player.play()
     }
 
@@ -130,92 +122,22 @@ export default class MelodyPlayer {
         const choux = []
 
         /**
-         * On récupère la track 3 du fichier MID, qui est la track sur laquelle on à créer des notes qui donne le tempo
+         * On récupère la track 3 du fichier MID, qui est la track   sur laquelle on à créer des notes qui donne le tempo
          * de la melody, et qui réprésente des timings sur lesquels on peut accrocher des choux
+         *
          */
 
 
-        const rythmTrack = this.player.tracks[2]
-        const rythmNotes = []
+        const rythmTrack = this.player.tracks[0]
+        const events = rythmTrack.events
 
-        /**
-         * On push tout les event "Note on" de la track du tempo
-         */
 
-        for (const note of rythmTrack.events) {
-            if (note.name === 'Note on') {
-                rythmNotes.push(note)
-            }
-        }
+        const rythmNotes = events.filter((e) => {
+            return e.name === 'Note on' && e.track == 1
+        })
 
-        /**
-         * Les deux valeurs ci-dessous permette de ne pas avoir des choux qui se superposent
-         */
-
-        let lastChouStartTime = 0
-        let lastChouDuration = 0
-
-        for (const note of rythmNotes) {
-            if (note.tick > lastChouStartTime + lastChouDuration + 1000) {
-
-                //Add random to choux's creation, avoiding getting the same pattern
-                if (Math.random() > 1 / 3) {
-
-                    const chouTypeIndice = Math.floor(Math.random() * 2.99)
-                    if (chouTypeIndice === 0) {
-
-                        //Chou type === Hit
-                        choux.push({
-                            type: 'hit',
-                            tick: note.tick,
-                            duration: 0
-                        })
-                        lastChouStartTime = note.tick
-                        lastChouDuration = 0
-
-                    } else if (chouTypeIndice === 1) {
-
-                        //Chou type === Hold
-
-                        /**
-                         * TODO : Create choux duration logic
-                         * 
-                         */
-
-                        const chouDuration = Math.random() * 2000 + 1000
-
-                        choux.push({
-                            type: 'hold',
-                            tick: note.tick,
-                            duration: chouDuration
-                        })
-                        lastChouStartTime = note.tick
-                        lastChouDuration = chouDuration
-
-                    } else {
-
-                        //Chou type === Mix
-
-                        /**
-                         * TO DO : Create choux duration logic
-                         * 
-                         */
-
-                        const chouDuration = Math.random() * 2000 + 3000
-
-                        choux.push({
-                            type: 'Mix',
-                            tick: note.tick,
-                            duration: chouDuration
-                        })
-                        lastChouStartTime = note.tick
-                        lastChouDuration = chouDuration
-
-                    }
-
-                }
-            }
-        }
+        this.game.notes = rythmNotes
+        this.game.createTargets(rythmNotes,this.player.tempo)
 
 
         //Array d'object avec un type de chou, sa duration, et le timing auxquels il est censé être interagit

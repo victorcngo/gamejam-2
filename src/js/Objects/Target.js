@@ -49,9 +49,8 @@ export default class Target {
         })
     }
 
-    loadBackground(svgPath) {
-        const texture = PIXI.Texture.from(svgPath);
-        this.background = new PIXI.Sprite(texture);
+    loadBackground() {
+        this.background = new PIXI.Sprite(this.playerID === 1 ? this.game.bgTextureP1 : this.game.bgTextureP2);
         this.background.anchor.set(0.5, 0.5);
         this.background.scale.set(2, 2)
         this.background.x = this.circlePos;

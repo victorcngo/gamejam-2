@@ -3,16 +3,21 @@ import * as PIXI from 'pixi.js'
 import { timelineY } from '../settings.js'
 
 export default class Hit extends Chou {
-    constructor(container, direction, index, initXPos, playerId, arrowType) {
+    constructor(container, direction, index, initXPos, playerId,tempo,tick) {
         super(container, direction, index, initXPos, playerId)
         this.type = 'hit'
         this.direction = this.playerID === 1 ? -1 : 1
-        this.arrowType = arrowType
-        this.texture = PIXI.Texture.from('/assets/icons/fleche.svg');
-        this.fleche = new PIXI.Sprite(this.texture);
-        this.fleche.x = this.circlePos;
-        this.fleche.y = timelineY;
-        this.loadFleche();
+        this._lastBeatTime = Date.now()
+        this._bpm = tempo;
+        this._intervalBetweenBeats = (60 / this._bpm) * 1000;
+        this._currentTime = Date.now()
+        this._startTime = null
+        this._timeSinceLastBeat = 0
+        this._tick = tick
+        this._isDestroy = false
+        this._timeLaunch = this._tick - this._intervalBetweenBeats;
+
+
         this.drawChou()
     }
 
@@ -24,36 +29,12 @@ export default class Hit extends Chou {
         }
     }
 
-    loadFleche() {
-        this.fleche.anchor.set(0.5)
-        switch (this.arrowType) {
-            case 'left':
-                this.fleche.rotation = Math.PI
-                break;
-            case 'right':
-                this.fleche.rotation = 0
-                break;
-            case 'up':
-                this.fleche.rotation = - Math.PI / 2
-                break;
-            case 'down':
-                this.fleche.rotation = Math.PI / 2
-                break;
-            default:
-                break;
-        }
-
-
-        this.container.addChild(this.fleche);
-    }
-
     showFeedback() {
         console.log("success hit", this.isHitCorrect())
     }
 
     drawChou() {
         this.background.x = this.circlePos
-        this.fleche.x = this.circlePos
     }
 
     remove() {
@@ -61,8 +42,35 @@ export default class Hit extends Chou {
         this.container.removeChild(this.fleche);
     }
 
-    move() {
-        this.circlePos += (-this.direction) * this.game.speed;
-        this.drawChou();
+    move(dt) {
+        if(this.speed !== null){
+            if(!this._startTime){
+                this._startTime = Date.now()
+                this._lastBeatTime = Date.now()
+            }
+
+            this._timeSinceStart = Date.now() - this._startTime
+            if(this._timeSinceStart >= this._timeLaunch && !this._isDestroy){
+                this._currentTime = Date.now()
+
+                if(this._currentTime - this._lastBeatTime >= this._intervalBetweenBeats) {
+                    this._lastBeatTime = this._currentTime;
+                    if(this._timeSinceStart >= this._tick){
+                        this._isDestroy = true
+                        this.remove()
+                    }
+                }
+
+                this._timeSinceLastBeat = this._currentTime - this._lastBeatTime
+                this._moveSpeed = Math.min(1, this._timeSinceLastBeat / this._intervalBetweenBeats)
+                const targetPos = window.innerWidth * .5;
+                this.circlePos = this._lerp(this.circlePos, targetPos, this._moveSpeed )
+                this.drawChou();
+            }
+        }
+    }
+
+    _lerp(start, end, t) {
+        return start + (end - start) * t;
     }
 }
