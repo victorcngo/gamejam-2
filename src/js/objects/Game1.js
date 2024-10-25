@@ -77,6 +77,7 @@ export default class Game {
 
         // HACK - Need click to allow audioContext, remove when starting page completed
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
+        this.player2.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
 
         this.audioManager.sounds["music"].volume = 0.2
     }
