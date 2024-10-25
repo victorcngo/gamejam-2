@@ -71,6 +71,8 @@ export default class Game {
 
         // HACK - Need click to allow audioContext, remove when starting page completed
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
+
+        this.audioManager.sounds["music"].volume = 0.2
     }
 
     scheduleFartTargets() {
@@ -106,7 +108,8 @@ export default class Game {
 
         gsap.set(tutorial, { opacity: 0 });
 
-        gsap.to(tutorial, {
+        gsap.timeline()
+            .to(tutorial, {
             duration: 1,
             opacity: 1,
             delay: 1,
@@ -121,7 +124,20 @@ export default class Game {
                     });
                 }, 2000)
             }
-        });
+        }).fromTo(tutorial.children[0], {
+            scale:0.5
+        },{
+            scale: 1,
+            duration:.5 ,
+            ease:"back.out(1.4)"
+        },"<")
+            .fromTo(tutorial.children[1], {
+                scale:0.75
+            },{
+                scale: 1,
+                duration:.5 ,
+                ease:"back.out(2)"
+            },"<+.25")
     }
 
     showCountdown() {
@@ -196,10 +212,14 @@ export default class Game {
     checkFartSuccess() {
         if(this.player1.hasFart && this.player2.hasFart) {
             this.fartSuccess = true
-            console.log('Both players farted')
+            console.log('perfect fart')
+            this.audioManager.play('perfectFart')
+            this.score += 1000
+            $$score.innerHTML = this.score
         }else {
             this.fartSuccess = false
-            console.log('One or both players did not fart')
+            console.log('failed fart')
+            this.audioManager.play('failedFart')
         }
     }
 
