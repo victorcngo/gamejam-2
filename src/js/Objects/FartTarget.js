@@ -10,7 +10,7 @@ import {
     ACCURACY,
     SCREEN_RATIO
 } from '../settings.js'
-import Game from './Game.js';
+import Game from '../Game.js';
 import Feedback from './Feedback.js';
 import { wait } from '../utils/async/wait.js';
 import Signal from '../utils/signal'
