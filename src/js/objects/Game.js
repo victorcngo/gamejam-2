@@ -25,6 +25,9 @@ const $$score = document.querySelector('.score p')
 const $$player1Combo = document.querySelector('.combo.player-1 p')
 const $$player2Combo = document.querySelector('.combo.player-2 p')
 
+console.log("SVP");
+
+
 export default class Game {
     static instance
 
