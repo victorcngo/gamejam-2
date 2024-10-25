@@ -2,7 +2,7 @@
 
 "orange-1.png":
 {
-	"frame": {"x":1,"y":1,"w":2073,"h":2976},
+	"frame": {"x":0,"y":0,"w":2073,"h":2976},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":2073,"h":2976},
@@ -10,7 +10,7 @@
 },
 "orange-2.png":
 {
-	"frame": {"x":1,"y":2979,"w":2073,"h":2976},
+	"frame": {"x":0,"y":2976,"w":2073,"h":2976},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":2073,"h":2976},
@@ -18,7 +18,7 @@
 },
 "orange-3.png":
 {
-	"frame": {"x":2076,"y":1,"w":2073,"h":2976},
+	"frame": {"x":2073,"y":0,"w":2073,"h":2976},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":2073,"h":2976},
@@ -26,7 +26,7 @@
 },
 "orange-4.png":
 {
-	"frame": {"x":2076,"y":2979,"w":2072,"h":2976},
+	"frame": {"x":2073,"y":2976,"w":2072,"h":2976},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":2072,"h":2976},
@@ -40,8 +40,8 @@
 	"version": "1.1",
 	"image": "orange.png",
 	"format": "RGBA8888",
-	"size": {"w":4150,"h":5956},
+	"size": {"w":4146,"h":5952},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:bda2c6c06685f0a32fa474ddcb78e1d8:bcb46b877631011a95053a87591e425d:6c1f86cb1a02c05c77f78af5aabd332f$"
+	"smartupdate": "$TexturePacker:SmartUpdate:e0bd4ee798163f1477a1abf32d6b56d2:ec05719bc728035f55c2dda96bde769e:6c1f86cb1a02c05c77f78af5aabd332f$"
 }
 }

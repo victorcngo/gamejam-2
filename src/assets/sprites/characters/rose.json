@@ -2,7 +2,7 @@
 
 "rose-1.png":
 {
-	"frame": {"x":1,"y":1,"w":2072,"h":2976},
+	"frame": {"x":0,"y":0,"w":2072,"h":2976},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":2072,"h":2976},
@@ -10,7 +10,7 @@
 },
 "rose-2.png":
 {
-	"frame": {"x":1,"y":2979,"w":2072,"h":2976},
+	"frame": {"x":0,"y":2976,"w":2072,"h":2976},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":2072,"h":2976},
@@ -18,7 +18,7 @@
 },
 "rose-3.png":
 {
-	"frame": {"x":2075,"y":1,"w":2072,"h":2976},
+	"frame": {"x":2072,"y":0,"w":2072,"h":2976},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":2072,"h":2976},
@@ -26,7 +26,7 @@
 },
 "rose-4.png":
 {
-	"frame": {"x":2075,"y":2979,"w":2072,"h":2976},
+	"frame": {"x":2072,"y":2976,"w":2072,"h":2976},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":2072,"h":2976},
@@ -40,8 +40,8 @@
 	"version": "1.1",
 	"image": "rose.png",
 	"format": "RGBA8888",
-	"size": {"w":4148,"h":5956},
+	"size": {"w":4144,"h":5952},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:d6beb1c556ce87e726c2334f49439063:0d7ee4a28a4bc9d0741ecc6f698b32fa:8d35b104fc841baa4443581e6cea979e$"
+	"smartupdate": "$TexturePacker:SmartUpdate:dea99ab50442cbbace1cc21405cb70ed:5e0f9aec47e1a431de8524b93cf7fc67:8d35b104fc841baa4443581e6cea979e$"
 }
 }
