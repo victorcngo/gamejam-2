@@ -218,7 +218,7 @@ canvas {
 
 
 .o-Splashscreen_logo img{
-    width: 30vw;
+    width: 25vw;
 }
 
 .o-Splashscreen_content, .o-Splashscreen_actions {
@@ -238,11 +238,11 @@ canvas {
 }
 
 .o-Splashscreen-start {
-    width: 15vw;
+    width: 20vw;
 }
 
 .o-Splashscreen-leaderboard {
-    width: 6vw;
+    width: 10vw;
 }
 
 /* -----------------------------------------------
