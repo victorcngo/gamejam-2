@@ -6,7 +6,7 @@ import { wait } from '../utils/async/wait.js'
 import { SCREEN_RATIO } from '../settings.js';
 import {gsap} from "gsap"
 
-const BASE_SPRITE_SIZE = 0.6
+const BASE_SPRITE_SIZE = 0.5
 
 export default class Player {
     combo = 0

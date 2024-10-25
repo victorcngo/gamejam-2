@@ -106,7 +106,6 @@ canvas {
     position: absolute;
     top: -1vw;
     padding: 1vw;
-    font-size: 4vw;
     width: 20vw;
     display: flex;
     align-items: center;
@@ -120,13 +119,11 @@ canvas {
     color: white;
     -webkit-text-stroke: 0.2vw #9BAE55;
     text-stroke: 0.2vw #9BAE55;
-    margin-top: -0.5vw;
-    font-size: 4vw;
+    font-size: 3vw;
 }
 
 .score .cabbage {
     width: 4vw;
-    margin-top: -0.5vw;
 }
 
 .score .background {

@@ -148,9 +148,6 @@ export default class Game {
         const images = countdown.querySelectorAll('img');
 
         countdown.setAttribute('data-state', 'hidden');
-        this.hasStarted = true;
-        this.melodyPlayer.startNewWave(120);
-        this.scheduleFartTargets();
 
         const tl = gsap.timeline({
             delay: 2,
@@ -159,11 +156,11 @@ export default class Game {
                 this.showTutorial();
             },
             onComplete: () => {
-                // countdown.setAttribute('data-state', 'hidden');
-                // this.hasStarted = true;
-                // this.melodyPlayer.startNewWave(120);
-                // this.scheduleFartTargets();
-                // tl.kill();
+                countdown.setAttribute('data-state', 'hidden');
+                this.hasStarted = true;
+                this.melodyPlayer.startNewWave(120);
+                this.scheduleFartTargets();
+                tl.kill();
             }
         });
 
@@ -186,10 +183,6 @@ export default class Game {
             this.melodyPlayer = new MelodyPlayer(120)
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
-
-        // // HACK - Fast start
-        // this.hasStarted = true;
-        // this.melodyPlayer.start();
     }
 
     setStaticObjects() {
@@ -215,13 +208,11 @@ export default class Game {
     checkFartSuccess() {
         if(this.player1.hasFart && this.player2.hasFart) {
             this.fartSuccess = true
-            console.log('perfect fart')
             this.audioManager.play('perfectFart')
             this.score += 1000
             $$score.innerHTML = this.score
         }else {
             this.fartSuccess = false
-            console.log('failed fart')
             this.audioManager.play('failedFart')
         }
     }

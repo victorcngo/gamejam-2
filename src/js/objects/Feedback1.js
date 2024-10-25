@@ -30,10 +30,11 @@ export default class Feedback {
 
         const randomOffset = (Math.random() - 0.5) * 100;
         this.sprite.x = this.playerID === 1
-            ? window.innerWidth / 2 - (SCREEN_RATIO * 500) + randomOffset
-            : window.innerWidth / 2 + (SCREEN_RATIO * 500) + randomOffset;
+            ? window.innerWidth / 2 - (SCREEN_RATIO * 600) + randomOffset
+            : window.innerWidth / 2 + (SCREEN_RATIO * 600) + randomOffset;
         this.sprite.y = TIMELINE_Y - (SCREEN_RATIO);
         this.sprite.rotation = (Math.random() * 0.4) - 0.2;
+        this.sprite.scale.set(0.8)
         this.app.stage.addChild(this.sprite);
 
         const timeline = gsap.timeline();

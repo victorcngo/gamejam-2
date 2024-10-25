@@ -26,15 +26,6 @@ const createApp = async () => {
 
     const $$overlay = document.querySelector('.overlay')
 
-    // TODO!! - TEST
-    // setTimeout(() => {
-    //     Signal.emit(":showOverlay")
-    // }, 4000)
-
-    // setTimeout(() => {
-    //     Signal.emit(":hideOverlay")
-    // }, 6000)
-
     Signal.on(":showOverlay", () => {
         $$overlay.classList.add('is-active')
     })
