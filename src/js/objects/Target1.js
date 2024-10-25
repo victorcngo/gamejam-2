@@ -113,7 +113,7 @@ export default class Target {
 
                 if (accuracy === "cool") {
                     this.game['player' + playerID].incrementScore(5)
-                    this.game.audioManager.sounds["cool"].volume = 0.025
+                    this.game.audioManager.sounds["cool"].volume = 0.075
                     this.game.audioManager.play("cool")
                 }
 
