@@ -28,13 +28,14 @@ module.exports = {
       },
     ],
   },
-  
+
   plugins: [
     new CleanWebpackPlugin(),
 
     new CopyWebpackPlugin([
       { from: 'assets/',to:'assets/'},
-      { from: './style.css', to: 'style.css' }, // Add this line to copy the stylesheet
+      { from: './style.css', to: 'style.css' },
+      { from: './reset.css', to: 'reset.css' },
     ], {
       ignore: [],
       debug:'debug',
@@ -53,7 +54,7 @@ module.exports = {
         verbose:true,
         quality: '80-90',
       }
-    }),  
+    }),
     new HtmlPlugin({
       file:path.join(__dirname,'dist','index.html'),
       template:'./index.html'
