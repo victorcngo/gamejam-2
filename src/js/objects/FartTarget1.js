@@ -70,9 +70,11 @@ export default class FartTarget extends Target {
     }
 
     async showFeedback(playerID) {
-        if (this.isHitCorrect()) {
+        if (true) {
             this.game['player' + playerID].triggerAnimation("fart")
             this.game['player' + playerID].hasFart = true
+            await wait(300)
+            this.game['player' + playerID].hasFart = false
         } else {
             this.game['player' + playerID].triggerAnimation("missed")
             this.game['player' + playerID].hasFart = false

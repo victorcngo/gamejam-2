@@ -36,6 +36,7 @@ export default class Game {
     score = 0
     userIsHolding = false
     hasStarted = false
+    hasFart = false
 
     constructor(app) {
         if (Game.instance) {
@@ -217,6 +218,7 @@ export default class Game {
             this.audioManager.play('perfectFart')
             this.score += 1000
             $$score.innerHTML = this.score
+
             Signal.emit(":showOverlay")
             await wait(2000)
             Signal.emit(":hideOverlay")
