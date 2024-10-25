@@ -27,17 +27,25 @@ export default class Feedback {
     setupSprite(sheet) {
         this.sprite = new PIXI.AnimatedSprite(sheet.animations[this.type]);
         this.sprite.anchor.set(0.5);
+
+        const randomOffset = (Math.random() - 0.5) * 100;
         this.sprite.x = this.playerID === 1
-            ? window.innerWidth / 2 - (SCREEN_RATIO * 500)
-            : window.innerWidth / 2 + (SCREEN_RATIO * 500);
-        this.sprite.y = TIMELINE_Y - (SCREEN_RATIO * 100);
+            ? window.innerWidth / 2 - (SCREEN_RATIO * 500) + randomOffset
+            : window.innerWidth / 2 + (SCREEN_RATIO * 500) + randomOffset;
+        this.sprite.y = TIMELINE_Y - (SCREEN_RATIO);
         this.sprite.rotation = (Math.random() * 0.4) - 0.2;
         this.app.stage.addChild(this.sprite);
 
-        gsap.to(this.sprite, {
-            y: this.sprite.y - (SCREEN_RATIO * 100),
+        const timeline = gsap.timeline();
+
+        timeline.to(this.sprite, {
+            y: this.sprite.y - (SCREEN_RATIO * 150),
+            duration: 1,
+            ease: 'power4.out'
+        }).to(this.sprite, {
             alpha: 0,
             duration: 1,
+            ease: 'power4.out',
             onComplete: () => {
                 this.remove();
             }

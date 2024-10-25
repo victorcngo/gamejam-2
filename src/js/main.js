@@ -24,14 +24,16 @@ const createApp = async () => {
     const game = new Game(app)
     game.init()
 
-    // Listen to the overlay fart even
     const $$overlay = document.querySelector('.overlay')
 
-    // test: emit showOverlay after 4 secs
+    // TODO!! - TEST
+    // setTimeout(() => {
+    //     Signal.emit(":showOverlay")
+    // }, 4000)
 
-    setTimeout(() => {
-        Signal.emit(":showOverlay")
-    }, 4000)
+    // setTimeout(() => {
+    //     Signal.emit(":hideOverlay")
+    // }, 6000)
 
     Signal.on(":showOverlay", () => {
         $$overlay.classList.add('is-active')
