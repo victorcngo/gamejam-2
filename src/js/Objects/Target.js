@@ -8,7 +8,7 @@ import {
     ACCURACY,
     SCREEN_RATIO
 } from '../settings.js'
-import Game from './Game.js'
+import Game from '../Game.js'
 import { wait } from '../utils/async/wait.js'
 import Feedback from './Feedback.js';
 import {gsap} from "gsap"

@@ -1,5 +1,5 @@
-import Game from '../objects/Game';
-import LeaderboardPopup from './LeaderboardPopup';
+import Game from '../Game.js';
+import LeaderboardPopup from './LeaderboardPopup.js';
 
 export default class Splashscreen {
     constructor({ element }) {

@@ -8,14 +8,14 @@ import {
     START_SPEED,
     SCREEN_RATIO,
     TIMELINE_Y
-} from '../settings.js'
-import Target from './Target.js'
-import MelodyPlayer from './MelodyPlayer.js';
-import Player from './Player.js'
-import { AudioManager } from '../AudioManager.js'
+} from './settings.js'
+import Target from './objects/Target.js'
+import MelodyPlayer from './objects/MelodyPlayer.js';
+import Player from './objects/Player.js'
+import { AudioManager } from './AudioManager.js'
 import gsap from 'gsap'
-import LeaderboardPopup from '../ui/LeaderboardPopup.js';
-import FartTarget from './FartTarget.js';
+import LeaderboardPopup from './ui/LeaderboardPopup.js';
+import FartTarget from './objects/FartTarget.js';
 
 const BASE_TIMELINE_SIZE = 0.5
 const BASE_HIT_ZONE_SIZE = 0.18
