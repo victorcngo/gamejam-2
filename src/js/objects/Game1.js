@@ -51,7 +51,7 @@ export default class Game {
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
-        this.fartTargetTimes = [8000, 24000, 40000, 56000, 73000]
+        this.fartTargetTimes = [9000, 23000, 40000, 56000, 73000]
 
         this.fartTarget = {
             1: [],
