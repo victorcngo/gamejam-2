@@ -190,6 +190,7 @@ export default class Game {
         if (!this.melodyPlayer) {
             this.melodyPlayer = new MelodyPlayer(120)
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
+            this.player2.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
     }
 
