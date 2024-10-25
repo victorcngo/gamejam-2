@@ -4,6 +4,7 @@ import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
 import Splashscreen from './ui/Splashscreen.js'
 import { wait } from './utils/async/wait.js'
+import Signal from './utils/signal'
 
 const $$video = document.querySelector('.page-background video')
 
@@ -22,6 +23,23 @@ const createApp = async () => {
     await setUpButtons()
     const game = new Game(app)
     game.init()
+
+    // Listen to the overlay fart even
+    const $$overlay = document.querySelector('.overlay')
+
+    // test: emit showOverlay after 4 secs
+
+    setTimeout(() => {
+        Signal.emit(":showOverlay")
+    }, 4000)
+
+    Signal.on(":showOverlay", () => {
+        $$overlay.classList.add('is-active')
+    })
+
+    Signal.on(":hideOverlay", () => {
+        $$overlay.classList.remove('is-active')
+    })
 
     const splashscreen = new Splashscreen({ element: document.querySelector('.js-splashscreen')})
     splashscreen.init()

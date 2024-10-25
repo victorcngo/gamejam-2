@@ -73,23 +73,21 @@ export default class Player {
     increaseCombo(amount = 1) {
         this.combo += amount
         this.maxCombo = Math.max(this.maxCombo, this.combo)
-        console.log(this.$$playerCombo.parentElement.parentElement)
+        this.$$playerCombo.innerHTML = this.combo
         const elt = this.$$playerCombo.parentElement.parentElement
         this._tlScore?.kill()
         this._tlScore = gsap.timeline()
             .to(elt,{
                 scale:1.1,
                 duration: this.game.melodyPlayer.intervalBetweenBeats/1000,
-                ease: "elastic.out(1, 0.3)",
+                ease: "elastic.out(1, 0.4)",
 
             })
             .to(this.$$playerCombo,{
                 scale:1.25,
                 duration: this.game.melodyPlayer.intervalBetweenBeats/1000,
-                ease: "elastic.out(1, 0.3)",
-                onComplete: () => {
-                    this.$$playerCombo.innerHTML = this.combo
-                }
+                ease: "elastic.out(1, 0.4)",
+
             },"<")
             .to(elt,{
                 scale:1,

@@ -105,18 +105,18 @@ export default class Target {
 
                 if (accuracy === "perfect") {
                     this.game['player' + playerID].triggerAnimation("success")
-                    this.game['player' + playerID].incrementScore(100)
                     this.game['player' + playerID].increaseCombo(1)
-                    this.game.audioManager.sounds["perfect"].volume = 0.5
+                    this.game['player' + playerID].incrementScore(10)
+                    this.game.audioManager.sounds["perfect"].volume = 0.35
                     this.game.audioManager.play("perfect")
                 }
 
                 if (accuracy === "cool") {
-                    this.game['player' + playerID].incrementScore(50)
+                    this.game['player' + playerID].incrementScore(5)
                 }
 
                 if (accuracy === "bof") {
-                    this.game['player' + playerID].incrementScore(10)
+                    this.game['player' + playerID].incrementScore(1)
                 }
 
             await wait(300)
@@ -151,7 +151,6 @@ export default class Target {
 
     remove() {
         if(!this._isHit){
-            // this.game['player' + this.playerID].resetCombo()
             this._inDestroy = true
             gsap.timeline()
                 .to(this.background,{
@@ -199,7 +198,6 @@ export default class Target {
                     this._iBeat += 1
                     if(this._iBeat === this._indexTargetBeat-1){
                         this.game.idxTarget[this.playerID] = this._indexTargetBeat
-                        console.log(this._indexTargetBeat)
                         gsap.fromTo(this.background.scale,{x:BASE_TARGET_SIZE * SCREEN_RATIO * 0.75,y:BASE_TARGET_SIZE * SCREEN_RATIO *.75}, {
                             x:BASE_TARGET_SIZE * SCREEN_RATIO,
                             y:BASE_TARGET_SIZE * SCREEN_RATIO,

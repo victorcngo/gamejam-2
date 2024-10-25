@@ -31,8 +31,7 @@ export default class Feedback {
             ? window.innerWidth / 2 - (SCREEN_RATIO * 500)
             : window.innerWidth / 2 + (SCREEN_RATIO * 500);
         this.sprite.y = TIMELINE_Y - (SCREEN_RATIO * 100);
-        // add a slight random rotation
-        this.sprite.rotation = (Math.random() * 0.2) - 0.1;
+        this.sprite.rotation = (Math.random() * 0.4) - 0.2;
         this.app.stage.addChild(this.sprite);
 
         gsap.to(this.sprite, {
@@ -47,6 +46,5 @@ export default class Feedback {
 
     remove() {
         this.app.stage.removeChild(this.sprite);
-        console.log("remove the feedback!");
     }
 }
