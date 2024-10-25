@@ -51,7 +51,7 @@ export default class Game {
         this.audioManager = new AudioManager()
         this.setMelodyPlayer = this.setMelodyPlayer.bind(this);
         this.melodyPlayer = null
-        this.fartTargetTimes = [1000, 17000, 33000, 49000, 65000]
+        this.fartTargetTimes = [8000, 24000, 40000, 56000, 73000]
 
         this.fartTarget = {
             1: [],
@@ -77,6 +77,7 @@ export default class Game {
 
         // HACK - Need click to allow audioContext, remove when starting page completed
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
+        this.player2.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
 
         this.audioManager.sounds["music"].volume = 0.2
     }
@@ -189,6 +190,7 @@ export default class Game {
         if (!this.melodyPlayer) {
             this.melodyPlayer = new MelodyPlayer(120)
             this.player1.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
+            this.player2.instance.buttons[0].removeEventListener('keydown', this.setMelodyPlayer)
         }
     }
 

@@ -14,15 +14,15 @@ export default class Splashscreen {
     }
 
     destroy() {
-        if (this.startButtons && this.leaderboardButtons) {
+        if (this.startButtons) {
             this.removeEventListeners();
         }
 
         this.startButtons = null;
-        this.leaderboardButtons = null;
+        // this.leaderboardButtons = null;
 
         this.handleStartButtonClick = null;
-        this.handleLeaderboardButtonClick = null;
+        // this.handleLeaderboardButtonClick = null;
 
         if (this.element) {
             this.element.setAttribute('data-state', 'hidden');
@@ -36,23 +36,23 @@ export default class Splashscreen {
             this.game.player2.instance.buttons[0]
         ];
 
-        this.leaderboardButtons = [
-            this.game.player1.instance.buttons[1],
-            this.game.player2.instance.buttons[1]
-        ];
+        // this.leaderboardButtons = [
+        //     this.game.player1.instance.buttons[1],
+        //     this.game.player2.instance.buttons[1]
+        // ];
     }
 
     addEventListeners() {
         this.handleStartButtonClick = this.handleStartButtonClick.bind(this);
-        this.handleLeaderboardButtonClick = this.handleLeaderboardButtonClick.bind(this);
+        // this.handleLeaderboardButtonClick = this.handleLeaderboardButtonClick.bind(this);
 
         this.startButtons.forEach(button => {
             button.addEventListener('keydown', this.handleStartButtonClick);
         });
 
-        this.leaderboardButtons.forEach(button => {
-            button.addEventListener('keydown', this.handleLeaderboardButtonClick);
-        });
+        // this.leaderboardButtons.forEach(button => {
+        //     button.addEventListener('keydown', this.handleLeaderboardButtonClick);
+        // });
     }
 
     removeEventListeners() {
@@ -60,9 +60,9 @@ export default class Splashscreen {
             button.removeEventListener('keydown', this.handleStartButtonClick);
         });
 
-        this.leaderboardButtons.forEach(button => {
-            button.removeEventListener('keydown', this.handleLeaderboardButtonClick);
-        });
+        // this.leaderboardButtons.forEach(button => {
+        //     button.removeEventListener('keydown', this.handleLeaderboardButtonClick);
+        // });
     }
 
     handleStartButtonClick(event) {
@@ -82,16 +82,16 @@ export default class Splashscreen {
         });
     }
 
-    handleLeaderboardButtonClick(event) {
-        const leaderboardpopup = document.querySelector('.js-leaderboardpopup');
+    // handleLeaderboardButtonClick(event) {
+    //     const leaderboardpopup = document.querySelector('.js-leaderboardpopup');
 
-        this.game.player1.leaderboard.getScores().then((response) => {
-            new LeaderboardPopup({
-                element: leaderboardpopup,
-                response: response
-            }).show();
-        });
+    //     this.game.player1.leaderboard.getScores().then((response) => {
+    //         new LeaderboardPopup({
+    //             element: leaderboardpopup,
+    //             response: response
+    //         }).show();
+    //     });
 
-        this.removeEventListeners();
-    }
+    //     this.removeEventListeners();
+    // }
 }
