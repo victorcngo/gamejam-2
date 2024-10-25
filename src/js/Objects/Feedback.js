@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import Game from '../Game.js';
+import Game from './Game.js';
 import { gsap } from 'gsap';
 import { SCREEN_RATIO, TIMELINE_Y } from '../settings';
 

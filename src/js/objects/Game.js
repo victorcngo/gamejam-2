@@ -8,14 +8,14 @@ import {
     START_SPEED,
     SCREEN_RATIO,
     TIMELINE_Y
-} from './settings.js'
-import Target from './objects/Target.js'
-import MelodyPlayer from './objects/MelodyPlayer.js';
-import Player from './objects/Player.js'
-import { AudioManager } from './AudioManager.js'
+} from '../settings.js'
+import Target from './Target.js'
+import MelodyPlayer from './MelodyPlayer.js';
+import Player from './Player.js'
+import { AudioManager } from '../AudioManager.js'
 import gsap from 'gsap'
-import LeaderboardPopup from './ui/LeaderboardPopup.js';
-import FartTarget from './objects/FartTarget.js';
+import LeaderboardPopup from '../ui/LeaderboardPopup.js';
+import FartTarget from './FartTarget.js';
 
 const BASE_TIMELINE_SIZE = 0.5
 const BASE_HIT_ZONE_SIZE = 0.18
@@ -108,7 +108,8 @@ export default class Game {
 
         gsap.set(tutorial, { opacity: 0 });
 
-        gsap.to(tutorial, {
+        gsap.timeline()
+            .to(tutorial, {
             duration: 1,
             opacity: 1,
             delay: 1,
@@ -123,7 +124,20 @@ export default class Game {
                     });
                 }, 2000)
             }
-        });
+        }).fromTo(tutorial.children[0], {
+            scale:0.5
+        },{
+            scale: 1,
+            duration:.5 ,
+            ease:"back.out(1.4)"
+        },"<")
+            .fromTo(tutorial.children[1], {
+                scale:0.75
+            },{
+                scale: 1,
+                duration:.5 ,
+                ease:"back.out(2)"
+            },"<+.25")
     }
 
     showCountdown() {
