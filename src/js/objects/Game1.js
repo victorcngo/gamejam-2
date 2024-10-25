@@ -16,6 +16,7 @@ import { AudioManager } from '../AudioManager.js'
 import gsap from 'gsap'
 import LeaderboardPopup from '../ui/LeaderboardPopup.js';
 import FartTarget from './FartTarget1.js';
+import { wait } from '../utils/async/wait.js'
 
 const BASE_TIMELINE_SIZE = 0.5
 const BASE_HIT_ZONE_SIZE = 0.18
@@ -105,8 +106,10 @@ export default class Game {
         }
     }
 
-    showTutorial() {
-        const tutorial = document.querySelector('.js-tutorial');
+    showTutorial(target) {
+    console.log('show tutorial', target)
+        const tutorial = target;
+
         tutorial.setAttribute('data-state', 'visible');
 
         gsap.set(tutorial, { opacity: 0 });
@@ -156,7 +159,10 @@ export default class Game {
             delay: 2,
             onStart: () => {
                 countdown.setAttribute('data-state', 'visible');
-                this.showTutorial();
+                this.showTutorial(document.querySelector('.js-tutorial'));
+                wait(9000).then(() => {
+                    this.showTutorial(document.querySelector('.js-tutorial-2'));
+                });
             },
             onComplete: () => {
                 // countdown.setAttribute('data-state', 'hidden');

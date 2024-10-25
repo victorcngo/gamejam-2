@@ -319,6 +319,10 @@ canvas {
     width: 75% !important;
 }
 
+.js-tutorial-2{
+   width: 22vw;
+}
+
 .a-Tutorial[data-state="hidden"] {
     display: none;
 }

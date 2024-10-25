@@ -15,7 +15,7 @@ import Feedback from './Feedback1.js';
 import { wait } from '../utils/async/wait.js';
 import Signal from '../utils/signal/index.js'
 
-const BASE_TARGET_SIZE = 1.5;
+const BASE_TARGET_SIZE = .3;
 
 export default class FartTarget extends Target {
     constructor(index, initXPos, playerId) {
@@ -23,7 +23,7 @@ export default class FartTarget extends Target {
     }
 
     loadBackground(svgPath) {
-        const texture = PIXI.Texture.from(`/assets/icons/fart-target.svg`);
+        const texture = PIXI.Texture.from(`/assets/icons/fart-target.png`);
         this.background = new PIXI.Sprite(texture);
         this.background.anchor.set(0.5, 0.5);
         this.background.scale.set(BASE_TARGET_SIZE * SCREEN_RATIO);
