@@ -1,4 +1,4 @@
-import { music, perfect } from "./settings";
+import { music, perfect, failedFart, perfectFart } from "./settings";
 import { debounce } from './utils/async/debounce'
 
 export class AudioManager {
@@ -7,6 +7,8 @@ export class AudioManager {
         this.loaded = {};
         this.preloadSounds(music)
         this.preloadSounds(perfect)
+        this.preloadSounds(failedFart)
+        this.preloadSounds(perfectFart)
         this.debouncedPlay = debounce(this.play.bind(this), 1000);
         this.activeSounds = [];
     }

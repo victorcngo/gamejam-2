@@ -32,3 +32,17 @@ export const perfect = [
         src: "./assets/audios/perfect.mp3"
     },
 ]
+
+export const perfectFart = [
+    {
+        name: "perfectFart",
+        src: "./assets/audios/perfect-fart.mp3"
+    },
+]
+
+export const failedFart = [
+    {
+        name: "failedFart",
+        src: "./assets/audios/failed-fart.mp3"
+    },
+]
