@@ -257,11 +257,12 @@ canvas {
     font-size: 10vw;
     z-index: 1;
     color: white;
-    width: 15vw;
-    height: 15vw;
+    width: 25vw;
+    height: 25vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
 
 .a-Countdown img {
