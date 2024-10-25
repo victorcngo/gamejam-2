@@ -15,7 +15,7 @@ import {gsap} from "gsap"
 
 import * as PIXI from "pixi.js";
 
-const BASE_TARGET_SIZE = 0.5
+const BASE_TARGET_SIZE = 0.6
 
 export default class Target {
     constructor(index, initXPos, playerId,indexTargetBeat,intervalBetweenBeats,objectBeat) {

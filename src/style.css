@@ -292,10 +292,10 @@ canvas {
 
 .a-Tutorial {
     position: absolute;
-    top: 25%;
+    bottom: 25%;
     left: 50%;
     transform: translateX(-50%);
-    width: 15vw;
+    width: 25vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -314,6 +314,10 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 75% !important;
+}
+
+.js-tutorial-2{
+   width: 32vw;
 }
 
 .a-Tutorial[data-state="hidden"] {
