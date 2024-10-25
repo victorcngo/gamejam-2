@@ -60,8 +60,7 @@ export default class FartTarget extends Target {
 
         if (distance < distanceMax) {
             const successInPercentage = 100 - (distance / distanceMax) * 100;
-
-            if (successInPercentage > ACCURACY.bad) {
+            if (successInPercentage > ACCURACY.bof) {
                 return "success";
             }
             return "missed";
