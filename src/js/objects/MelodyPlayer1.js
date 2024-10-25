@@ -11,6 +11,7 @@ export default class MelodyPlayer {
         this.tempo = tempo;
         this.currentTick = 0;
         this.game = new Game(); // singleton
+        this._alreadyStarted = false
 
         this.player = new MidiPlayer.Player(() => {
             this.player.setTempo(this.tempo);
@@ -83,10 +84,12 @@ export default class MelodyPlayer {
      * regénérer des choux
      */
     startNewWave(tempo) {
-        this.tempo = tempo
-        this.intervalBetweenBeats = (60 / tempo) * 1000;
-        this.createRandomChoux()
-
+        if(!this._alreadyStarted){
+            this.tempo = tempo
+            this.intervalBetweenBeats = (60 / tempo) * 1000;
+            this.createRandomChoux()
+            this._alreadyStarted = true
+        }
     }
 
     getObjectBeats(trackIdx){
