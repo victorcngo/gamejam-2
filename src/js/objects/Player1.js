@@ -1,5 +1,5 @@
 import Axis from 'axis-api'
-import Game from './Game.js'
+import Game from './Game1.js'
 import * as PIXI from 'pixi.js'
 import { AnimatedSprite, Assets } from 'pixi.js';
 import { wait } from '../utils/async/wait.js'

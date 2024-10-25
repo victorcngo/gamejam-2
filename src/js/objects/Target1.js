@@ -8,9 +8,9 @@ import {
     ACCURACY,
     SCREEN_RATIO
 } from '../settings.js'
-import Game from './Game.js'
+import Game from './Game1.js'
 import { wait } from '../utils/async/wait.js'
-import Feedback from './Feedback.js';
+import Feedback from './Feedback1.js';
 import {gsap} from "gsap"
 
 import * as PIXI from "pixi.js";

@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
-import Game from './Game.js';
+import Game from './Game1.js';
 import { gsap } from 'gsap';
-import { SCREEN_RATIO, TIMELINE_Y } from '../settings';
+import { SCREEN_RATIO, TIMELINE_Y } from '../settings.js';
 
 export default class Feedback {
     constructor(type, playerID) {

@@ -1,5 +1,5 @@
 import { setUpButtons } from './InputManager'
-import Game from './objects/Game.js'
+import Game from './objects/Game1.js'
 import * as PIXI from 'pixi.js'
 import { debounce } from './utils/async/debounce'
 import Splashscreen from './ui/Splashscreen.js'
