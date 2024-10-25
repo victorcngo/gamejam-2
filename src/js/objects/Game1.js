@@ -217,6 +217,9 @@ export default class Game {
             this.audioManager.play('perfectFart')
             this.score += 1000
             $$score.innerHTML = this.score
+            Signal.emit(":showOverlay")
+            await wait(2000)
+            Signal.emit(":hideOverlay")
         }else {
             this.fartSuccess = false
             this.audioManager.play('failedFart')

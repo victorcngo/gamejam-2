@@ -3,6 +3,8 @@ import Game from './Game1.js';
 import { gsap } from 'gsap';
 import { SCREEN_RATIO, TIMELINE_Y } from '../settings.js';
 
+const BASE_FEEDBACK_SIZE = 0.5;
+
 export default class Feedback {
     constructor(type, playerID) {
         this.game = new Game();
@@ -34,7 +36,7 @@ export default class Feedback {
             : window.innerWidth / 2 + (SCREEN_RATIO * 600) + randomOffset;
         this.sprite.y = TIMELINE_Y - (SCREEN_RATIO);
         this.sprite.rotation = (Math.random() * 0.4) - 0.2;
-        this.sprite.scale.set(0.8)
+        this.sprite.scale.set(BASE_FEEDBACK_SIZE * SCREEN_RATIO);
         this.app.stage.addChild(this.sprite);
 
         const timeline = gsap.timeline();

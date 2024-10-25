@@ -74,10 +74,6 @@ export default class FartTarget extends Target {
         if (this.isHitCorrect()) {
             this.game['player' + playerID].triggerAnimation("fart")
             this.game['player' + playerID].hasFart = true
-            Signal.emit(":showOverlay")
-            await wait(200)
-            await wait(2700)
-            Signal.emit(":hideOverlay")
         } else {
             this.game['player' + playerID].triggerAnimation("missed")
             this.game['player' + playerID].hasFart = false
