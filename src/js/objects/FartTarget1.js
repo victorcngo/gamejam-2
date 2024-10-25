@@ -13,7 +13,6 @@ import {
 import Game from './Game1.js';
 import Feedback from './Feedback1.js';
 import { wait } from '../utils/async/wait.js';
-import Signal from '../utils/signal/index.js'
 
 const BASE_TARGET_SIZE = .3;
 
