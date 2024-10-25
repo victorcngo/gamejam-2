@@ -33,6 +33,27 @@ export const perfect = [
     },
 ]
 
+export const cool = [
+    {
+        name: "cool",
+        src: "./assets/audios/cool.mp3"
+    },
+]
+
+export const bof = [
+    {
+        name: "bof",
+        src: "./assets/audios/bof.mp3"
+    },
+]
+
+export const missed = [
+    {
+        name: "missed",
+        src: "./assets/audios/missed.mp3"
+    },
+]
+
 export const perfectFart = [
     {
         name: "perfectFart",
