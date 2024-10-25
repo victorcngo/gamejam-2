@@ -17,6 +17,7 @@ import gsap from 'gsap'
 import LeaderboardPopup from '../ui/LeaderboardPopup.js';
 import FartTarget from './FartTarget1.js';
 import { wait } from '../utils/async/wait.js'
+import Signal from '../utils/signal/index.js'
 
 const BASE_TIMELINE_SIZE = 0.5
 const BASE_HIT_ZONE_SIZE = 0.18
@@ -217,6 +218,9 @@ export default class Game {
             this.audioManager.play('perfectFart')
             this.score += 1000
             $$score.innerHTML = this.score
+            Signal.emit(":showOverlay")
+            await wait(2000)
+            Signal.emit(":hideOverlay")
         }else {
             this.fartSuccess = false
             this.audioManager.play('failedFart')

@@ -13,7 +13,6 @@ import {
 import Game from './Game1.js';
 import Feedback from './Feedback1.js';
 import { wait } from '../utils/async/wait.js';
-import Signal from '../utils/signal/index.js'
 
 const BASE_TARGET_SIZE = .3;
 
@@ -74,10 +73,6 @@ export default class FartTarget extends Target {
         if (this.isHitCorrect()) {
             this.game['player' + playerID].triggerAnimation("fart")
             this.game['player' + playerID].hasFart = true
-            Signal.emit(":showOverlay")
-            await wait(200)
-            await wait(2700)
-            Signal.emit(":hideOverlay")
         } else {
             this.game['player' + playerID].triggerAnimation("missed")
             this.game['player' + playerID].hasFart = false
