@@ -107,25 +107,25 @@ export default class Target {
                     this.game['player' + playerID].triggerAnimation("success")
                     this.game['player' + playerID].increaseCombo(1)
                     this.game['player' + playerID].incrementScore(10)
-                    this.game.audioManager.sounds["perfect"].volume = 1
+                    this.game.audioManager.sounds["perfect"].volume = 0.3
                     this.game.audioManager.play("perfect")
                 }
 
                 if (accuracy === "cool") {
                     this.game['player' + playerID].incrementScore(5)
-                    this.game.audioManager.sounds["cool"].volume = 1
+                    this.game.audioManager.sounds["cool"].volume = 0.025
                     this.game.audioManager.play("cool")
                 }
 
                 if (accuracy === "bof") {
                     this.game['player' + playerID].incrementScore(1)
-                    this.game.audioManager.sounds["bof"].volume = 1
+                    this.game.audioManager.sounds["bof"].volume = 0.1
                     this.game.audioManager.play("bof")
                 }
             } else {
                 this.game['player' + playerID].resetCombo()
                 this.game['player' + playerID].triggerAnimation("missed")
-                this.game.audioManager.sounds["missed"].volume = 1
+                this.game.audioManager.sounds["missed"].volume = 0.1
                 this.game.audioManager.play("missed")
             }
 
