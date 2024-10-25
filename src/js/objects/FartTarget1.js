@@ -1,4 +1,4 @@
-import Target from './Target';
+import Target from './Target1.js';
 import * as PIXI from 'pixi.js'
 import {
     RADIUS,
@@ -13,7 +13,7 @@ import {
 import Game from './Game.js';
 import Feedback from './Feedback.js';
 import { wait } from '../utils/async/wait.js';
-import Signal from '../utils/signal'
+import Signal from '../utils/signal/index.js'
 
 const BASE_TARGET_SIZE = 1.5;
 

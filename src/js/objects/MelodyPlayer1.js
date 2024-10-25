@@ -1,7 +1,7 @@
 import MidiPlayer from 'midi-player-js';
 import { Soundfont } from "smplr";
 import Game from './Game.js'
-import Target from "./Target";
+import Target from "./Target1.js";
 
 //Onjectif de cette class : Analyser le fichier midi pour timer l'apparition des choux
 

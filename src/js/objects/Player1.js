@@ -2,8 +2,8 @@ import Axis from 'axis-api'
 import Game from './Game.js'
 import * as PIXI from 'pixi.js'
 import { AnimatedSprite, Assets } from 'pixi.js';
-import { wait } from '../utils/async/wait'
-import { SCREEN_RATIO } from '../settings';
+import { wait } from '../utils/async/wait.js'
+import { SCREEN_RATIO } from '../settings.js';
 import {gsap} from "gsap"
 
 const BASE_SPRITE_SIZE = 0.6
