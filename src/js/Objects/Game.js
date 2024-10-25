@@ -106,7 +106,8 @@ export default class Game {
 
         gsap.set(tutorial, { opacity: 0 });
 
-        gsap.to(tutorial, {
+        gsap.timeline()
+            .to(tutorial, {
             duration: 1,
             opacity: 1,
             delay: 1,
@@ -121,7 +122,20 @@ export default class Game {
                     });
                 }, 2000)
             }
-        });
+        }).fromTo(tutorial.children[0], {
+            scale:0.5
+        },{
+            scale: 1,
+            duration:.5 ,
+            ease:"back.out(1.4)"
+        },"<")
+            .fromTo(tutorial.children[1], {
+                scale:0.75
+            },{
+                scale: 1,
+                duration:.5 ,
+                ease:"back.out(2)"
+            },"<+.25")
     }
 
     showCountdown() {
