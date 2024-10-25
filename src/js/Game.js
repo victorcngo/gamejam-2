@@ -71,6 +71,8 @@ export default class Game {
 
         // HACK - Need click to allow audioContext, remove when starting page completed
         this.player1.instance.buttons[0].addEventListener('keydown', this.setMelodyPlayer)
+
+        this.audioManager.sounds["music"].volume = 0.2
     }
 
     scheduleFartTargets() {
@@ -196,10 +198,14 @@ export default class Game {
     checkFartSuccess() {
         if(this.player1.hasFart && this.player2.hasFart) {
             this.fartSuccess = true
-            console.log('Both players farted')
+            console.log('perfect fart')
+            this.audioManager.play('perfectFart')
+            this.score += 1000
+            $$score.innerHTML = this.score
         }else {
             this.fartSuccess = false
-            console.log('One or both players did not fart')
+            console.log('failed fart')
+            this.audioManager.play('failedFart')
         }
     }
 
