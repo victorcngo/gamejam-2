@@ -156,12 +156,11 @@ export default class Game {
 
         const tl = gsap.timeline({
             delay: 2,
-            onStart: () => {
+            onStart: async () => {
                 countdown.setAttribute('data-state', 'visible');
                 this.showTutorial(document.querySelector('.js-tutorial'));
-                wait(9000).then(() => {
-                    this.showTutorial(document.querySelector('.js-tutorial-2'));
-                });
+                await wait(9000)
+                this.showTutorial(document.querySelector('.js-tutorial-2'));
             },
             onComplete: () => {
                 countdown.setAttribute('data-state', 'hidden');

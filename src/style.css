@@ -218,7 +218,7 @@ canvas {
 
 
 .o-Splashscreen_logo img{
-    width: 30vw;
+    width: 25vw;
 }
 
 .o-Splashscreen_content, .o-Splashscreen_actions {
@@ -238,11 +238,11 @@ canvas {
 }
 
 .o-Splashscreen-start {
-    width: 15vw;
+    width: 20vw;
 }
 
 .o-Splashscreen-leaderboard {
-    width: 6vw;
+    width: 10vw;
 }
 
 /* -----------------------------------------------
@@ -257,11 +257,12 @@ canvas {
     font-size: 10vw;
     z-index: 1;
     color: white;
-    width: 15vw;
-    height: 15vw;
+    width: 25vw;
+    height: 25vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
 
 .a-Countdown img {
